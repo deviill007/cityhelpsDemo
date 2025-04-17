@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import { FcGoogle } from "react-icons/fc";
 import ClipLoader from "react-spinners/ClipLoader";
-import { EyeIcon, EyeOffIcon, Link } from "lucide-react";
+import { EyeIcon, EyeOffIcon } from "lucide-react";
 import { useToast } from "@/components/ToastContext";
 
 
@@ -36,6 +36,15 @@ export default function LoginPopupContent({ onClose, onLoginSuccess }: Props) {
 
   const router = useRouter();
   const showToast = useToast();
+
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://accounts.google.com/gsi/client";
+    script.async = true;
+    script.defer = true;
+    script.onload = () => setGoogleScriptLoaded(true);
+    document.body.appendChild(script);
+  }, []);
 
   useEffect(() => {
     const checkGoogle = () => {
@@ -394,178 +403,228 @@ export default function LoginPopupContent({ onClose, onLoginSuccess }: Props) {
 
   return (
     <div className="login-container">
-      <h2 className="login">Log in or sign up</h2>
+      <h2 className="login">
+        {isForgotPasswordMode ? "Reset your password" : "Log in or sign up"}
+      </h2>
       <p className="login-p">
-        Check out more easily and access your tickets on any device with your
-        CityHelps account.
+        {isForgotPasswordMode
+          ? "We'll send you a link to reset your password."
+          : "Check out more easily and access your tickets on any device with your CityHelps account."}
       </p>
-
-      <div className="google-button-container">
-        <button
-          className="btn-google"
-          onClick={handleGoogleLogin}
-          disabled={isGoogleLoading}
-        >
-          {isGoogleLoading ? (
-            <ClipLoader size={18} color="#000" />
+  
+      {isForgotPasswordMode ? (
+        <>
+          {resetSuccessMessage ? (
+            <p className="success-text">{resetSuccessMessage}</p>
           ) : (
             <>
-              <FcGoogle size={22} style={{ marginRight: "8px" }} />
-              Continue with Google
+              <input
+                placeholder="Enter your email"
+                className="input-style"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              {errors.email && <p className="error-text">{errors.email}</p>}
+              <button
+                className="btn-login"
+                onClick={() => handleResetPasswordRequest()}
+                disabled={isResetRequesting || !email}
+              >
+                {isResetRequesting ? (
+                  <ClipLoader size={18} color="#fff" />
+                ) : (
+                  "Send Reset Link"
+                )}
+              </button>
             </>
           )}
-        </button>
-        <div
-          id="google-signin-button"
-          style={{ display: "none" }}
-          ref={googleButtonRef}
-        />
-      </div>
-      {googleError && <p className="error-text">{googleError}</p>}
-
-      {!isOtpSent && !isValidated && (
-        <>
-          <input
-            placeholder="Email"
-            className="input-style"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                handleEmailSubmit();
-              }
-            }}
-          />
-          {errors.email && <p className="error-text">{errors.email}</p>}
-
-          <button
-            className="btn-login"
-            onClick={handleEmailSubmit}
-            disabled={isLoginLoading || !email}
-          >
-            {isLoginLoading ? (
-              <ClipLoader size={18} color="#fff" />
-            ) : (
-              "Continue with Email"
-            )}
-          </button>
-        </>
-      )}
-
-      {isOtpSent && !isValidated && (
-        <>
-          <input
-            placeholder="Enter OTP"
-            className="input-style"
-            type="text"
-            value={otp}
-            onChange={(e) => setOtp(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                handleOtpVerify();
-              }
-            }}
-          />
-          {errors.otp && <p className="error-text">{errors.otp}</p>}
-          <button
-            className="btn-login"
-            onClick={handleOtpVerify}
-            disabled={isOtpVerifying || !otp}
-          >
-            {isOtpVerifying ? (
-              <ClipLoader size={18} color="#fff" />
-            ) : (
-              "Verify OTP"
-            )}
-          </button>
           <button
             className="btn-secondary"
-            onClick={sendOtp}
-            disabled={cooldown > 0 || isOtpLoading}
+            onClick={() => {
+              setIsForgotPasswordMode(false);
+              setResetSuccessMessage("");
+              setErrors({});
+            }}
           >
-            {isOtpLoading ? (
-              <ClipLoader size={16} color="#000" />
-            ) : cooldown > 0 ? (
-              `Resend OTP in ${cooldown}s`
-            ) : (
-              "Resend OTP"
-            )}
+            Back to Login
           </button>
         </>
-      )}
-
-      {isValidated && (
+      ) : (
         <>
-          {isNewUser && (
-            <>
-              <input
-                placeholder="Name"
-                className="input-style"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-              {errors.name && <p className="error-text">{errors.name}</p>}
-              <input
-                placeholder="Phone"
-                className="input-style"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-              />
-              {errors.phone && <p className="error-text">{errors.phone}</p>}
-            </>
-          )}
-          <div className="relative">
-            <input
-              placeholder="Password"
-              className="input-style" // space for the eye icon
-              type={showPassword ? "text" : "password"}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  handleLogin(); // now valid
-                }
-              }}
+          {/* === Google Login === */}
+          <div className="google-button-container">
+            <button
+              className="btn-google"
+              onClick={handleGoogleLogin}
+              disabled={isGoogleLoading}
+            >
+              {isGoogleLoading ? (
+                <ClipLoader size={18} color="#000" />
+              ) : (
+                <>
+                  <FcGoogle size={22} style={{ marginRight: "8px" }} />
+                  Continue with Google
+                </>
+              )}
+            </button>
+            <div
+              id="google-signin-button"
+              style={{ display: "none" }}
+              ref={googleButtonRef}
             />
-            <span onClick={() => setShowPassword((prev) => !prev)}>
-              {showPassword ? <EyeOffIcon /> : <EyeIcon />}
-            </span>
-            {errors.password && <p className="error-text">{errors.password}</p>}
           </div>
-          {!isNewUser && (
+          {googleError && <p className="error-text">{googleError}</p>}
+  
+          {/* === Login / OTP / Register === */}
+          {!isOtpSent && !isValidated && (
             <>
-              <div className="button-container">
-                <button
-                  className="btn-forgotPassword"
-                  onClick={async () => {
-                    setIsForgotPasswordMode(true);
-                    setErrors({});
-                    setResetSuccessMessage("");
-                    await handleResetPasswordRequest({ autoRedirect: true });
-                  }}
-                >
-                  Forgot Password?
-                </button>
-              </div>
+              <input
+                placeholder="Email"
+                className="input-style"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    handleEmailSubmit();
+                  }
+                }}
+              />
+              {errors.email && <p className="error-text">{errors.email}</p>}
+  
+              <button
+                className="btn-login"
+                onClick={handleEmailSubmit}
+                disabled={isLoginLoading || !email}
+              >
+                {isLoginLoading ? (
+                  <ClipLoader size={18} color="#fff" />
+                ) : (
+                  "Continue with Email"
+                )}
+              </button>
             </>
           )}
-
-          <button
-            className="btn-login"
-            onClick={handleLogin}
-            disabled={
-              isLoginLoading || !password || (isNewUser && (!name || !phone))
-            }
-          >
-            {isLoginLoading ? <ClipLoader size={18} color="#fff" /> : "Login"}
-          </button>
+  
+          {isOtpSent && !isValidated && (
+            <>
+              <input
+                placeholder="Enter OTP"
+                className="input-style"
+                type="text"
+                value={otp}
+                onChange={(e) => setOtp(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    handleOtpVerify();
+                  }
+                }}
+              />
+              {errors.otp && <p className="error-text">{errors.otp}</p>}
+              <button
+                className="btn-login"
+                onClick={handleOtpVerify}
+                disabled={isOtpVerifying || !otp}
+              >
+                {isOtpVerifying ? (
+                  <ClipLoader size={18} color="#fff" />
+                ) : (
+                  "Verify OTP"
+                )}
+              </button>
+              <button
+                className="btn-secondary"
+                onClick={sendOtp}
+                disabled={cooldown > 0 || isOtpLoading}
+              >
+                {isOtpLoading ? (
+                  <ClipLoader size={16} color="#000" />
+                ) : cooldown > 0 ? (
+                  `Resend OTP in ${cooldown}s`
+                ) : (
+                  "Resend OTP"
+                )}
+              </button>
+            </>
+          )}
+  
+          {isValidated && (
+            <>
+              {isNewUser && (
+                <>
+                  <input
+                    placeholder="Name"
+                    className="input-style"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                  {errors.name && <p className="error-text">{errors.name}</p>}
+                  <input
+                    placeholder="Phone"
+                    className="input-style"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                  />
+                  {errors.phone && <p className="error-text">{errors.phone}</p>}
+                </>
+              )}
+              <div className="relative">
+                <input
+                  placeholder="Password"
+                  className="input-style"
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      handleLogin();
+                    }
+                  }}
+                />
+                <span onClick={() => setShowPassword((prev) => !prev)}>
+                  {showPassword ? <EyeOffIcon /> : <EyeIcon />}
+                </span>
+                {errors.password && (
+                  <p className="error-text">{errors.password}</p>
+                )}
+              </div>
+              {!isNewUser && (
+                <div className="button-container">
+                  <button
+                    className="btn-forgotPassword"
+                    onClick={() => {
+                      setIsForgotPasswordMode(true);
+                      setErrors({});
+                      setResetSuccessMessage("");
+                    }}
+                  >
+                    Forgot Password?
+                  </button>
+                </div>
+              )}
+              <button
+                className="btn-login"
+                onClick={handleLogin}
+                disabled={
+                  isLoginLoading || !password || (isNewUser && (!name || !phone))
+                }
+              >
+                {isLoginLoading ? (
+                  <ClipLoader size={18} color="#fff" />
+                ) : (
+                  "Login"
+                )}
+              </button>
+            </>
+          )}
+          <p className="login-p-down">
+            By signing in or creating an account, you accept our{" "}
+            <span>Terms and Conditions</span> and <span>Privacy Policy</span>.
+          </p>
         </>
       )}
-      <p className="login-p-down">
-        By signing in or creating an account, you accept our{" "}
-        <span>Terms and Conditions</span> and <span>Privacy Policy</span>.
-      </p>
     </div>
   );
+  
 }

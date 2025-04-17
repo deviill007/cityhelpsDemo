@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styles from "./experience.module.css";
 import Image from "next/image";
 
@@ -14,19 +14,9 @@ const MorningTrek = () => {
   const [travelFrom, setTravelFrom] = useState("");
   const [travelTill, setTravelTill] = useState("");
   const [travellers, setTravellers] = useState(1);
-
-  const [current, setCurrent] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalIndex, setModalIndex] = useState(0);
 
-  const nextSlide = () => setCurrent((prev) => (prev + 1) % images.length);
-  const prevSlide = () =>
-    setCurrent((prev) => (prev - 1 + images.length) % images.length);
-
-  useEffect(() => {
-    const auto = setInterval(nextSlide, 4000);
-    return () => clearInterval(auto);
-  }, []);
 
   const openModal = (index: React.SetStateAction<number>) => {
     setModalIndex(index);
