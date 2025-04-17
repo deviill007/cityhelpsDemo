@@ -14,19 +14,9 @@ const LeopardSafari = () => {
   const [travelFrom, setTravelFrom] = useState("");
   const [travelTill, setTravelTill] = useState("");
   const [travellers, setTravellers] = useState(1);
-
-  const [current, setCurrent] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalIndex, setModalIndex] = useState(0);
 
-  const nextSlide = () => setCurrent((prev) => (prev + 1) % images.length);
-  const prevSlide = () =>
-    setCurrent((prev) => (prev - 1 + images.length) % images.length);
-
-  useEffect(() => {
-    const auto = setInterval(nextSlide, 4000);
-    return () => clearInterval(auto);
-  }, []);
 
   const openModal = (index: React.SetStateAction<number>) => {
     setModalIndex(index);
@@ -42,7 +32,13 @@ const LeopardSafari = () => {
         <h1>🛡️ Leopard Safari in Jaipur: Into the Wild Heart of the Aravallis</h1>
         <div className={styles.masonryGallery}>
           <div className={styles.mainImage}>
-            <img src={images[0]} onClick={() => openModal(0)} alt="Main View" />
+          <Image
+    src={images[0]}
+    alt="Main View"
+    fill
+    style={{ objectFit: "cover", borderRadius: "10px" }}
+    priority
+  />
           </div>
           <div className={styles.sideGrid}>
             {images.slice(1, 5).map((img, index) => (
@@ -51,7 +47,13 @@ const LeopardSafari = () => {
                 className={styles.sideImageWrapper}
                 onClick={() => openModal(index + 1)}
               >
-                <img src={img} alt={`View ${index + 1}`} />
+                                <Image
+                  src={img}
+                  alt={`View ${index + 1}`}
+                  width={700}
+                  height={700}
+                  className={styles.thumbnail}
+                />
                 {index === 3 && images.length > 5 && (
                   <div className={styles.overlay}>+{images.length - 5}</div>
                 )}
@@ -83,9 +85,12 @@ const LeopardSafari = () => {
                 
               />
             </button>
-            <img
+            <Image
               src={images[modalIndex]}
               alt="large"
+              width={1000}
+              height={1000}
+              style={{ objectFit: "contain", borderRadius: "20px" }}
               className={styles.modalImage}
             />
             <button className={styles.rightArrow}  onClick={nextModal}>

@@ -722,7 +722,7 @@ export default function Home() {
                         }
                       >
                         <Image
-                          src="/images/jaipur/elephantWalks.jpg"
+                          src="/images/jaipur/morningTrek.jpg"
                           alt="Elephant Walks"
                           className={styles.cardImage}
                           width={500} // You can adjust width/height as needed

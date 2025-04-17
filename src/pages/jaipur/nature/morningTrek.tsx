@@ -48,7 +48,13 @@ const MorningTrek = () => {
         {/* 🔥 Image Gallery */}
         <div className={styles.masonryGallery}>
           <div className={styles.mainImage}>
-            <img src={images[0]} onClick={() => openModal(0)} alt="Main View" />
+          <Image
+    src={images[0]}
+    alt="Main View"
+    fill
+    style={{ objectFit: "cover", borderRadius: "10px" }}
+    priority
+  />
           </div>
           <div className={styles.sideGrid}>
             {images.slice(1, 5).map((img, index) => (
@@ -57,7 +63,13 @@ const MorningTrek = () => {
                 className={styles.sideImageWrapper}
                 onClick={() => openModal(index + 1)}
               >
-                <img src={img} alt={`View ${index + 1}`} />
+                                <Image
+                  src={img}
+                  alt={`View ${index + 1}`}
+                  width={700}
+                  height={700}
+                  className={styles.thumbnail}
+                />
                 {index === 3 && images.length > 5 && (
                   <div className={styles.overlay}>+{images.length - 5}</div>
                 )}
@@ -89,9 +101,12 @@ const MorningTrek = () => {
                 
               />
             </button>
-            <img
+            <Image
               src={images[modalIndex]}
               alt="large"
+              width={1000}
+              height={1000}
+              style={{ objectFit: "contain", borderRadius: "20px" }}
               className={styles.modalImage}
             />
             <button className={styles.rightArrow}  onClick={nextModal}>
