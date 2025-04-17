@@ -128,7 +128,7 @@ const ElephantWalks = () => {
         <ul>
           <li>Help gently scrub and clean the giants</li>
           <li>
-            Use clay tubs with clean water and cool conditions in Elephant's
+            Use clay tubs with clean water and cool conditions in Elephant&rsquo;s
             bath
           </li>
           <li>Bond between movement and photo opportunity</li>

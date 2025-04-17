@@ -116,6 +116,7 @@ export default function LoginPopupContent({ onClose, onLoginSuccess }: Props) {
         setIsValidated(true);
       }
     } catch (error) {
+      console.log(error)
       setErrors({ email: "Something went wrong while checking email." });
     } finally {
       setIsLoginLoading(false);
@@ -142,6 +143,7 @@ export default function LoginPopupContent({ onClose, onLoginSuccess }: Props) {
         setErrors({ otp: data.message });
       }
     } catch (error) {
+      console.log(error)
       setErrors({ otp: "Failed to send OTP." });
     } finally {
       setIsOtpLoading(false);
@@ -163,6 +165,7 @@ export default function LoginPopupContent({ onClose, onLoginSuccess }: Props) {
         setErrors({ otp: data.message });
       }
     } catch (error) {
+      console.log(error)
       setErrors({ otp: "Failed to verify OTP." });
     } finally {
       setIsOtpVerifying(false);
@@ -230,6 +233,7 @@ export default function LoginPopupContent({ onClose, onLoginSuccess }: Props) {
       localStorage.removeItem("redirectAfterLogin");
       router.push(redirectTo);
     } catch (error) {
+      console.log(error)
       const errorMessage = (error as Error).message;
       setErrors({ password: errorMessage });
       // Show error toast
@@ -457,7 +461,7 @@ export default function LoginPopupContent({ onClose, onLoginSuccess }: Props) {
             <button
               className="btn-google"
               onClick={handleGoogleLogin}
-              disabled={isGoogleLoading}
+              disabled={isGoogleLoading || !googleScriptLoaded}
             >
               {isGoogleLoading ? (
                 <ClipLoader size={18} color="#000" />

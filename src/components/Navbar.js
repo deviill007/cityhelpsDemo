@@ -122,7 +122,6 @@ export default function Navigationbar() {
       router.push("/");
     } catch (err) {
       console.error("Logout failed", err);
-      // Show error toast (progress bar will start)
       showToast({
         message: "Logout failed. Please try again.",
         type: "error",
