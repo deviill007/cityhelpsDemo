@@ -9,6 +9,8 @@ import LoginPopupContent from "@/components/LoginPopupContent";
 import CurrencyPopupContent from "@/components/CurrencyPopupContent";
 import { FaArrowRightToCity } from "react-icons/fa6";
 import { useToast } from "@/components/ToastContext";
+import ResetPasswordPopupContent from "@/components/ResetPasswordPopupContent";
+
 
 export default function Navigationbar() {
   const [panelOpen, setPanelOpen] = useState(false);
@@ -307,8 +309,9 @@ export default function Navigationbar() {
       <Popup isOpen={!!popupType} onClose={() => setPopupType(null)}>
         {popupType === "login" && (
           <LoginPopupContent
-            onLoginSuccess={(userData) => {
-              fetch("/api/auth/me")
+          onLoginSuccess={(userData) => {
+            console.log("Logged in:", userData);
+            fetch("/api/auth/me")          
                 .then((res) => res.json())
                 .then((data) => {
                   setUser(data.user);

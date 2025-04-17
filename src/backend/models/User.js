@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+import { Schema, models, model } from "mongoose";
 
-const userSchema = new mongoose.Schema(
+const userSchema = new Schema(
   {
     email: { type: String, required: true, unique: true },
     name: { type: String, required: false }, // Ensure name is required, especially for Google users
@@ -25,4 +25,4 @@ const userSchema = new mongoose.Schema(
 );
 
 // Ensure that the model is either already created or create a new one
-module.exports = mongoose.models.User || mongoose.model("User", userSchema);
+export default models.User || model("User", userSchema);

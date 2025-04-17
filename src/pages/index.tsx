@@ -3,208 +3,207 @@ import Image from "next/image";
 import styles from "@/styles/Home.module.css";
 import { useRouter } from "next/router";
 import { useSearchParams } from "next/navigation";
-import Popup from '@/components/Popup';
+import Popup from "@/components/Popup";
 import HomePagePopupContent from "@/components/HomePagePopupContent";
-
+const defaultPlan = [
+  {
+    time: "7:00 AM",
+    name: "Optional: Sunrise Rooftop Yoga",
+    price: 600,
+    category: "Culture",
+    img: "🧘",
+    description: "Start your day grounded with yoga on a heritage rooftop.",
+    optional: true,
+    alternatives: [
+      {
+        name: "Morning Walk + Temple Visit",
+        price: 400,
+        img: "🚶‍♂",
+        description:
+          "Leisurely walk through quiet lanes ending with temple darshan.",
+      },
+      {
+        name: "Tea with Locals",
+        price: 200,
+        img: "🍵",
+        description: "Visit a local chaiwala and share morning stories.",
+      },
+    ],
+  },
+  {
+    time: "9:00 AM",
+    name: "Amber Fort & Sheesh Mahal",
+    price: 500,
+    category: "Classic",
+    img: "🏯",
+    description:
+      "Explore the grand Amber Fort, including the mirror palace (Sheesh Mahal), courtyards, and panoramic views of Maota Lake.",
+    alternatives: [],
+  },
+  {
+    time: "10:30 AM",
+    name: "Panna Meena Ka Kund (Stepwell)",
+    price: 100,
+    category: "Classic",
+    img: "🪜",
+    description:
+      "Visit this symmetrical 16th-century stepwell—a hidden gem known for its photogenic zigzag staircases.",
+    alternatives: [],
+  },
+  {
+    time: "11:30 AM",
+    name: "Jal Mahal + Chai Stop",
+    price: 100,
+    category: "Classic",
+    img: "🍵",
+    description:
+      "Scenic photo stop at the Water Palace in Man Sagar Lake with a quick kulhad chai break.",
+    alternatives: [
+      {
+        name: "Block Printing Workshop",
+        price: 800,
+        img: "🖌",
+        description: "Hands-on textile printing at an artisan studio.",
+      },
+      {
+        name: "Miniature Painting / Pottery",
+        price: 800,
+        img: "🎨",
+        description:
+          "Create your own blue pottery or learn intricate miniature painting.",
+      },
+    ],
+  },
+  {
+    time: "1:00 PM",
+    name: "Home Cooking + Lunch",
+    price: 1500,
+    category: "Culture",
+    img: "🍛",
+    description:
+      "Cook and eat with a Rajasthani family in their home. Learn regional recipes and stories behind each dish.",
+    alternatives: [],
+  },
+  {
+    time: "2:30 PM",
+    name: "City Palace + Jantar Mantar",
+    price: 300,
+    category: "Classic",
+    img: "🏰",
+    description:
+      "Visit the royal City Palace complex and Jantar Mantar observatory—both UNESCO heritage sites.",
+    alternatives: [
+      {
+        name: "Cultural Street Walk",
+        price: 500,
+        img: "🚶",
+        description:
+          "Explore artisan lanes, temples, and Jaipur’s vibrant local life on foot.",
+      },
+      {
+        name: "Hidden Temple Visit",
+        price: 300,
+        img: "🛕",
+        description:
+          "Visit lesser-known, spiritual temples with a cultural guide.",
+      },
+    ],
+  },
+  {
+    time: "5:30 PM",
+    name: "Nahargarh Sunset Point",
+    price: 200,
+    category: "Classic",
+    img: "🌇",
+    description:
+      "Enjoy panoramic views of Jaipur at golden hour from the Nahargarh Fort ramparts.",
+    alternatives: [],
+  },
+  {
+    time: "6:30 PM",
+    name: "Govind Dev Ji Aarti",
+    price: 0,
+    category: "Culture",
+    img: "🪔",
+    description:
+      "Evening temple aarti with joyful chanting at one of Jaipur’s most beloved Krishna temples.",
+    alternatives: [],
+  },
+  {
+    time: "8:00 PM",
+    name: "Optional: Local Market Visit or Rooftop Dinner",
+    price: 0,
+    category: "Culture",
+    img: "🛍",
+    description:
+      "Explore night markets or enjoy a rooftop dinner with city views.",
+    optional: true,
+    alternatives: [
+      {
+        name: "Heritage Hotel Cultural Show",
+        price: 600,
+        img: "🎭",
+        description:
+          "Enjoy a folk dance and music performance with traditional dinner.",
+      },
+      {
+        name: "Night Bazaar + Food Tasting",
+        price: 400,
+        img: "🍢",
+        description:
+          "Walk through lively local bazaars and sample Rajasthani snacks.",
+      },
+    ],
+  },
+];
+const defaultPlanDay2 = [
+  {
+    time: "8:00 AM",
+    name: "Albert Hall Museum",
+    price: 300,
+    category: "Classic",
+    img: "🏛️",
+    description: "Explore one of the oldest museums in Rajasthan.",
+    optional: false,
+    alternatives: [],
+  },
+  {
+    time: "10:00 AM",
+    name: "Galta Ji Monkey Temple",
+    price: 200,
+    category: "Spiritual",
+    img: "🐒",
+    description: "Beautiful temple surrounded by hills and monkeys.",
+    optional: false,
+    alternatives: [],
+  },
+  {
+    time: "12:30 PM",
+    name: "Sisodia Rani Garden",
+    price: 250,
+    category: "Nature",
+    img: "🌺",
+    description: "A peaceful garden perfect for a relaxing stroll.",
+    optional: true,
+    alternatives: [],
+  },
+  {
+    time: "3:00 PM",
+    name: "Patrika Gate",
+    price: 150,
+    category: "Photo Spot",
+    img: "🎨",
+    description: "Instagram-famous gate with colorful Rajasthani art.",
+    optional: true,
+    alternatives: [],
+  },
+];
 
 export default function Home() {
-
   const searchParams = useSearchParams();
-const router = useRouter();
+  const router = useRouter();
 
-  const defaultPlan = [
-    {
-      time: "7:00 AM",
-      name: "Optional: Sunrise Rooftop Yoga",
-      price: 600,
-      category: "Culture",
-      img: "🧘",
-      description: "Start your day grounded with yoga on a heritage rooftop.",
-      optional: true,
-      alternatives: [
-        {
-          name: "Morning Walk + Temple Visit",
-          price: 400,
-          img: "🚶‍♂",
-          description:
-            "Leisurely walk through quiet lanes ending with temple darshan.",
-        },
-        {
-          name: "Tea with Locals",
-          price: 200,
-          img: "🍵",
-          description: "Visit a local chaiwala and share morning stories.",
-        },
-      ],
-    },
-    {
-      time: "9:00 AM",
-      name: "Amber Fort & Sheesh Mahal",
-      price: 500,
-      category: "Classic",
-      img: "🏯",
-      description:
-        "Explore the grand Amber Fort, including the mirror palace (Sheesh Mahal), courtyards, and panoramic views of Maota Lake.",
-      alternatives: [],
-    },
-    {
-      time: "10:30 AM",
-      name: "Panna Meena Ka Kund (Stepwell)",
-      price: 100,
-      category: "Classic",
-      img: "🪜",
-      description:
-        "Visit this symmetrical 16th-century stepwell—a hidden gem known for its photogenic zigzag staircases.",
-      alternatives: [],
-    },
-    {
-      time: "11:30 AM",
-      name: "Jal Mahal + Chai Stop",
-      price: 100,
-      category: "Classic",
-      img: "🍵",
-      description:
-        "Scenic photo stop at the Water Palace in Man Sagar Lake with a quick kulhad chai break.",
-      alternatives: [
-        {
-          name: "Block Printing Workshop",
-          price: 800,
-          img: "🖌",
-          description: "Hands-on textile printing at an artisan studio.",
-        },
-        {
-          name: "Miniature Painting / Pottery",
-          price: 800,
-          img: "🎨",
-          description:
-            "Create your own blue pottery or learn intricate miniature painting.",
-        },
-      ],
-    },
-    {
-      time: "1:00 PM",
-      name: "Home Cooking + Lunch",
-      price: 1500,
-      category: "Culture",
-      img: "🍛",
-      description:
-        "Cook and eat with a Rajasthani family in their home. Learn regional recipes and stories behind each dish.",
-      alternatives: [],
-    },
-    {
-      time: "2:30 PM",
-      name: "City Palace + Jantar Mantar",
-      price: 300,
-      category: "Classic",
-      img: "🏰",
-      description:
-        "Visit the royal City Palace complex and Jantar Mantar observatory—both UNESCO heritage sites.",
-      alternatives: [
-        {
-          name: "Cultural Street Walk",
-          price: 500,
-          img: "🚶",
-          description:
-            "Explore artisan lanes, temples, and Jaipur’s vibrant local life on foot.",
-        },
-        {
-          name: "Hidden Temple Visit",
-          price: 300,
-          img: "🛕",
-          description:
-            "Visit lesser-known, spiritual temples with a cultural guide.",
-        },
-      ],
-    },
-    {
-      time: "5:30 PM",
-      name: "Nahargarh Sunset Point",
-      price: 200,
-      category: "Classic",
-      img: "🌇",
-      description:
-        "Enjoy panoramic views of Jaipur at golden hour from the Nahargarh Fort ramparts.",
-      alternatives: [],
-    },
-    {
-      time: "6:30 PM",
-      name: "Govind Dev Ji Aarti",
-      price: 0,
-      category: "Culture",
-      img: "🪔",
-      description:
-        "Evening temple aarti with joyful chanting at one of Jaipur’s most beloved Krishna temples.",
-      alternatives: [],
-    },
-    {
-      time: "8:00 PM",
-      name: "Optional: Local Market Visit or Rooftop Dinner",
-      price: 0,
-      category: "Culture",
-      img: "🛍",
-      description:
-        "Explore night markets or enjoy a rooftop dinner with city views.",
-      optional: true,
-      alternatives: [
-        {
-          name: "Heritage Hotel Cultural Show",
-          price: 600,
-          img: "🎭",
-          description:
-            "Enjoy a folk dance and music performance with traditional dinner.",
-        },
-        {
-          name: "Night Bazaar + Food Tasting",
-          price: 400,
-          img: "🍢",
-          description:
-            "Walk through lively local bazaars and sample Rajasthani snacks.",
-        },
-      ],
-    },
-  ];
-  const defaultPlanDay2 = [
-    {
-      time: "8:00 AM",
-      name: "Albert Hall Museum",
-      price: 300,
-      category: "Classic",
-      img: "🏛️",
-      description: "Explore one of the oldest museums in Rajasthan.",
-      optional: false,
-      alternatives: [],
-    },
-    {
-      time: "10:00 AM",
-      name: "Galta Ji Monkey Temple",
-      price: 200,
-      category: "Spiritual",
-      img: "🐒",
-      description: "Beautiful temple surrounded by hills and monkeys.",
-      optional: false,
-      alternatives: [],
-    },
-    {
-      time: "12:30 PM",
-      name: "Sisodia Rani Garden",
-      price: 250,
-      category: "Nature",
-      img: "🌺",
-      description: "A peaceful garden perfect for a relaxing stroll.",
-      optional: true,
-      alternatives: [],
-    },
-    {
-      time: "3:00 PM",
-      name: "Patrika Gate",
-      price: 150,
-      category: "Photo Spot",
-      img: "🎨",
-      description: "Instagram-famous gate with colorful Rajasthani art.",
-      optional: true,
-      alternatives: [],
-    },
-  ];
+
 
   const tourDetails = {
     description: `Experience Jaipur like a local by taking an autorickshaw (also known as tuk-tuk in Southeast Asia) on this full-day sightseeing tour. Your friendly driver will pick you up from your hotel and take you to all the must-see attractions, such as the City Palace, Hawa Mahal or “Palace of Winds”, Jantar Mantar observatory, and Amber Fort. Get ready for an authentic and immersive experience of Jaipur’s rich culture and history!`,
@@ -290,7 +289,6 @@ const router = useRouter();
   const closePopup = () => {
     setIsPopupOpen(false); // Close the popup
   };
-  
 
   useEffect(() => {
     const plan = selectedDay === "1 Day" ? defaultPlan : defaultPlanDay2;
@@ -387,10 +385,7 @@ const router = useRouter();
           <p>
             Personalized and Authentic Local Experiences Tailored Just for You{" "}
           </p>
-          <button
-            className={styles.button}
-            onClick={handleScrollToTabs}
-          >
+          <button className={styles.button} onClick={handleScrollToTabs}>
             Start Exploring
           </button>
         </div>
@@ -672,10 +667,12 @@ const router = useRouter();
                           router.push("/jaipur/nature/morningTrek")
                         }
                       >
-                        <img
+                        <Image
                           src="/images/jaipur/morningTrek.jpg"
                           alt="Morning Treks"
                           className={styles.cardImage}
+                          width={500} // You can adjust width/height as needed
+                          height={300}
                         />
                         <p>Morning Treks</p>
                       </div>
@@ -686,10 +683,12 @@ const router = useRouter();
                           router.push("/jaipur/nature/elephantWalks")
                         }
                       >
-                        <img
+                        <Image
                           src="/images/jaipur/elephantWalks.jpg"
                           alt="Elephant Walks"
                           className={styles.cardImage}
+                          width={500} // You can adjust width/height as needed
+                          height={300}
                         />
                         <p>Elephant Walks</p>
                       </div>
@@ -700,10 +699,12 @@ const router = useRouter();
                           router.push("/jaipur/nature/leopardSafari")
                         }
                       >
-                        <img
+                        <Image
                           src="/images/jaipur/leopardSafari.jpg"
                           alt="Leopard Safari"
                           className={styles.cardImage}
+                          width={500} // You can adjust width/height as needed
+                          height={300}
                         />
                         <p>Leopard Safari</p>
                       </div>
@@ -713,50 +714,56 @@ const router = useRouter();
 
                 {selected === 1 && (
                   <div className={styles.ecardContainer}>
-                  <div className={styles.ecardContainer}>
-                    <div
-                      className={styles.ecard}
-                      onClick={() =>
-                        router.push("/jaipur/nature/morningTrek")
-                      }
-                    >
-                      <img
-                        src="/images/jaipur/morningTrek.jpg"
-                        alt="Morning Treks"
-                        className={styles.cardImage}
-                      />
-                      <p>Morning Treks</p>
-                    </div>
+                    <div className={styles.ecardContainer}>
+                      <div
+                        className={styles.ecard}
+                        onClick={() =>
+                          router.push("/jaipur/nature/morningTrek")
+                        }
+                      >
+                        <Image
+                          src="/images/jaipur/elephantWalks.jpg"
+                          alt="Elephant Walks"
+                          className={styles.cardImage}
+                          width={500} // You can adjust width/height as needed
+                          height={300}
+                        />
+                        <p>Morning Treks</p>
+                      </div>
 
-                    <div
-                      className={styles.ecard}
-                      onClick={() =>
-                        router.push("/jaipur/nature/elephantWalks")
-                      }
-                    >
-                      <img
-                        src="/images/jaipur/elephantWalks.jpg"
-                        alt="Elephant Walks"
-                        className={styles.cardImage}
-                      />
-                      <p>Elephant Walks</p>
-                    </div>
+                      <div
+                        className={styles.ecard}
+                        onClick={() =>
+                          router.push("/jaipur/nature/elephantWalks")
+                        }
+                      >
+                        <Image
+                          src="/images/jaipur/elephantWalks.jpg"
+                          alt="Elephant Walks"
+                          className={styles.cardImage}
+                          width={500} // You can adjust width/height as needed
+                          height={300}
+                        />
+                        <p>Elephant Walks</p>
+                      </div>
 
-                    <div
-                      className={styles.ecard}
-                      onClick={() =>
-                        router.push("/jaipur/nature/leopardSafari")
-                      }
-                    >
-                      <img
-                        src="/images/jaipur/leopardSafari.jpg"
-                        alt="Leopard Safari"
-                        className={styles.cardImage}
-                      />
-                      <p>Leopard Safari</p>
+                      <div
+                        className={styles.ecard}
+                        onClick={() =>
+                          router.push("/jaipur/nature/leopardSafari")
+                        }
+                      >
+                        <Image
+                          src="/images/jaipur/leopardSafari.jpg"
+                          alt="Leopard Safari"
+                          className={styles.cardImage}
+                          width={500} // You can adjust width/height as needed
+                          height={300}
+                        />
+                        <p>Leopard Safari</p>
+                      </div>
                     </div>
                   </div>
-                </div>
                 )}
                 {selected === 2 && <div>🏰 History-related content here</div>}
                 {selected === 3 && <div>🔥 Trending content here</div>}

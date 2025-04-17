@@ -1,6 +1,7 @@
 // components/404Content.tsx
 import React, { useEffect, useState } from 'react';
 import Lottie from 'react-lottie';
+import Link from 'next/link';
 
 const Custom404 = () => {
   const [animationData, setAnimationData] = useState(null);
@@ -33,7 +34,7 @@ const Custom404 = () => {
         Oops! The page you are trying to access does not exist or has been moved. <br />
         Try going back to our homepage.
       </p>
-      <a
+      <Link
         href="/"
         style={{
           fontSize: '18px',
@@ -45,7 +46,7 @@ const Custom404 = () => {
         }}
       >
         Home Page
-      </a>
+      </Link>
       <p style={{ fontSize: '14px', color: '#333', padding: '20px', marginTop: '10px' }}>
         If you think this is an error, contact our support team at <br />
         <span style={{color: "E47D31"}}>support@cityhelps.com</span>

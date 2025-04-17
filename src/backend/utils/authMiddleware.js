@@ -1,8 +1,8 @@
 import jwt from "jsonwebtoken";
-const cookie = require('cookie');
+import { parse } from "cookie";
 
 export function authenticate(req, res) {
-  const cookies = cookie.parse(req.headers.cookie || "");
+  const cookies = parse(req.headers.cookie || "");
 
   const authToken = cookies.auth_token;
 
@@ -15,6 +15,7 @@ export function authenticate(req, res) {
     const decoded = jwt.verify(authToken, process.env.JWT_SECRET);
     return decoded; // contains userId, email
   } catch (err) {
+    console.error("JWT error:", err);
     res.status(401).json({ message: "Invalid token" });
     return null;
   }
