@@ -171,9 +171,13 @@ export default function LoginPopupContent({ onClose, onLoginSuccess }: Props) {
       setIsOtpVerifying(false);
     }
   };
-
+  type LoginErrors = {
+    password?: string;
+    name?: string;
+    phone?: string;
+  };
   const handleLogin = async () => {
-    const errs: any = {};
+    const errs: LoginErrors = {};
     if (!password) errs.password = "Password is required";
     if (isNewUser && passwordStrength === "Weak")
       errs.password = "Password too weak";
