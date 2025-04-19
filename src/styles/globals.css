@@ -800,3 +800,239 @@ a {
   margin-top: 16px;
   color: #28a745;
 }
+
+
+/* Profile Page CSS */
+.profile-container {
+  display: flex;
+  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+.profile-page {
+  display: flex;
+  min-height: 700px;
+  width: 1000px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 220px;
+  border-radius: 16px;
+  padding: 20px 15px;
+}
+
+.tab-button {
+  padding: 14px 18px;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  color: #333;
+  background-color: #f5f5f5;
+  border: 1.5px solid transparent;
+  letter-spacing: 0.3px;
+  text-align: left;
+}
+
+.tab-button:hover{
+  background-color: #fff;
+  border-color: #e47d31;
+  color: #e47d31;
+  box-shadow: 0 0 0 2px rgba(228, 125, 49, 0.1);
+}
+.tab-button.active {
+  background: linear-gradient(135deg, #e47d31, #ff8a4c);
+  color: #ffffff !important;
+  border-color: #e47d31;
+  box-shadow: 0 4px 12px rgba(228, 125, 49, 0.25);
+}
+
+.content {
+  flex: 1;
+  padding: 20px 40px; 
+}
+
+h2, h3 {
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+.input-section {
+  display: flex;
+  justify-content: space-between;
+}
+.input-group {
+  margin-bottom: 20px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+
+.input-group input {
+  width: 300px;
+  padding: 12px;
+  margin-top: 12px;
+  margin-bottom: 8px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  outline: none;
+  transition: border 0.3s ease;
+}
+.input-group input:focus{
+  border-color: #E47D31;
+}
+.input-with-icon {
+  position: relative;
+}
+
+.edit-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+}
+
+.action-buttons {
+  margin-top: 20px;
+}
+.btn-logout{
+  background-color: #f44336;
+}
+.action-buttons hr {
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 20px 0;
+}
+.delete-input {
+  display: flex;
+  flex-direction: column;
+
+}
+.delete-input input{
+  width: 300px;
+  padding: 12px;
+  margin-top: 12px;
+  margin-bottom: 8px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  outline: none;
+  transition: border 0.3s ease;
+}
+.delete-input p{
+  font-size: 16px;
+  font-weight: 600;
+}
+.delete-input input:focus{
+  border-color: #E47D31;
+}
+.delete-btn {
+  background: #f44336;
+  width: 200px;
+}
+
+
+/*Support Page Styles */
+/* Container for the entire page */
+.support-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+}
+
+/* Title of the support page */
+.support-title {
+  text-align: center;
+  font-size: 36px;
+  margin-bottom: 40px;
+  color: #333;
+}
+
+/* Each section within the support page */
+.support-section {
+  margin-bottom: 40px;
+}
+
+/* Section titles */
+.section-title {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #2C3E50;
+}
+
+/* FAQ list styling */
+.faq-list {
+  list-style: none;
+  padding: 0;
+}
+
+.faq-item {
+  margin-bottom: 20px;
+}
+
+.faq-item h3 {
+  font-size: 20px;
+  color: #E47D31;
+}
+
+.faq-item p {
+  font-size: 16px;
+  color: #7F8C8D;
+}
+
+/* Contact form styling */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.contact-form label {
+  font-size: 16px;
+  color: #2C3E50;
+}
+
+.contact-form input, .contact-form textarea {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #BDC3C7;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.contact-form textarea {
+  height: 150px;
+}
+
+/* Troubleshooting list styling */
+.troubleshooting-list {
+  list-style: none;
+  padding: 0;
+}
+
+.troubleshooting-item {
+  margin-bottom: 20px;
+}
+
+.troubleshooting-item h3 {
+  font-size: 20px;
+  color: #E67E22;
+}
+
+.troubleshooting-item p {
+  font-size: 16px;
+  color: #7F8C8D;
+}

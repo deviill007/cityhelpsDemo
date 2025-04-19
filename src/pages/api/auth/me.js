@@ -1,16 +1,17 @@
 // src/pages/api/auth/me.js
-import { authenticate } from "../../../backend/utils/authMiddleware";
 import dbConnect from "../../../backend/utils/dbConnect";
 import User from "../../../backend/models/User";
+import withAuth from "../../../backend/utils/withAuth";
 
-export default async function handler(req, res) {
+const handler = async (req, res) => {
   await dbConnect();
 
-  const decoded = authenticate(req, res);
-  if (!decoded) return;
+  const { userId } = req.user;
+  const user = await User.findById(userId).select("name email phone");
 
-  const user = await User.findById(decoded.userId).select("name email phone");
   if (!user) return res.status(404).json({ message: "User not found" });
 
-  res.status(200).json({ user });
-}
+  return res.status(200).json({ user });
+};
+
+export default withAuth(handler);

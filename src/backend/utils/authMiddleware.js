@@ -3,7 +3,6 @@ import { parse } from "cookie";
 
 export function authenticate(req, res) {
   const cookies = parse(req.headers.cookie || "");
-
   const authToken = cookies.auth_token;
 
   if (!authToken) {
@@ -13,7 +12,7 @@ export function authenticate(req, res) {
 
   try {
     const decoded = jwt.verify(authToken, process.env.JWT_SECRET);
-    return decoded; // contains userId, email
+    return decoded; // decoded.userId will be available
   } catch (err) {
     console.error("JWT error:", err);
     res.status(401).json({ message: "Invalid token" });

@@ -10,19 +10,20 @@ import CurrencyPopupContent from "@/components/CurrencyPopupContent";
 import { FaArrowRightToCity } from "react-icons/fa6";
 import { useToast } from "@/components/ToastContext";
 import ResetPasswordPopupContent from "@/components/ResetPasswordPopupContent";
+import { useAuth } from "@/contexts/AuthContext";
 
 
 export default function Navigationbar() {
   const [panelOpen, setPanelOpen] = useState(false);
   const [popupType, setPopupType] = useState(null);
   const [cityDropdownOpen, setCityDropdownOpen] = useState(false);
-  const [user, setUser] = useState(null);
+  // const [user, setUser] = useState(null);
 
   const hoverTimeoutRef = useRef(null);
   const panelRef = useRef(null);
   const iconRef = useRef(null);
   const cityPanelRef = useRef(null);
-
+  const { user, setUser, logout } = useAuth();
   const router = useRouter();
   const showToast = useToast();
 
@@ -32,25 +33,6 @@ export default function Navigationbar() {
     }
   }, [router.pathname]);
 
-  // Load user from cookie on mount
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const res = await fetch("/api/auth/me"); // Create this route
-        if (res.ok) {
-          const data = await res.json();
-          setUser(data.user);
-        } else {
-          setUser(null);
-        }
-      } catch (err) {
-        console.error("Failed to fetch user", err);
-        setUser(null);
-      }
-    };
-
-    fetchUser();
-  }, []);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -101,34 +83,31 @@ export default function Navigationbar() {
 
   const handleLogout = async () => {
     try {
-      // Show loading toast (spinner visible, no progress bar)
       showToast({
         message: "Logging out...",
         type: "loading",
-        isLoading: true
+        isLoading: true,
       });
-  
-      await fetch("/api/auth/logout", { method: "POST" });
-      
-      // Show success toast (progress bar will start)
+
+      await logout();
+
       showToast({
         message: "Logged out successfully",
         type: "success",
-        isLoading: false
+        isLoading: false,
       });
-  
-      setUser(null);
-      setPopupType(null);
+
       router.push("/");
     } catch (err) {
       console.error("Logout failed", err);
       showToast({
         message: "Logout failed. Please try again.",
         type: "error",
-        isLoading: false
+        isLoading: false,
       });
     }
   };
+  
 
   return (
     <div className="navbar">
@@ -251,7 +230,7 @@ export default function Navigationbar() {
                 )}
 
                 {user && (
-                  <div className="profile-option">
+                  <div className="profile-option" onClick={()=> {router.push('/profile')}}>
                     <div className="option-left">
                       <Image
                         height={50}

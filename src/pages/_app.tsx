@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import FloatingButtons from "@/components/FloatingButtons";
 import { useEffect } from "react";
 import { ToastProvider } from "@/components/ToastContext";
+import { AuthProvider } from "@/contexts/AuthContext";
 
 export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
@@ -16,11 +17,13 @@ export default function App({ Component, pageProps }: AppProps) {
   }, []);
 
   return (
+    <AuthProvider>
     <ToastProvider>
       <Navbar />
       <Component {...pageProps} />
       <FloatingButtons />
       {/* <Footer /> */}
     </ToastProvider>
+    </AuthProvider>
   );
 }
