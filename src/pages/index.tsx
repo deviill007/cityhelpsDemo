@@ -365,7 +365,7 @@ export default function Home() {
   const tabsRef = useRef<HTMLDivElement | null>(null);
 
   const handleScrollToTabs = () => {
-    const navbarHeight = 70; // adjust if your navbar is taller/shorter
+    const navbarHeight = 99;
     if (tabsRef.current) {
       const top = tabsRef.current.getBoundingClientRect().top + window.scrollY;
       window.scrollTo({

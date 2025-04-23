@@ -12,7 +12,6 @@ import { useToast } from "@/components/ToastContext";
 import ResetPasswordPopupContent from "@/components/ResetPasswordPopupContent";
 import { useAuth } from "@/contexts/AuthContext";
 
-
 export default function Navigationbar() {
   const [panelOpen, setPanelOpen] = useState(false);
   const [popupType, setPopupType] = useState(null);
@@ -32,7 +31,6 @@ export default function Navigationbar() {
       setPopupType("reset-password");
     }
   }, [router.pathname]);
-
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -107,141 +105,174 @@ export default function Navigationbar() {
       });
     }
   };
-  
 
   return (
     <div className="navbar">
-      <div className="logo">CityHelps</div>
+      <div className="navbar-topSection">
+        <div className="logo">CityHelps</div>
 
-      <div className="first">
-        <div
-          className="city-selector"
-          onClick={() => setCityDropdownOpen((prev) => !prev)}
-        >
-          <span>Jaipur</span>
-          <Image
-            height={10}
-            width={10}
-            src="/icons/drop-down.png"
-            alt="cart icon"
-          />
-        </div>
-
-        {cityDropdownOpen && (
-          <div className="city-dropdown-panel" ref={cityPanelRef}>
-            <div className="city-option selected">
-              <FaArrowRightToCity className="city-icon" /> Jaipur
-            </div>
-            <div className="city-option disabled">
-              <FaArrowRightToCity className="city-icon" /> Udaipur (Coming Soon)
-            </div>
-            <div className="city-option disabled">
-              <FaArrowRightToCity className="city-icon" /> Jaisalmer (Coming
-              Soon)
-            </div>
-            <div className="city-option disabled">
-              <FaArrowRightToCity className="city-icon" /> Delhi (Coming Soon)
-            </div>
-            <hr />
-            <div className="city-option">Become a Partner</div>
+        <div className="first">
+          <div
+            className="city-selector"
+            onClick={() => setCityDropdownOpen((prev) => !prev)}
+          >
+            <span>Jaipur</span>
+            <Image
+              height={10}
+              width={10}
+              src="/icons/drop-down.png"
+              alt="cart icon"
+            />
           </div>
-        )}
 
-        <div className="last">
-          <Link href="/#">Explore</Link>
-          <Link href="/testimonials">Testimonials</Link>
-          <Link href="/articles">Articles</Link>
-          <Link href="/support">Support</Link>
-
-          <Link href="/cart">
-            <div className="user-icon">
-              <Image
-                height={20}
-                width={20}
-                src="/icons/shopping-cart.png"
-                alt="cart icon"
-              />
-              <div className="username">Cart</div>
-            </div>
-          </Link>
-
-          <div className="user-wrapper">
-            <div
-              className="user-icon"
-              ref={iconRef}
-              onMouseEnter={handleMouseEnter}
-              onClick={() => setPanelOpen((prev) => !prev)}
-            >
-              <Image
-                height={50}
-                width={50}
-                src="/icons/user.png"
-                alt="user icon"
-              />
-              <div className="username">
-                {user?.name?.split(" ")[0] || "Profile"}
+          {cityDropdownOpen && (
+            <div className="city-dropdown-panel" ref={cityPanelRef}>
+              <div className="city-option selected">
+                <FaArrowRightToCity className="city-icon" /> Jaipur
               </div>
+              <div className="city-option disabled">
+                <FaArrowRightToCity className="city-icon" /> Udaipur (Coming
+                Soon)
+              </div>
+              <div className="city-option disabled">
+                <FaArrowRightToCity className="city-icon" /> Jaisalmer (Coming
+                Soon)
+              </div>
+              <div className="city-option disabled">
+                <FaArrowRightToCity className="city-icon" /> Delhi (Coming Soon)
+              </div>
+              <hr />
+              <div className="city-option">Become a Partner</div>
             </div>
+          )}
 
-            {panelOpen && (
+          <div className="last">
+            <Link href="/#">Explore</Link>
+            <Link href="/testimonials">Testimonials</Link>
+            <Link href="/articles">Articles</Link>
+            <Link href="/support">Support</Link>
+
+            <Link href="/cart">
+              <div className="user-icon">
+                <Image
+                  height={20}
+                  width={20}
+                  src="/icons/shopping-cart.png"
+                  alt="cart icon"
+                />
+                <div className="username">Cart</div>
+              </div>
+            </Link>
+
+            <div className="user-wrapper">
               <div
-                className="user-panel"
-                ref={panelRef}
+                className="user-icon"
+                ref={iconRef}
                 onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
+                onClick={() => setPanelOpen((prev) => !prev)}
               >
-                <div className="header">Profile</div>
+                <Image
+                  height={50}
+                  width={50}
+                  src="/icons/user.png"
+                  alt="user icon"
+                />
+                <div className="username">
+                  {user?.name?.split(" ")[0] || "Profile"}
+                </div>
+              </div>
 
-                {user ? (
-                  <div className="profile-option line" onClick={handleLogout}>
-                    <div className="option-left">
-                      <Image
-                        height={50}
-                        width={50}
-                        className="image1"
-                        src="/icons/login.png"
-                        alt="logout icon"
-                      />
-                      <span>Logout</span>
+              {panelOpen && (
+                <div
+                  className="user-panel"
+                  ref={panelRef}
+                  onMouseEnter={handleMouseEnter}
+                  onMouseLeave={handleMouseLeave}
+                >
+                  <div className="header">Profile</div>
+
+                  {user ? (
+                    <div className="profile-option line" onClick={handleLogout}>
+                      <div className="option-left">
+                        <Image
+                          height={50}
+                          width={50}
+                          className="image1"
+                          src="/icons/login.png"
+                          alt="logout icon"
+                        />
+                        <span>Logout</span>
+                      </div>
+                      <div className="option-right">
+                        <i className="fas fa-chevron-right"></i>
+                      </div>
                     </div>
-                    <div className="option-right">
-                      <i className="fas fa-chevron-right"></i>
+                  ) : (
+                    <div
+                      className="profile-option line"
+                      onClick={() => setPopupType("login")}
+                    >
+                      <div className="option-left">
+                        <Image
+                          height={50}
+                          width={50}
+                          className="image1"
+                          src="/icons/login.png"
+                          alt=""
+                        />
+                        <span>Log in / Sign up</span>
+                      </div>
+                      <div className="option-right">
+                        <i className="fas fa-chevron-right"></i>
+                      </div>
                     </div>
-                  </div>
-                ) : (
+                  )}
+
+                  {user && (
+                    <div
+                      className="profile-option"
+                      onClick={() => {
+                        router.push("/profile");
+                      }}
+                    >
+                      <div className="option-left">
+                        <Image
+                          height={50}
+                          width={50}
+                          className="image1"
+                          src="/icons/user.png"
+                          alt="profile icon"
+                        />
+                        <span>Profile</span>
+                      </div>
+                      <div className="option-right">
+                        <Image
+                          height={50}
+                          width={50}
+                          className="image2"
+                          src="/icons/next.png"
+                          alt=""
+                        />
+                      </div>
+                    </div>
+                  )}
+
                   <div
-                    className="profile-option line"
-                    onClick={() => setPopupType("login")}
+                    className="profile-option"
+                    onClick={() => setPopupType("currency")}
                   >
                     <div className="option-left">
                       <Image
                         height={50}
                         width={50}
                         className="image1"
-                        src="/icons/login.png"
+                        src="/icons/currency.png"
                         alt=""
                       />
-                      <span>Log in / Sign up</span>
+                      <span>Currency</span>
                     </div>
                     <div className="option-right">
-                      <i className="fas fa-chevron-right"></i>
-                    </div>
-                  </div>
-                )}
-
-                {user && (
-                  <div className="profile-option" onClick={()=> {router.push('/profile')}}>
-                    <div className="option-left">
-                      <Image
-                        height={50}
-                        width={50}
-                        className="image1"
-                        src="/icons/user.png"
-                        alt="profile icon"
-                      />
-                      <span>Profile</span>
-                    </div>
-                    <div className="option-right">
+                      INR
                       <Image
                         height={50}
                         width={50}
@@ -251,59 +282,60 @@ export default function Navigationbar() {
                       />
                     </div>
                   </div>
-                )}
-
-                <div
-                  className="profile-option"
-                  onClick={() => setPopupType("currency")}
-                >
-                  <div className="option-left">
-                    <Image
-                      height={50}
-                      width={50}
-                      className="image1"
-                      src="/icons/currency.png"
-                      alt=""
-                    />
-                    <span>Currency</span>
-                  </div>
-                  <div className="option-right">
-                    INR
-                    <Image
-                      height={50}
-                      width={50}
-                      className="image2"
-                      src="/icons/next.png"
-                      alt=""
-                    />
-                  </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
+
+        <Popup isOpen={!!popupType} onClose={() => setPopupType(null)}>
+          {popupType === "login" && (
+            <LoginPopupContent
+              onLoginSuccess={(userData) => {
+                console.log("Logged in:", userData);
+                fetch("/api/auth/me")
+                  .then((res) => res.json())
+                  .then((data) => {
+                    setUser(data.user);
+                    setPopupType(null);
+                  })
+                  .catch(console.error);
+              }}
+            />
+          )}
+          {popupType === "currency" && <CurrencyPopupContent />}
+          {popupType === "reset-password" && (
+            <ResetPasswordPopupContent onClose={() => setPopupType(null)} />
+          )}
+        </Popup>
       </div>
 
-      <Popup isOpen={!!popupType} onClose={() => setPopupType(null)}>
-        {popupType === "login" && (
-          <LoginPopupContent
-          onLoginSuccess={(userData) => {
-            console.log("Logged in:", userData);
-            fetch("/api/auth/me")          
-                .then((res) => res.json())
-                .then((data) => {
-                  setUser(data.user);
-                  setPopupType(null);
-                })
-                .catch(console.error);
-            }}
-          />
-        )}
-        {popupType === "currency" && <CurrencyPopupContent />}
-        {popupType === "reset-password" && (
-          <ResetPasswordPopupContent onClose={() => setPopupType(null)} />
-        )}
-      </Popup>
+      <div className="navbar-bottomSection">
+        <Link href="#">
+          <div className="bottomSection-links">
+            <p>Quick Links</p>{" "}
+            <Image
+              height={50}
+              width={50}
+              className="dropImage"
+              src="/icons/drop-down.png"
+              alt=""
+            />
+          </div>
+        </Link>
+        <Link href="#">
+          <div className="bottomSection-links">
+            <p>Trip Guides</p>{" "}
+            <Image
+              height={50}
+              width={50}
+              className="dropImage"
+              src="/icons/drop-down.png"
+              alt=""
+            />
+          </div>
+        </Link>
+      </div>
     </div>
   );
 }
