@@ -32,11 +32,13 @@ const ProfilePage = () => {
         setLastName(lName || "");
         setPhone(res.data.user.phone || "");
       } catch (err) {
+        console.error("Failed to fetch user:", err);
         router.push("/");
       }
     };
     fetchUser();
-  }, []);
+  }, [router, setUser]);
+
 
   const handleSaveProfile = async () => {
     try {
@@ -330,7 +332,7 @@ const ProfilePage = () => {
             <div className="delete-section">
               <h2>Delete Account</h2>
               <div className="delete-input">
-                <p>Type "delete" below to confirm account deletion.</p>
+                <p>Type &quot;delete&quot; below to confirm account deletion.</p>
                 <input
                   type="text"
                   value={deleteConfirm}

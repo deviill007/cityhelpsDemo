@@ -39,8 +39,8 @@ const Support = () => {
         <h2 className="section-title">Troubleshooting</h2>
         <ul className="troubleshooting-list">
           <li className="troubleshooting-item">
-            <h3>Can't log in?</h3>
-            <p>Ensure your email and password are correct. If you're still having issues, try resetting your password.</p>
+            <h3>Can&apos;t log in?</h3>
+            <p>Ensure your email and password are correct. If you&apos;re still having issues, try resetting your password.</p>
           </li>
         </ul>
       </div>

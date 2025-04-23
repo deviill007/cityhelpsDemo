@@ -1,20 +1,18 @@
 import dbConnect from "../../../backend/utils/dbConnect";
 import User from "../../../backend/models/User";
 import withAuth from "../../../backend/utils/withAuth";
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextApiResponse } from "next";
+import { AuthenticatedRequest } from "../../../backend/utils/withAuth";
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+const handler = async (req: AuthenticatedRequest, res: NextApiResponse) => {
   if (req.method !== "DELETE") return res.status(405).end();
 
-  const { userId } = (req as any).user;
+  const { _id: userId, email: userEmail } = req.user;
   const { confirmEmail } = req.body;
 
   await dbConnect();
 
-  const user = await User.findById(userId);
-  if (!user) return res.status(404).json({ message: "User not found." });
-
-  if (user.email !== confirmEmail) {
+  if (userEmail !== confirmEmail) {
     return res.status(400).json({ message: "Email does not match." });
   }
 

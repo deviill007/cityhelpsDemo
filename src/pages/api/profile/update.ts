@@ -1,12 +1,13 @@
 import dbConnect from "../../../backend/utils/dbConnect";
 import User from "../../../backend/models/User";
 import withAuth from "../../../backend/utils/withAuth";
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextApiResponse } from "next";
+import { AuthenticatedRequest } from "../../../backend/utils/withAuth";
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+const handler = async (req: AuthenticatedRequest, res: NextApiResponse) => {
   if (req.method !== "POST") return res.status(405).end();
 
-  const { userId } = (req as any).user;
+  const { _id: userId } = req.user;
   const { name, phone } = req.body;
 
   if (!name || !phone) {
