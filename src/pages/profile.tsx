@@ -39,7 +39,6 @@ const ProfilePage = () => {
     fetchUser();
   }, [router, setUser]);
 
-
   const handleSaveProfile = async () => {
     try {
       showToast({
