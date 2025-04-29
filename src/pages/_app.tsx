@@ -1,7 +1,7 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import Navbar from "@/components/Navbar";
-// import Footer from "@/components/Footer"
+import Footer from "@/components/Footer"
 import FloatingButtons from "@/components/FloatingButtons";
 import { useEffect } from "react";
 import { ToastProvider } from "@/components/ToastContext";
@@ -22,7 +22,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <Navbar />
       <Component {...pageProps} />
       <FloatingButtons />
-      {/* <Footer /> */}
+      <Footer />
     </ToastProvider>
     </AuthProvider>
   );

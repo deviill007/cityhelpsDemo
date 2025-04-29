@@ -3,6 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import User from "../../../backend/models/User";
 import jwt from "jsonwebtoken";
 import { setTokenCookie } from "../../../backend/utils/setTokenCookie"; 
+import dbConnect from "../../../backend/utils/dbConnect";
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
@@ -13,6 +14,7 @@ export default async function handler(
   if (req.method !== "POST") return res.status(405).json({ message: "Method not allowed" });
 
   try {
+    await dbConnect();
     const { credential } = req.body;
     if (!credential) return res.status(400).json({ message: "Missing Google token" });
 

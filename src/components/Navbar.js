@@ -16,11 +16,12 @@ export default function Navigationbar() {
   const [panelOpen, setPanelOpen] = useState(false);
   const [popupType, setPopupType] = useState(null);
   const [cityDropdownOpen, setCityDropdownOpen] = useState(false);
-  // const [user, setUser] = useState(null);
-
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const openedByHover = useRef(false);
   const hoverTimeoutRef = useRef(null);
   const panelRef = useRef(null);
   const iconRef = useRef(null);
+  const menuRef = useRef(null);
   const cityPanelRef = useRef(null);
   const { user, setUser, logout } = useAuth();
   const router = useRouter();
@@ -31,6 +32,25 @@ export default function Navigationbar() {
       setPopupType("reset-password");
     }
   }, [router.pathname]);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (
+        isMobileMenuOpen &&
+        menuRef.current &&
+        !menuRef.current.contains(event.target) &&
+        !iconRef.current?.contains(event.target)
+      ) {
+        setIsMobileMenuOpen(false);
+        setPanelOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isMobileMenuOpen]);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -69,15 +89,18 @@ export default function Navigationbar() {
   }, [popupType]);
 
   const handleMouseEnter = () => {
+    openedByHover.current = true;
     clearTimeout(hoverTimeoutRef.current);
     setPanelOpen(true);
   };
-
+  
   const handleMouseLeave = () => {
+    openedByHover.current = false;
     hoverTimeoutRef.current = setTimeout(() => {
       setPanelOpen(false);
     }, 500);
   };
+  
 
   const handleLogout = async () => {
     try {
@@ -108,234 +131,433 @@ export default function Navigationbar() {
 
   return (
     <div className="navbar">
-      <div className="navbar-topSection">
-        <div className="logo">CityHelps</div>
+      <div className="logo">CityHelps</div>
 
-        <div className="first">
-          <div
-            className="city-selector"
-            onClick={() => setCityDropdownOpen((prev) => !prev)}
-          >
-            <span>Jaipur</span>
-            <Image
-              height={10}
-              width={10}
-              src="/icons/drop-down.png"
-              alt="cart icon"
-            />
-          </div>
+      <div
+        className="menu-button"
+        onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+      >
+        <Image src="/icons/menu.png" alt="menu" width={20} height={20} />
+      </div>
 
-          {cityDropdownOpen && (
-            <div className="city-dropdown-panel" ref={cityPanelRef}>
-              <div className="city-option selected">
-                <FaArrowRightToCity className="city-icon" /> Jaipur
-              </div>
-              <div className="city-option disabled">
-                <FaArrowRightToCity className="city-icon" /> Udaipur (Coming
-                Soon)
-              </div>
-              <div className="city-option disabled">
-                <FaArrowRightToCity className="city-icon" /> Jaisalmer (Coming
-                Soon)
-              </div>
-              <div className="city-option disabled">
-                <FaArrowRightToCity className="city-icon" /> Delhi (Coming Soon)
-              </div>
-              <hr />
-              <div className="city-option">Become a Partner</div>
+      <div className="first desktop-menu">
+        <div
+          className="city-selector"
+          onClick={() => setCityDropdownOpen((prev) => !prev)}
+        >
+          <span>Jaipur</span>
+          <Image
+            height={10}
+            width={10}
+            src="/icons/drop-down.png"
+            alt="cart icon"
+          />
+        </div>
+
+        {cityDropdownOpen && (
+          <div className="city-dropdown-panel" ref={cityPanelRef}>
+            <div className="city-option selected">
+              <FaArrowRightToCity className="city-icon" /> Jaipur
             </div>
-          )}
+            <div className="city-option disabled">
+              <FaArrowRightToCity className="city-icon" /> Udaipur (Coming Soon)
+            </div>
+            <div className="city-option disabled">
+              <FaArrowRightToCity className="city-icon" /> Jaisalmer (Coming
+              Soon)
+            </div>
+            <div className="city-option disabled">
+              <FaArrowRightToCity className="city-icon" /> Delhi (Coming Soon)
+            </div>
+            <hr />
+            <div className="city-option">Become a Partner</div>
+          </div>
+        )}
 
-          <div className="last">
-            <Link href="/#">Explore</Link>
-            <Link href="/testimonials">Testimonials</Link>
-            <Link href="/articles">Articles</Link>
-            <Link href="/support">Support</Link>
+        <div className="last">
+          <Link href="/#">Explore</Link>
+          <Link href="/testimonials">Testimonials</Link>
+          <Link href="/articles">Articles</Link>
+          <Link href="/support">Support</Link>
 
-            <Link href="/cart">
-              <div className="user-icon">
-                <Image
-                  height={20}
-                  width={20}
-                  src="/icons/shopping-cart.png"
-                  alt="cart icon"
-                />
-                <div className="username">Cart</div>
+          <Link href="/cart">
+            <div className="user-icon">
+              <Image
+                height={20}
+                width={20}
+                src="/icons/shopping-cart.png"
+                alt="cart icon"
+              />
+              <div className="username">Cart</div>
+            </div>
+          </Link>
+
+          <div className="user-wrapper">
+            <div
+              className="user-icon"
+              ref={iconRef}
+              onMouseEnter={handleMouseEnter}
+              onClick={() => setPanelOpen((prev) => !prev)}
+            >
+              <Image
+                height={50}
+                width={50}
+                src="/icons/user.png"
+                alt="user icon"
+              />
+              <div className="username">
+                {user?.name?.split(" ")[0] || "Profile"}
               </div>
-            </Link>
+            </div>
 
-            <div className="user-wrapper">
+            {panelOpen && (
               <div
-                className="user-icon"
-                ref={iconRef}
+                className="user-panel"
+                ref={panelRef}
                 onMouseEnter={handleMouseEnter}
-                onClick={() => setPanelOpen((prev) => !prev)}
+                onMouseLeave={handleMouseLeave}
               >
-                <Image
-                  height={50}
-                  width={50}
-                  src="/icons/user.png"
-                  alt="user icon"
-                />
-                <div className="username">
-                  {user?.name?.split(" ")[0] || "Profile"}
-                </div>
-              </div>
+                <div className="header">Profile</div>
 
-              {panelOpen && (
-                <div
-                  className="user-panel"
-                  ref={panelRef}
-                  onMouseEnter={handleMouseEnter}
-                  onMouseLeave={handleMouseLeave}
-                >
-                  <div className="header">Profile</div>
-
-                  {user ? (
-                    <div className="profile-option line" onClick={handleLogout}>
-                      <div className="option-left">
-                        <Image
-                          height={50}
-                          width={50}
-                          className="image1"
-                          src="/icons/login.png"
-                          alt="logout icon"
-                        />
-                        <span>Logout</span>
-                      </div>
-                      <div className="option-right">
-                        <i className="fas fa-chevron-right"></i>
-                      </div>
-                    </div>
-                  ) : (
-                    <div
-                      className="profile-option line"
-                      onClick={() => setPopupType("login")}
-                    >
-                      <div className="option-left">
-                        <Image
-                          height={50}
-                          width={50}
-                          className="image1"
-                          src="/icons/login.png"
-                          alt=""
-                        />
-                        <span>Log in / Sign up</span>
-                      </div>
-                      <div className="option-right">
-                        <i className="fas fa-chevron-right"></i>
-                      </div>
-                    </div>
-                  )}
-
-                  {user && (
-                    <div
-                      className="profile-option"
-                      onClick={() => {
-                        router.push("/profile");
-                      }}
-                    >
-                      <div className="option-left">
-                        <Image
-                          height={50}
-                          width={50}
-                          className="image1"
-                          src="/icons/user.png"
-                          alt="profile icon"
-                        />
-                        <span>Profile</span>
-                      </div>
-                      <div className="option-right">
-                        <Image
-                          height={50}
-                          width={50}
-                          className="image2"
-                          src="/icons/next.png"
-                          alt=""
-                        />
-                      </div>
-                    </div>
-                  )}
-
-                  <div
-                    className="profile-option"
-                    onClick={() => setPopupType("currency")}
-                  >
+                {user ? (
+                  <div className="profile-option line" onClick={handleLogout}>
                     <div className="option-left">
                       <Image
                         height={50}
                         width={50}
                         className="image1"
-                        src="/icons/currency.png"
-                        alt=""
+                        src="/icons/login.png"
+                        alt="logout icon"
                       />
-                      <span>Currency</span>
+                      <span>Logout</span>
                     </div>
                     <div className="option-right">
-                      INR
+                      <i className="fas fa-chevron-right"></i>
+                    </div>
+                  </div>
+                ) : (
+                  <div
+                    className="profile-option line"
+                    onClick={() => setPopupType("login")}
+                  >
+                    <div className="option-left">
                       <Image
-                        height={50}
-                        width={50}
+                        height={1000}
+                        width={1000}
+                        className="image1"
+                        src="/icons/login.png"
+                        alt=""
+                      />
+                      <span>Log in / Sign up</span>
+                    </div>
+                    <div className="option-right">
+                      <i className="fas fa-chevron-right"></i>
+                    </div>
+                  </div>
+                )}
+
+                {user && (
+                  <div
+                    className="profile-option"
+                    onClick={() => {
+                      router.push("/profile");
+                    }}
+                  >
+                    <div className="option-left">
+                      <Image
+                        height={1000}
+                        width={1000}
+                        className="image1"
+                        src="/icons/user.png"
+                        alt="profile icon"
+                      />
+                      <span>Profile</span>
+                    </div>
+                    <div className="option-right">
+                      <Image
+                        height={1000}
+                        width={1000}
                         className="image2"
                         src="/icons/next.png"
                         alt=""
                       />
                     </div>
                   </div>
+                )}
+
+                {user && (
+                  <div
+                    className="profile-option"
+                    onClick={() => {
+                      router.push("/bookings");
+                    }}
+                  >
+                    <div className="option-left">
+                      <Image
+                        height={1000}
+                        width={1000}
+                        className="image1"
+                        src="/icons/history.png"
+                        alt="profile icon"
+                      />
+                      <span>My Bookings</span>
+                    </div>
+                    <div className="option-right">
+                      <Image
+                        height={1000}
+                        width={1000}
+                        className="image2"
+                        src="/icons/next.png"
+                        alt=""
+                      />
+                    </div>
+                  </div>
+                )}
+
+                <div
+                  className="profile-option"
+                  onClick={() => setPopupType("currency")}
+                >
+                  <div className="option-left">
+                    <Image
+                      height={1000}
+                      width={1000}
+                      className="image1"
+                      src="/icons/currency.png"
+                      alt=""
+                    />
+                    <span>Currency</span>
+                  </div>
+                  <div className="option-right">
+                    INR
+                    <Image
+                      height={1000}
+                      width={1000}
+                      className="image2"
+                      src="/icons/next.png"
+                      alt=""
+                    />
+                  </div>
                 </div>
-              )}
-            </div>
+              </div>
+            )}
           </div>
         </div>
+      </div>
 
-        <Popup isOpen={!!popupType} onClose={() => setPopupType(null)}>
-          {popupType === "login" && (
-            <LoginPopupContent
-              onLoginSuccess={(userData) => {
-                console.log("Logged in:", userData);
-                fetch("/api/auth/me")
-                  .then((res) => res.json())
-                  .then((data) => {
-                    setUser(data.user);
-                    setPopupType(null);
-                  })
-                  .catch(console.error);
+      {isMobileMenuOpen && (
+        <div className="mobile-menu" ref={menuRef}>
+          <Link href="/#" onClick={() => setIsMobileMenuOpen(false)}>
+            Explore
+          </Link>
+          <Link href="/testimonials" onClick={() => setIsMobileMenuOpen(false)}>
+            Testimonials
+          </Link>
+          <Link href="/articles" onClick={() => setIsMobileMenuOpen(false)}>
+            Articles
+          </Link>
+          <Link href="/support" onClick={() => setIsMobileMenuOpen(false)}>
+            Support
+          </Link>
+          <Link href="/cart" onClick={() => setIsMobileMenuOpen(false)}>
+            <div className="user-icon">
+              <Image
+                height={20}
+                width={20}
+                src="/icons/shopping-cart.png"
+                alt="cart icon"
+              />
+              <div className="username">Cart</div>
+            </div>
+          </Link>
+          <div className="user-wrapper">
+            <div
+              className="user-icon"
+              ref={iconRef}
+              onMouseEnter={handleMouseEnter}
+              onClick={() => {
+                if (!openedByHover.current) {
+                  setPanelOpen((prev) => !prev);
+                }
               }}
-            />
-          )}
-          {popupType === "currency" && <CurrencyPopupContent />}
-          {popupType === "reset-password" && (
-            <ResetPasswordPopupContent onClose={() => setPopupType(null)} />
-          )}
-        </Popup>
-      </div>
+              
+              
+            >
+              <Image
+                height={50}
+                width={50}
+                src="/icons/user.png"
+                alt="user icon"
+              />
+              <div className="username">
+                {user?.name?.split(" ")[0] || "Profile"}
+              </div>
+            </div>
 
-      <div className="navbar-bottomSection">
-        <Link href="#">
-          <div className="bottomSection-links">
-            <p>Quick Links</p>{" "}
-            <Image
-              height={50}
-              width={50}
-              className="dropImage"
-              src="/icons/drop-down.png"
-              alt=""
-            />
+            {panelOpen && (
+              <div
+                className="user-panel"
+                ref={panelRef}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+              >
+                <div className="header">Profile</div>
+
+                {user ? (
+                  <div className="profile-option line" onClick={handleLogout}>
+                    <div className="option-left">
+                      <Image
+                        height={50}
+                        width={50}
+                        className="image1"
+                        src="/icons/login.png"
+                        alt="logout icon"
+                      />
+                      <span>Logout</span>
+                    </div>
+                    <div className="option-right">
+                      <i className="fas fa-chevron-right"></i>
+                    </div>
+                  </div>
+                ) : (
+                  <div
+                    className="profile-option line"
+                    onClick={() => {
+                      setPopupType("login")
+                      setIsMobileMenuOpen(false)
+                    }}
+                  >
+                    <div className="option-left">
+                      <Image
+                        height={1000}
+                        width={1000}
+                        className="image1"
+                        src="/icons/login.png"
+                        alt=""
+                      />
+                      <span>Log in / Sign up</span>
+                    </div>
+                    <div className="option-right">
+                      <i className="fas fa-chevron-right"></i>
+                    </div>
+                  </div>
+                )}
+
+                {user && (
+                  <div
+                    className="profile-option"
+                    onClick={() => {
+                      router.push("/profile");
+                      setIsMobileMenuOpen(false)
+                    }}
+                  >
+                    <div className="option-left">
+                      <Image
+                        height={1000}
+                        width={1000}
+                        className="image1"
+                        src="/icons/user.png"
+                        alt="profile icon"
+                      />
+                      <span>Profile</span>
+                    </div>
+                    <div className="option-right">
+                      <Image
+                        height={1000}
+                        width={1000}
+                        className="image2"
+                        src="/icons/next.png"
+                        alt=""
+                      />
+                    </div>
+                  </div>
+                )}
+
+                {user && (
+                  <div
+                    className="profile-option"
+                    onClick={() => {
+                      router.push("/bookings");
+                      setIsMobileMenuOpen(false)
+                    }}
+                  >
+                    <div className="option-left">
+                      <Image
+                        height={1000}
+                        width={1000}
+                        className="image1"
+                        src="/icons/history.png"
+                        alt="profile icon"
+                      />
+                      <span>My Bookings</span>
+                    </div>
+                    <div className="option-right">
+                      <Image
+                        height={1000}
+                        width={1000}
+                        className="image2"
+                        src="/icons/next.png"
+                        alt=""
+                      />
+                    </div>
+                  </div>
+                )}
+
+                <div
+                  className="profile-option"
+                  onClick={() => {
+                    setPopupType("currency")
+                    setIsMobileMenuOpen(false)
+                  }}
+                  
+                >
+                  <div className="option-left">
+                    <Image
+                      height={1000}
+                      width={1000}
+                      className="image1"
+                      src="/icons/currency.png"
+                      alt=""
+                    />
+                    <span>Currency</span>
+                  </div>
+                  <div className="option-right">
+                    INR
+                    <Image
+                      height={1000}
+                      width={1000}
+                      className="image2"
+                      src="/icons/next.png"
+                      alt=""
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
-        </Link>
-        <Link href="#">
-          <div className="bottomSection-links">
-            <p>Trip Guides</p>{" "}
-            <Image
-              height={50}
-              width={50}
-              className="dropImage"
-              src="/icons/drop-down.png"
-              alt=""
-            />
-          </div>
-        </Link>
-      </div>
+        </div>
+      )}
+
+      <Popup isOpen={!!popupType} onClose={() => setPopupType(null)}>
+        {popupType === "login" && (
+          <LoginPopupContent
+            onLoginSuccess={(userData) => {
+              console.log("Logged in:", userData);
+              fetch("/api/auth/me")
+                .then((res) => res.json())
+                .then((data) => {
+                  setUser(data.user);
+                  setPopupType(null);
+                })
+                .catch(console.error);
+            }}
+          />
+        )}
+        {popupType === "currency" && <CurrencyPopupContent />}
+        {popupType === "reset-password" && (
+          <ResetPasswordPopupContent onClose={() => setPopupType(null)} />
+        )}
+      </Popup>
     </div>
   );
 }

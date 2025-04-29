@@ -1,0 +1,86 @@
+/* components/404.module.css */
+
+.container {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.title {
+  font-size: 30px;
+  color: #e47d31;
+  margin-top: 20px;
+}
+
+.subtitle {
+  font-size: 20px;
+  color: #e47d31;
+  margin-top: 10px;
+}
+
+.description {
+  font-size: 14px;
+  color: #333;
+  padding: 20px;
+  margin-bottom: 10px;
+}
+
+.homeButton {
+  display: inline-block;
+  font-size: 18px;
+  color: #fff;
+  padding: 12px 24px;
+  background-color: #e47d31;
+  margin: 10px;
+  border-radius: 10px;
+  text-decoration: none;
+}
+
+.supportText {
+  font-size: 14px;
+  color: #333;
+  padding: 20px;
+  margin-top: 10px;
+}
+
+.supportEmail {
+  color: #e47d31;
+}
+.lottieWrapper {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.lottieWrapper > div {
+  width: 100% !important;
+  height: auto !important;
+}
+
+/* Responsive (for mobile) */
+@media (max-width: 768px) {
+  .lottieWrapper {
+    max-width: 300px;
+  }
+  .container {
+    padding: 30px 20px;
+  }
+
+  .title {
+    font-size: 24px;
+  }
+
+  .subtitle {
+    font-size: 18px;
+  }
+
+  .description,
+  .supportText {
+    font-size: 13px;
+    padding: 15px;
+  }
+
+  .homeButton {
+    font-size: 16px;
+    padding: 10px 20px;
+  }
+}

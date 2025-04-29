@@ -308,8 +308,9 @@ export default function Home() {
   const handleTabChange = (tabIndex: number) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set("tab", tabIndex.toString());
-    router.push(`?${params.toString()}`);
+    router.push(`?${params.toString()}`, undefined, { scroll: false });
   };
+  
 
   const resetToDefault = () => {
     const plan =
@@ -365,7 +366,7 @@ export default function Home() {
   const tabsRef = useRef<HTMLDivElement | null>(null);
 
   const handleScrollToTabs = () => {
-    const navbarHeight = 99;
+    const navbarHeight = 69;
     if (tabsRef.current) {
       const top = tabsRef.current.getBoundingClientRect().top + window.scrollY;
       window.scrollTo({
@@ -385,7 +386,7 @@ export default function Home() {
           <p>
             Personalized and Authentic Local Experiences Tailored Just for You{" "}
           </p>
-          <button className={styles.button} onClick={handleScrollToTabs}>
+          <button className="button" onClick={handleScrollToTabs}>
             Start Exploring
           </button>
         </div>
@@ -462,7 +463,7 @@ export default function Home() {
                 </select>
               </div>
               <div className={styles.rowCards}>
-                <div>
+                <div className={styles.descriptionBar}>
                   <details>
                     <summary>Tour Description</summary>
                     <p>{tourDetails.description}</p>
@@ -519,29 +520,35 @@ export default function Home() {
                   {itinerary.map((item, index) => (
                     <div key={index} className={styles.card}>
                       <div className={styles.cardHeader}>
-                        {item.optional && (
-                          <input
-                            type="checkbox"
-                            className={styles.checkbox}
-                            checked={item.selected}
-                            onChange={(e) => {
-                              const updated = [...itinerary];
-                              updated[index].selected = e.target.checked;
-                              setItinerary(updated);
-                            }}
-                          />
-                        )}
-                        <span className={styles.time}>{item.time}</span>
-                        <span className={styles.emoji}>{item.img}</span>
-                        <div className={styles.titleBlock}>
-                          <h3>{item.name}</h3>
-                          <p className={styles.category}>
-                            {item.optional ? "Optional" : "Mandatory"} •{" "}
-                            {item.category}
-                          </p>
-                        </div>
-                        <span className={styles.price}>₹{item.price}</span>
-                      </div>
+  {item.optional && (
+    <input
+      type="checkbox"
+      className={styles.checkbox}
+      checked={item.selected}
+      onChange={(e) => {
+        const updated = [...itinerary];
+        updated[index].selected = e.target.checked;
+        setItinerary(updated);
+      }}
+    />
+  )}
+
+  {/* Group 1: Title */}
+  <div className={styles.titleBlock}>
+    <h3>{item.name}</h3>
+    <p className={styles.category}>
+      {item.optional ? "Optional" : "Mandatory"} • {item.category}
+    </p>
+  </div>
+
+  {/* Group 2: Meta info */}
+  <div className={styles.metaBlock}>
+    <span className={styles.time}>{item.time}</span>
+    <span className={styles.emoji}>{item.img}</span>
+    <span className={styles.price}>₹{item.price}</span>
+  </div>
+</div>
+
                       <p className={styles.description}>{item.description}</p>
 
                       {/* Replace section */}

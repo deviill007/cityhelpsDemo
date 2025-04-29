@@ -5,7 +5,6 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 import { useToast } from "@/components/ToastContext";
 
-
 type Props = {
   onClose?: () => void;
   onLoginSuccess?: (user: { name: string; email: string }) => void;
@@ -116,7 +115,7 @@ export default function LoginPopupContent({ onClose, onLoginSuccess }: Props) {
         setIsValidated(true);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
       setErrors({ email: "Something went wrong while checking email." });
     } finally {
       setIsLoginLoading(false);
@@ -126,6 +125,11 @@ export default function LoginPopupContent({ onClose, onLoginSuccess }: Props) {
   const sendOtp = async () => {
     if (cooldown > 0) return;
     setIsOtpLoading(true);
+    showToast({
+      message: "Sending OTP...",
+      type: "loading",
+      isLoading: true,
+    });
     try {
       const res = await fetch("/api/auth/sendOtp", {
         method: "POST",
@@ -136,14 +140,20 @@ export default function LoginPopupContent({ onClose, onLoginSuccess }: Props) {
       if (data.message === "OTP sent successfully") {
         setIsOtpSent(true);
         setCooldown(30);
+        showToast({
+          message: "OTP sent. Please check your registered email...",
+          type: "success",
+          isLoading: false,
+        });
       } else if (data.validated) {
         setIsValidated(true);
         setIsNewUser(false);
       } else {
         setErrors({ otp: data.message });
       }
+
     } catch (error) {
-      console.log(error)
+      console.log(error);
       setErrors({ otp: "Failed to send OTP." });
     } finally {
       setIsOtpLoading(false);
@@ -165,7 +175,7 @@ export default function LoginPopupContent({ onClose, onLoginSuccess }: Props) {
         setErrors({ otp: data.message });
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
       setErrors({ otp: "Failed to verify OTP." });
     } finally {
       setIsOtpVerifying(false);
@@ -181,31 +191,31 @@ export default function LoginPopupContent({ onClose, onLoginSuccess }: Props) {
     if (!password) errs.password = "Password is required";
     if (isNewUser && passwordStrength === "Weak")
       errs.password = "Password too weak";
-  
+
     if (isNewUser) {
       if (!name) errs.name = "Name is required";
       if (!phone) errs.phone = "Phone is required";
     }
-  
+
     if (Object.keys(errs).length) {
       // Show error toast for validation errors
       const firstError = Object.values(errs)[0] as string;
       showToast({
         message: firstError,
         type: "error",
-        isLoading: false
+        isLoading: false,
       });
       return setErrors(errs);
     }
-  
+
     setIsLoginLoading(true);
     // Show loading toast
     showToast({
       message: "Logging in...",
       type: "loading",
-      isLoading: true
+      isLoading: true,
     });
-  
+
     try {
       const res = await fetch("/api/auth/login", {
         method: "POST",
@@ -216,35 +226,35 @@ export default function LoginPopupContent({ onClose, onLoginSuccess }: Props) {
           ...(isNewUser && { name, phone }),
         }),
       });
-  
+
       if (!res.ok) {
         const errorData = await res.json();
         throw new Error(errorData.message || "Login failed");
       }
-  
+
       // Show success toast
       showToast({
         message: "Login successful!",
         type: "success",
-        isLoading: false
+        isLoading: false,
       });
-  
+
       const data = await res.json();
       onLoginSuccess?.(data.user);
       onClose?.();
-      
+
       const redirectTo = localStorage.getItem("redirectAfterLogin") || "/";
       localStorage.removeItem("redirectAfterLogin");
       router.push(redirectTo);
     } catch (error) {
-      console.log(error)
+      console.log(error);
       const errorMessage = (error as Error).message;
       setErrors({ password: errorMessage });
       // Show error toast
       showToast({
         message: errorMessage,
         type: "error",
-        isLoading: false
+        isLoading: false,
       });
     } finally {
       setIsLoginLoading(false);
@@ -257,67 +267,61 @@ export default function LoginPopupContent({ onClose, onLoginSuccess }: Props) {
     setGoogleError("");
     setIsGoogleLoading(true);
     // Show loading toast immediately
-    showToast({
-      message: "Connecting to Google...",
-      type: "loading",
-      isLoading: true
-    });
-  
+    // showToast({
+    //   message: "Connecting to Google...",
+    //   type: "loading",
+    //   isLoading: true
+    // });
+
     try {
       if (!window.google?.accounts) {
         throw new Error("Google services not loaded. Please refresh the page.");
       }
-  
+
       window.google.accounts.id.initialize({
         client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!,
         callback: async (response: { credential: string }) => {
           try {
-            // Update toast to indicate authentication in progress
-            showToast({
-              message: "Authenticating with Google...",
-              type: "loading",
-              isLoading: true
-            });
-  
             const res = await fetch("/api/auth/google", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ credential: response.credential }),
             });
-  
+
             if (!res.ok) {
               const errorData = await res.json();
               throw new Error(
                 errorData.message || "Google authentication failed"
               );
             }
-  
+
             // Show success toast
             showToast({
-              message: "Google login successful!",
+              message: "Login successful!",
               type: "success",
-              isLoading: false
+              isLoading: false,
             });
-  
+
             const data = await res.json();
             onLoginSuccess?.(data.user);
             onClose?.();
             router.push(localStorage.getItem("redirectAfterLogin") || "/");
           } catch (err) {
-            const errorMessage = err instanceof Error ? err.message : "Authentication failed";
+            const errorMessage =
+              err instanceof Error ? err.message : "Authentication failed";
             setGoogleError(errorMessage);
             // Show error toast
             showToast({
               message: errorMessage,
               type: "error",
-              isLoading: false
+              isLoading: false,
             });
           } finally {
             setIsGoogleLoading(false);
           }
         },
       });
-  
+
       // Show Google's invisible button
       if (googleButtonRef.current) {
         googleButtonRef.current.style.display = "block";
@@ -326,66 +330,67 @@ export default function LoginPopupContent({ onClose, onLoginSuccess }: Props) {
           theme: "outline",
           size: "large",
         });
-        const googleButton = googleButtonRef.current.querySelector("div[role=button]");
+        const googleButton =
+          googleButtonRef.current.querySelector("div[role=button]");
         if (googleButton) (googleButton as HTMLElement).click();
       }
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : "Failed to load Google services";
+      const errorMessage =
+        err instanceof Error ? err.message : "Failed to load Google services";
       setGoogleError(errorMessage);
       // Show error toast
       showToast({
         message: errorMessage,
         type: "error",
-        isLoading: false
+        isLoading: false,
       });
       setIsGoogleLoading(false);
     }
   };
 
-
   const handleResetPasswordRequest = async ({ autoRedirect = false } = {}) => {
     setErrors({});
     setResetSuccessMessage("");
-  
+
     if (!email.includes("@")) {
       const errorMsg = "Please enter a valid email address.";
       setErrors({ email: errorMsg });
       showToast({
         message: errorMsg,
         type: "error",
-        isLoading: false // Not loading, so progress will start immediately
+        isLoading: false, // Not loading, so progress will start immediately
       });
       return;
     }
-  
+
     setIsResetRequesting(true);
-  
+
     // Show loading toast (no progress bar)
     showToast({
       message: "Sending password reset link...",
       type: "loading",
-      isLoading: true
+      isLoading: true,
     });
-  
+
     try {
       const res = await fetch("/api/auth/request-reset", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
       });
-  
+
       const data = await res.json();
       if (!res.ok) throw new Error(data.message);
-  
+
       const successMsg = "Password reset link sent! Check your email.";
       setResetSuccessMessage(successMsg);
       // Change to success state (progress will start now)
       showToast({
         message: successMsg,
         type: "success",
-        isLoading: false
+        isLoading: false,
       });
-  
+
       if (autoRedirect) {
         setTimeout(() => {
           setIsForgotPasswordMode(false);
@@ -393,21 +398,20 @@ export default function LoginPopupContent({ onClose, onLoginSuccess }: Props) {
           setResetSuccessMessage("");
         }, 3000);
       }
-  
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : "Something went wrong.";
+      const errorMessage =
+        err instanceof Error ? err.message : "Something went wrong.";
       setErrors({ email: errorMessage });
       // Change to error state (progress will start now)
       showToast({
         message: errorMessage,
         type: "error",
-        isLoading: false
+        isLoading: false,
       });
     } finally {
       setIsResetRequesting(false);
     }
   };
-  
 
   return (
     <div className="login-container">
@@ -419,7 +423,7 @@ export default function LoginPopupContent({ onClose, onLoginSuccess }: Props) {
           ? "We'll send you a link to reset your password."
           : "Check out more easily and access your tickets on any device with your CityHelps account."}
       </p>
-  
+
       {isForgotPasswordMode ? (
         <>
           {resetSuccessMessage ? (
@@ -483,7 +487,7 @@ export default function LoginPopupContent({ onClose, onLoginSuccess }: Props) {
             />
           </div>
           {googleError && <p className="error-text">{googleError}</p>}
-  
+
           {/* === Login / OTP / Register === */}
           {!isOtpSent && !isValidated && (
             <>
@@ -500,7 +504,7 @@ export default function LoginPopupContent({ onClose, onLoginSuccess }: Props) {
                 }}
               />
               {errors.email && <p className="error-text">{errors.email}</p>}
-  
+
               <button
                 className="btn-login"
                 onClick={handleEmailSubmit}
@@ -514,7 +518,7 @@ export default function LoginPopupContent({ onClose, onLoginSuccess }: Props) {
               </button>
             </>
           )}
-  
+
           {isOtpSent && !isValidated && (
             <>
               <input
@@ -556,7 +560,7 @@ export default function LoginPopupContent({ onClose, onLoginSuccess }: Props) {
               </button>
             </>
           )}
-  
+
           {isValidated && (
             <>
               {isNewUser && (
@@ -615,7 +619,9 @@ export default function LoginPopupContent({ onClose, onLoginSuccess }: Props) {
                 className="btn-login"
                 onClick={handleLogin}
                 disabled={
-                  isLoginLoading || !password || (isNewUser && (!name || !phone))
+                  isLoginLoading ||
+                  !password ||
+                  (isNewUser && (!name || !phone))
                 }
               >
                 {isLoginLoading ? (
@@ -634,5 +640,4 @@ export default function LoginPopupContent({ onClose, onLoginSuccess }: Props) {
       )}
     </div>
   );
-  
 }

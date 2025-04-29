@@ -207,3 +207,117 @@
   flex-direction: column;
   max-width: 900px;
 }
+
+
+/* 1024px - Tablet Landscape */
+@media (max-width: 1024px) {
+  .infoContainer {
+    flex-direction: column;
+    padding: 2rem 1rem;
+    gap: 20px;
+  }
+
+  .masonryGallery {
+    flex-direction: column;
+    max-width: 100%;
+  }
+
+  .bottomBar {
+    width: 100%;
+    height: auto;
+    padding: 1.5rem;
+  }
+
+  .inputs {
+    justify-content: center;
+  }
+}
+
+/* 768px - Tablet Portrait */
+@media (max-width: 768px) {
+  .infoContainer {
+    padding: 1.5rem 1rem;
+  }
+
+  .bottomBar {
+    max-width: 100%;
+    padding: 1rem;
+    border-radius: 10px;
+  }
+
+  .inputs {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .dateInput,
+  .travellerInput {
+    width: 100%;
+  }
+
+  .masonryGallery {
+    flex-direction: column;
+  }
+
+  .sideGrid {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, 1fr);
+  }
+}
+
+/* 425px - Mobile */
+@media (max-width: 425px) {
+  .infoContainer {
+    padding-top: 80px;
+  }
+
+  .infoContainer h1 {
+    font-size: 1.6rem;
+  }
+
+  .infoContainer h2 {
+    font-size: 1.3rem;
+  }
+
+  .infoContainer h3 {
+    font-size: 1.1rem;
+  }
+
+  .modalImage {
+    max-width: 95%;
+    max-height: 80%;
+  }
+
+  .closeBtn,
+  .leftArrow,
+  .rightArrow {
+    height: 30px;
+    width: 30px;
+    font-size: 1rem;
+  }
+
+  .bottomBar {
+    padding: 1rem;
+    height: auto;
+  }
+
+  .inputs {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .dateInput,
+  .travellerInput {
+    width: 100%;
+  }
+
+  .sideGrid {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, 1fr);
+  }
+
+  .mainImage,
+  .sideImageWrapper img {
+    height: auto;
+  }
+}

@@ -1,17 +1,11 @@
 // components/404Content.tsx
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Lottie from 'react-lottie';
 import Link from 'next/link';
+import animationData from './animations/404-animation.json';
+import styles from '@/styles/404.module.css';
 
 const Custom404 = () => {
-  const [animationData, setAnimationData] = useState(null);
-
-  useEffect(() => {
-    fetch('/images/404-animation.json')
-      .then((response) => response.json())
-      .then((data) => setAnimationData(data));
-  }, []);
-
   const defaultOptions = {
     loop: true,
     autoplay: true,
@@ -22,34 +16,22 @@ const Custom404 = () => {
   };
 
   return (
-    <div style={{ textAlign: 'center', padding: '50px' }}>
-      {animationData ? (
-        <Lottie options={defaultOptions} height={500} width={500} />
-      ) : (
-        <p>Loading animation...</p>
-      )}
-      <h1 style={{ fontSize: '30px', color: '#E47D31' }}>404 NOT FOUND</h1>
-      <h3 style={{ fontSize: '20px', color: '#E47D31' }}>This page is outside of universe</h3>
-      <p style={{ fontSize: '14px', color: '#333', padding: '20px', marginBottom: '10px' }}>
+    <div className={styles.container}>
+            <div className={styles.lottieWrapper}>
+        <Lottie options={defaultOptions} />
+      </div>
+      <h1 className={styles.title}>404 NOT FOUND</h1>
+      <h3 className={styles.subtitle}>This page is outside of universe</h3>
+      <p className={styles.description}>
         Oops! The page you are trying to access does not exist or has been moved. <br />
         Try going back to our homepage.
       </p>
-      <Link
-        href="/"
-        style={{
-          fontSize: '18px',
-          color: '#fff',
-          padding: '20px',
-          backgroundColor: '#E47D31',
-          margin: '10px',
-          borderRadius: '10px',
-        }}
-      >
+      <Link href="/" className={styles.homeButton}>
         Home Page
       </Link>
-      <p style={{ fontSize: '14px', color: '#333', padding: '20px', marginTop: '10px' }}>
+      <p className={styles.supportText}>
         If you think this is an error, contact our support team at <br />
-        <span style={{color: "E47D31"}}>support@cityhelps.com</span>
+        <span className={styles.supportEmail}>support@cityhelps.com</span>
       </p>
     </div>
   );

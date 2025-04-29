@@ -7,11 +7,9 @@ const Footer = () => {
       <div className="footerContent">
         {/* Logo + Description */}
         <div className="section">
-          <Image src="/images/logo.jpg" alt="CityHelps Logo" width={240} height={80} />
+          <Image src="/icons/cityhelpsLogo.png" alt="CityHelps Logo" width={1000} height={1000} className="footer-logo"/>
           <p>
-  CityHelps connects you to authentic, safe, and unforgettable local experiences.
-  Whether you&apos;re exploring vibrant markets, tasting traditional dishes, or learning
-  local crafts, every adventure is guided by verified locals.
+          Personalized and Authentic Local Experiences Tailored Just for You
 </p>
 
         </div>

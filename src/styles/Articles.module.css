@@ -1,0 +1,56 @@
+.container {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: "Poppins", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  max-width: 900px;
+  margin: 100px auto;
+}
+
+.heading {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+  color: #e47d31;
+}
+.list {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: 50px;
+  align-items: center;
+  justify-content: center;
+}
+.articleCard {
+  width: 1300px;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  transition: all 0.3s;
+}
+.articleCard:hover {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px,
+    rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+}
+
+.title {
+  font-size: 1.2rem;
+  color: #333;
+  font-weight: 600;
+}
+.meta{
+  color: #777;
+  font-weight: 600;
+}
+.excerpt {
+  color: #555;
+  font-size: 0.95rem;
+  margin: 10px 0;
+  font-weight: 500;
+}
+
+.date {
+  font-size: 0.8rem;
+  color: #999;
+}

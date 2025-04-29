@@ -116,43 +116,6 @@ const ProfilePage = () => {
     }
   };
 
-  const handleDeleteAccount = async () => {
-    if (deleteConfirm !== "delete") {
-      return showToast({
-        message: 'Type "delete" to confirm.',
-        type: "error",
-        isLoading: false,
-      });
-    }
-
-    try {
-      showToast({
-        message: "Deleting account...",
-        type: "loading",
-        isLoading: true,
-      });
-
-      await axios.delete("/api/profile/delete-account", {
-        data: { confirmEmail: user?.email },
-      } as AxiosRequestConfig);
-      setUser(null)
-      showToast({
-        message: "Account deleted successfully",
-        type: "success",
-        isLoading: false,
-      });
-
-      router.push("/");
-    } catch (err) {
-      console.error(err);
-      showToast({
-        message: "Failed to delete account.",
-        type: "error",
-        isLoading: false,
-      });
-    }
-  };
-
   const handleLogout = async () => {
     try {
       showToast({
@@ -204,12 +167,6 @@ const ProfilePage = () => {
           >
             Notifications
           </button>
-          <button
-            className={`tab-button ${activeTab === "delete" ? "active" : ""}`}
-            onClick={() => setActiveTab("delete")}
-          >
-            Delete Account
-          </button>
         </aside>
 
         <main className="content">
@@ -260,7 +217,7 @@ const ProfilePage = () => {
 
               <h3>Account Details</h3>
               <div className="input-section">
-                <div className="input-group">
+                <div className="input-group disabled-email">
                   <label>Email</label>
                   <input type="email" value={user?.email || ""} disabled />
                 </div>
@@ -334,26 +291,6 @@ const ProfilePage = () => {
             <div className="notifications-section">
               <h2>Notifications</h2>
               <p>No new notifications</p>
-            </div>
-          )}
-
-          {activeTab === "delete" && (
-            <div className="delete-section">
-              <h2>Delete Account</h2>
-              <div className="delete-input">
-                <p>Type &quot;delete&quot; below to confirm account deletion.</p>
-                <input
-                  type="text"
-                  value={deleteConfirm}
-                  onChange={(e) => setDeleteConfirm(e.target.value)}
-                />
-                <button
-                  onClick={handleDeleteAccount}
-                  className="delete-btn button"
-                >
-                  Delete Account
-                </button>
-              </div>
             </div>
           )}
         </main>

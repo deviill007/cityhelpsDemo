@@ -1,7 +1,7 @@
-@import url('https://fonts.cdnfonts.com/css/black-chancery');
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url("https://fonts.cdnfonts.com/css/black-chancery");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
-.home{
+.home {
   color: var(--foreground);
   background: var(--background);
   font-family: "Poppins", sans-serif;
@@ -30,10 +30,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: linear-gradient(
-      rgba(0, 0, 0, 0.6), 
-      rgba(0, 0, 0, 0.3)
-    ),
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3)),
     url("/images/HeroImage.png");
   background-size: cover;
   background-position: center;
@@ -45,7 +42,7 @@
 /* Main heading styling */
 .heading {
   font-size: clamp(64px, 12vw, 128px);
-  font-family: 'BlackChancery', sans-serif;
+  font-family: "BlackChancery", sans-serif;
   background: linear-gradient(to bottom, #fff, #ffffff00);
   background-clip: text;
   -webkit-background-clip: text;
@@ -75,7 +72,7 @@
 .button {
   padding: 12px 28px;
   color: white;
-  background-color: #E47D31;
+  background-color: #e47d31;
   border: none;
   border-radius: 999px;
   font-size: 18px;
@@ -87,11 +84,10 @@
 
 .button:hover {
   background-color: #fff;
-  color: #E47D31;
-  box-shadow: 0 0 20px #E47D31aa;
+  color: #e47d31;
+  box-shadow: 0 0 20px #e47d31aa;
   transform: translateY(-2px);
 }
-
 
 .tabsContainer {
   display: flex;
@@ -114,13 +110,13 @@
   cursor: pointer;
   font-weight: 600;
   font-size: 17px;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   transition: color 0.3s ease, transform 0.3s ease;
   color: #333;
 }
 
 .tab:hover {
-  color: #E47D31;
+  color: #e47d31;
   transform: scale(1.05);
 }
 
@@ -133,7 +129,7 @@
   transform-origin: center;
   width: 100%;
   height: 3px;
-  background-color: #E47D31;
+  background-color: #e47d31;
   transition: transform 0.3s ease;
 }
 
@@ -142,7 +138,7 @@
 }
 
 .activeTab {
-  color: #E47D31;
+  color: #e47d31;
   font-weight: 700;
 }
 
@@ -161,6 +157,9 @@
   margin: 20px auto;
   transition: opacity 0.4s ease, transform 0.4s ease;
   animation: fadeSlideUp 0.6s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Optional entry animation for tab content */
@@ -175,7 +174,6 @@
   }
 }
 
-
 .hero2 {
   min-height: 200px;
   background: #fff;
@@ -188,12 +186,13 @@
 /* Unique experiences */
 .sidebarLayout {
   display: flex;
+  flex-wrap: wrap;
   flex-direction: column;
   gap: 30px;
   padding: 30px;
   min-height: 500px;
-  min-width: 1300px;
-  /* background-color: #f8f9fb; */
+  max-width: 1300px;
+  width: 100%;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
   border-radius: 20px;
 }
@@ -233,7 +232,6 @@
   border-color: #e47d31;
   box-shadow: 0 4px 12px rgba(228, 125, 49, 0.25);
 }
-
 
 /* Custom Plan */
 .queryContainer {
@@ -283,12 +281,12 @@
 .formSection h2 {
   font-size: 2rem;
   margin-bottom: 1rem;
-  font-family: 'BlackChancery', sans-serif;
+  font-family: "BlackChancery", sans-serif;
   color: #333;
 }
 
 .formSection h2 span {
-  color: #E47D31;
+  color: #e47d31;
 }
 
 /* Form Structure */
@@ -320,7 +318,7 @@
 .field input,
 .field textarea {
   padding: 0.75rem 1rem;
-  border: 1px solid #E47D31;
+  border: 1px solid #e47d31;
   border-radius: 10px;
   font-size: 0.95rem;
   background: #fff;
@@ -339,7 +337,6 @@
   min-height: 150px;
   font-family: inherit;
 }
-
 
 /* Responsive Adjustments */
 @media (max-width: 960px) {
@@ -392,18 +389,17 @@
 
 /* Enhanced Span Styles */
 .fancy {
-  font-family: 'BlackChancery', cursive;
-  color: #E47D31;
+  font-family: "BlackChancery", cursive;
+  color: #e47d31;
   font-size: 36px;
   letter-spacing: 1px;
 }
 
 .city {
-  color: #D97706;
+  color: #d97706;
   font-weight: 800;
   margin-left: 6px;
 }
-
 
 /* -------------------- MAIN ITINERARY TAB -------------------- */
 .itineraryTab {
@@ -421,28 +417,15 @@
   gap: 16px;
   flex-wrap: wrap;
 }
-
-/* Dropdown styling */
-.dropdown {
-  padding: 10px 18px;
-  font-size: 16px;
-  border-radius: 10px;
-  border: 1.5px solid #ccc;
-  background-color: #fff;
-  color: #333;
-  transition: all 0.3s;
-  cursor: pointer;
-}
-
-.dropdown:focus {
-  border-color: #E47D31;
-  box-shadow: 0 0 0 2px rgba(228, 125, 49, 0.2);
-  outline: none;
-}
-.rowCards{
+.rowCards {
   display: flex;
   flex-direction: row;
   gap: 50px;
+}
+.descriptionBar,
+.cardContainer,
+.bottomBar{
+  flex:1;
 }
 /* -------------------- CARD SECTION -------------------- */
 .cardContainer {
@@ -452,9 +435,6 @@
   max-width: 900px;
   width: 100%;
   border-radius: 20px;
-    /* max-height: 600px;
-    overflow-y: scroll;
-    overflow-x: hidden; */
 }
 
 /* Each card styling */
@@ -464,7 +444,8 @@
   border-radius: 16px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
   transition: transform 0.3s ease;
-  width: 900px;
+  max-width: 900px;
+  width: 100%;
 }
 
 .card:hover {
@@ -473,9 +454,20 @@
 
 .cardHeader {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
   gap: 12px;
+}
+
+.titleBlock {
+  flex: 1 1 100%;
+}
+
+.metaBlock {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .time {
@@ -578,13 +570,11 @@
   box-shadow: 0 0 0 2px rgba(243, 138, 0, 0.2);
 }
 
-
-
 /* Checkbox styling */
 .checkbox {
   width: 20px;
   height: 20px;
-  accent-color: #E47D31;
+  accent-color: #e47d31;
   cursor: pointer;
   transition: transform 0.2s ease;
   border-radius: 5px;
@@ -597,12 +587,11 @@
 /* -------------------- DETAILS SECTION -------------------- */
 .itineraryTab > div:nth-of-type(3) {
   width: 100%;
-  /* max-width: 900px; */
   background-color: #ffffff;
   padding: 32px;
   border-radius: 20px;
   margin-bottom: 40px;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   color: #333;
 }
 
@@ -610,7 +599,7 @@
 .itineraryTab details {
   background: #fdfdfd;
   border: 1px solid #eee;
-  border-left: 5px solid #E47D31;
+  border-left: 5px solid #e47d31;
   border-radius: 10px;
   margin-bottom: 18px;
   padding: 18px 24px;
@@ -628,22 +617,22 @@
   font-size: 18px;
   font-weight: 600;
   cursor: pointer;
-  color: #E47D31;
+  color: #e47d31;
   list-style: none;
   position: relative;
   padding-left: 28px;
 }
 
 .itineraryTab summary::before {
-  content: '➕';
+  content: "➕";
   position: absolute;
   left: 0;
-  color: #E47D31;
+  color: #e47d31;
   transition: transform 0.3s ease;
 }
 
 .itineraryTab details[open] summary::before {
-  content: '➖';
+  content: "➖";
 }
 
 /* Inner content */
@@ -668,10 +657,10 @@
 }
 
 .itineraryTab details li::before {
-  content: '•';
+  content: "•";
   position: absolute;
   left: 0;
-  color: #E47D31;
+  color: #e47d31;
   font-size: 18px;
   line-height: 1;
 }
@@ -683,6 +672,7 @@
   gap: 1.5rem;
   justify-content: center;
   padding: 2rem 1rem;
+  align-items: center;
 }
 
 .ecard {
@@ -714,4 +704,119 @@
   font-size: 1.1rem;
   font-weight: 600;
   color: #333;
+}
+
+/* responsiveness */
+@media (max-width: 1024px) {
+  .rowCards {
+    flex-direction: column;
+  }
+  .descriptionBar{
+    order:2;
+  }
+  .cardContainer{
+    order:1;
+  }
+  .bottomBar{
+    order:3;
+    max-width: 100%;
+  }
+}
+@media (max-width: 768px) {
+  .hero h2{
+    font-size: 28px;
+    margin-bottom: 0px;
+  }
+  .hero p{
+    font-size: 16px;
+  }
+  .tabsContainer {
+    gap: 20px;
+    padding: 10px 22px;
+  }
+  .tab {
+    padding: 10px 12px;
+  }
+  .tab span {
+    font-size: 14px;
+  }
+  .imageSection img{
+    height: 50%;
+  }
+  .formSection h2 {
+    font-size: 1.8rem;
+    }
+
+  .field label {
+    font-size: 0.8rem;
+  }
+
+  .field input,
+  .field textarea {
+    font-size: 0.75rem;
+  }
+
+  .field textarea {
+    min-height: 100px;
+  }
+  .sidebarButtons {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .sidebarButtons p {
+    padding: 12px;
+    font-size: 12px;
+    letter-spacing: 0.2px;
+  }
+  .card h3{
+    font-size: 18px;
+    margin: 0px;
+  }
+  .cardHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .titleBlock {
+    order: 1;
+    width: 100%;
+  }
+
+  .metaBlock {
+    order: 2;
+    width: 100%;
+    justify-content: space-around;
+  }
+  .emoji{
+    font-size: 14px;
+  }
+  .time{
+    font-size: 14px;
+  }
+  .tabContent{
+    padding: 0;
+  }
+  .ecardContainer{
+    padding: 0;
+  }
+  .sidebarLayout{
+    width: 90%;
+  }
+}
+@media (max-width: 425px) {
+
+  .sidebarButtons p{
+    padding: 8px;
+    font-size: 10px;
+  }
+  .ecard {
+    width: 200px;
+  }
+  .cardImage{
+    height: 120px;
+  }
+  .sidebarLayout{
+    width: 90%;
+  }
 }
