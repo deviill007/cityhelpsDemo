@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import axios from "axios";
-import type { AxiosRequestConfig } from "axios";
 import { useToast } from "@/components/ToastContext";
 import { useAuth } from "@/contexts/AuthContext";
 
@@ -12,14 +11,13 @@ const ProfilePage = () => {
   const [activeTab, setActiveTab] = useState("profile");
   const { user, setUser, logout } = useAuth();
   interface User {
-  _id: string;
-  name: string;
-  email: string;
-  phone?: string;
-  authProvider: "credentials" | "google";
-  isValidated: boolean;
-}
-
+    _id: string;
+    name: string;
+    email: string;
+    phone?: string;
+    authProvider: "credentials" | "google";
+    isValidated: boolean;
+  }
 
   // const [user, setUser] = useState<any>(null);
   const [firstName, setFirstName] = useState("");
@@ -28,8 +26,6 @@ const ProfilePage = () => {
 
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
-  const [deleteConfirm, setDeleteConfirm] = useState("");
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -47,7 +43,6 @@ const ProfilePage = () => {
     };
     fetchUser();
   }, [router, setUser]);
-  
 
   const handleSaveProfile = async () => {
     try {
@@ -96,7 +91,7 @@ const ProfilePage = () => {
       await axios.post("/api/profile/change-password", {
         newPassword,
         confirmPassword,
-      });      
+      });
 
       showToast({
         message: "Password changed successfully",
