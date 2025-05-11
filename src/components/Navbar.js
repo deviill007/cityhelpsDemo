@@ -11,6 +11,18 @@ import { FaArrowRightToCity } from "react-icons/fa6";
 import { useToast } from "@/components/ToastContext";
 import ResetPasswordPopupContent from "@/components/ResetPasswordPopupContent";
 import { useAuth } from "@/contexts/AuthContext";
+import { HiOutlineMenuAlt1 } from "react-icons/hi";
+import {
+  FiMenu,
+  FiX,
+  FiUser,
+  FiShoppingCart,
+  FiLogIn,
+  FiLogOut,
+  FiClock,
+  FiDollarSign,
+} from "react-icons/fi";
+import { RiArrowDropDownLine } from "react-icons/ri";
 
 export default function Navigationbar() {
   const [panelOpen, setPanelOpen] = useState(false);
@@ -93,14 +105,13 @@ export default function Navigationbar() {
     clearTimeout(hoverTimeoutRef.current);
     setPanelOpen(true);
   };
-  
+
   const handleMouseLeave = () => {
     openedByHover.current = false;
     hoverTimeoutRef.current = setTimeout(() => {
       setPanelOpen(false);
     }, 500);
   };
-  
 
   const handleLogout = async () => {
     try {
@@ -133,46 +144,46 @@ export default function Navigationbar() {
     <div className="navbar">
       <div className="logo">CityHelps</div>
 
-      <div
+      <button
         className="menu-button"
         onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+        aria-label="Toggle menu"
       >
-        <Image src="/icons/menu.png" alt="menu" width={20} height={20} />
-      </div>
+        {isMobileMenuOpen ? <FiX size={24} /> : <HiOutlineMenuAlt1 size={24} />}
+      </button>
 
       <div className="first desktop-menu">
-        <div
-          className="city-selector"
-          onClick={() => setCityDropdownOpen((prev) => !prev)}
-        >
-          <span>Jaipur</span>
-          <Image
-            height={10}
-            width={10}
-            src="/icons/drop-down.png"
-            alt="cart icon"
-          />
-        </div>
+      <div className="city-selector-wrapper">
+                    <div
+              className="city-selector"
+              onClick={() => setCityDropdownOpen((prev) => !prev)}
+            >
+              <span>Jaipur</span>
+              <div className={`dropdown-arrow ${cityDropdownOpen ? "open" : ""}`}>
+                <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
+                  <path d="M1 1L6 6L11 1" stroke="currentColor" strokeWidth="2" />
+                </svg>
+              </div>
+            </div>
 
-        {cityDropdownOpen && (
-          <div className="city-dropdown-panel" ref={cityPanelRef}>
-            <div className="city-option selected">
-              <FaArrowRightToCity className="city-icon" /> Jaipur
-            </div>
-            <div className="city-option disabled">
-              <FaArrowRightToCity className="city-icon" /> Udaipur (Coming Soon)
-            </div>
-            <div className="city-option disabled">
-              <FaArrowRightToCity className="city-icon" /> Jaisalmer (Coming
-              Soon)
-            </div>
-            <div className="city-option disabled">
-              <FaArrowRightToCity className="city-icon" /> Delhi (Coming Soon)
-            </div>
-            <hr />
-            <div className="city-option">Become a Partner</div>
-          </div>
-        )}
+            {cityDropdownOpen && (
+              <div className="city-dropdown-panel" ref={cityPanelRef}>
+                <div className="city-option selected">
+                  <FaArrowRightToCity className="city-icon" /> Jaipur
+                </div>
+                <div className="city-option disabled">
+                  <FaArrowRightToCity className="city-icon" /> Udaipur (Coming Soon)
+                </div>
+                <div className="city-option disabled">
+                  <FaArrowRightToCity className="city-icon" /> Jaisalmer (Coming Soon)
+                </div>
+                <div className="city-option disabled">
+                  <FaArrowRightToCity className="city-icon" /> Delhi (Coming Soon)
+                </div>
+                <div className="divider" />
+                <div className="city-option partner">Become a Partner</div>
+              </div>
+            )}</div>
 
         <div className="last">
           <Link href="/#">Explore</Link>
@@ -182,13 +193,7 @@ export default function Navigationbar() {
 
           <Link href="/cart">
             <div className="user-icon">
-              <Image
-                height={20}
-                width={20}
-                src="/icons/shopping-cart.png"
-                alt="cart icon"
-              />
-              <div className="username">Cart</div>
+              <FiShoppingCart size={20} />
             </div>
           </Link>
 
@@ -199,12 +204,7 @@ export default function Navigationbar() {
               onMouseEnter={handleMouseEnter}
               onClick={() => setPanelOpen((prev) => !prev)}
             >
-              <Image
-                height={50}
-                width={50}
-                src="/icons/user.png"
-                alt="user icon"
-              />
+              <FiUser size={20} />
               <div className="username">
                 {user?.name?.split(" ")[0] || "Profile"}
               </div>
@@ -222,13 +222,7 @@ export default function Navigationbar() {
                 {user ? (
                   <div className="profile-option line" onClick={handleLogout}>
                     <div className="option-left">
-                      <Image
-                        height={50}
-                        width={50}
-                        className="image1"
-                        src="/icons/login.png"
-                        alt="logout icon"
-                      />
+                      <FiLogOut size={20} />
                       <span>Logout</span>
                     </div>
                     <div className="option-right">
@@ -241,13 +235,7 @@ export default function Navigationbar() {
                     onClick={() => setPopupType("login")}
                   >
                     <div className="option-left">
-                      <Image
-                        height={1000}
-                        width={1000}
-                        className="image1"
-                        src="/icons/login.png"
-                        alt=""
-                      />
+                      <FiLogIn size={20} />
                       <span>Log in / Sign up</span>
                     </div>
                     <div className="option-right">
@@ -264,13 +252,7 @@ export default function Navigationbar() {
                     }}
                   >
                     <div className="option-left">
-                      <Image
-                        height={1000}
-                        width={1000}
-                        className="image1"
-                        src="/icons/user.png"
-                        alt="profile icon"
-                      />
+                      <FiUser size={20} />
                       <span>Profile</span>
                     </div>
                     <div className="option-right">
@@ -293,13 +275,7 @@ export default function Navigationbar() {
                     }}
                   >
                     <div className="option-left">
-                      <Image
-                        height={1000}
-                        width={1000}
-                        className="image1"
-                        src="/icons/history.png"
-                        alt="profile icon"
-                      />
+                      <FiClock size={20} />
                       <span>My Bookings</span>
                     </div>
                     <div className="option-right">
@@ -319,13 +295,7 @@ export default function Navigationbar() {
                   onClick={() => setPopupType("currency")}
                 >
                   <div className="option-left">
-                    <Image
-                      height={1000}
-                      width={1000}
-                      className="image1"
-                      src="/icons/currency.png"
-                      alt=""
-                    />
+                    <FiDollarSign size={20} />
                     <span>Currency</span>
                   </div>
                   <div className="option-right">
@@ -380,15 +350,8 @@ export default function Navigationbar() {
                   setPanelOpen((prev) => !prev);
                 }
               }}
-              
-              
             >
-              <Image
-                height={50}
-                width={50}
-                src="/icons/user.png"
-                alt="user icon"
-              />
+              <FiUser size={20} />
               <div className="username">
                 {user?.name?.split(" ")[0] || "Profile"}
               </div>
@@ -406,13 +369,7 @@ export default function Navigationbar() {
                 {user ? (
                   <div className="profile-option line" onClick={handleLogout}>
                     <div className="option-left">
-                      <Image
-                        height={50}
-                        width={50}
-                        className="image1"
-                        src="/icons/login.png"
-                        alt="logout icon"
-                      />
+                      <FiLogOut size={20} />
                       <span>Logout</span>
                     </div>
                     <div className="option-right">
@@ -423,18 +380,12 @@ export default function Navigationbar() {
                   <div
                     className="profile-option line"
                     onClick={() => {
-                      setPopupType("login")
-                      setIsMobileMenuOpen(false)
+                      setPopupType("login");
+                      setIsMobileMenuOpen(false);
                     }}
                   >
                     <div className="option-left">
-                      <Image
-                        height={1000}
-                        width={1000}
-                        className="image1"
-                        src="/icons/login.png"
-                        alt=""
-                      />
+                      <FiLogIn size={20} />
                       <span>Log in / Sign up</span>
                     </div>
                     <div className="option-right">
@@ -448,17 +399,11 @@ export default function Navigationbar() {
                     className="profile-option"
                     onClick={() => {
                       router.push("/profile");
-                      setIsMobileMenuOpen(false)
+                      setIsMobileMenuOpen(false);
                     }}
                   >
                     <div className="option-left">
-                      <Image
-                        height={1000}
-                        width={1000}
-                        className="image1"
-                        src="/icons/user.png"
-                        alt="profile icon"
-                      />
+                      <FiUser size={20} />
                       <span>Profile</span>
                     </div>
                     <div className="option-right">
@@ -478,17 +423,11 @@ export default function Navigationbar() {
                     className="profile-option"
                     onClick={() => {
                       router.push("/bookings");
-                      setIsMobileMenuOpen(false)
+                      setIsMobileMenuOpen(false);
                     }}
                   >
                     <div className="option-left">
-                      <Image
-                        height={1000}
-                        width={1000}
-                        className="image1"
-                        src="/icons/history.png"
-                        alt="profile icon"
-                      />
+                      <FiClock size={20} />
                       <span>My Bookings</span>
                     </div>
                     <div className="option-right">
@@ -506,19 +445,12 @@ export default function Navigationbar() {
                 <div
                   className="profile-option"
                   onClick={() => {
-                    setPopupType("currency")
-                    setIsMobileMenuOpen(false)
+                    setPopupType("currency");
+                    setIsMobileMenuOpen(false);
                   }}
-                  
                 >
                   <div className="option-left">
-                    <Image
-                      height={1000}
-                      width={1000}
-                      className="image1"
-                      src="/icons/currency.png"
-                      alt=""
-                    />
+                    <FiDollarSign size={20} />
                     <span>Currency</span>
                   </div>
                   <div className="option-right">

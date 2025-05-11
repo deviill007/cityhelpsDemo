@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "./experience.module.css";
+import styles from "@/styles/experience.module.css";
 import Image from "next/image";
 
 const images = [

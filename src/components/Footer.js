@@ -53,6 +53,7 @@ const Footer = () => {
       </div>
 
       <div className="copyright">
+        <hr></hr>
         © {new Date().getFullYear()} CityHelps. All rights reserved.
       </div>
     </footer>
