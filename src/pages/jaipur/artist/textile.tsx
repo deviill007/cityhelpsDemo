@@ -86,12 +86,12 @@ const Textile = () => {
 
         <p>
           Among the sandy hues and pink facades of Jaipur lies an explosion of color, rhythm, and creativity—
-          all captured in the city's legendary hand block printing and textile artistry. From the vibrant
+          all captured in the city&apos;s legendary hand block printing and textile artistry. From the vibrant
           bazaars of Sanganer to the story-filled villages of Bagru, this is where fabric becomes canvas and
           every print tells a tale.
         </p>
         <p>
-          Whether you're a design lover, fashion enthusiast, or someone who just appreciates mindful making,
+          Whether you&apos;re a design lover, fashion enthusiast, or someone who just appreciates mindful making,
           CityHelps offers exclusive access to trustified textile studios where you can witness and even create
           your own printed masterpiece.
         </p>
@@ -134,7 +134,7 @@ const Textile = () => {
 
         <h3>🖌️ Try It Yourself – Make Your Own Printed Fabric</h3>
         <p>
-          Here's where it gets exciting: most studios offer hands-on mini workshops (with prior booking). In
+          Here&apos;s where it gets exciting: most studios offer hands-on mini workshops (with prior booking). In
           these sessions, you’ll:
         </p>
         <ul>
@@ -169,7 +169,7 @@ const Textile = () => {
         <h3>💡 Insider Tip</h3>
         <p>
           Want something extra? Ask the studio to print your initials or a favorite symbol into the fabric.
-          Some even let you create your own block, which they'll carve and keep for future prints you may
+          Some even let you create your own block, which they&apos;ll carve and keep for future prints you may
           want shipped later!
         </p>
 

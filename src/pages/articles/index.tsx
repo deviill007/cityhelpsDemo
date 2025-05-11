@@ -27,8 +27,8 @@ const ArticlesPage = () => {
               Why CityHelps Is Jaipur’s Best Travel Assistant <br />
             </strong>
             Unlike traditional travel platforms, CityHelps isn’t just about
-            listings. We curate, personalize, and help on the go. Here's why
-            we're different: <br />- 🔍{" "}
+            listings. We curate, personalize, and help on the go. Here&apos;s why
+            we&apos;re different: <br />- 🔍{" "}
             <strong>Curated Local Experiences</strong> – From Rajasthani cooking
             classes in heritage homes to secret sunset viewpoints over Nahargarh
             Fort <br />- 📲 <strong>Real-Time Tourist Help</strong> – Lost your
@@ -49,7 +49,7 @@ const ArticlesPage = () => {
             Explore ancient havelis, bustling bazaars, and temple bells with a
             local storyteller <br />
             <strong>2. Handicraft & Textile Trail</strong> <br />
-            Dive into Jaipur's artistry—blue pottery, block printing, gemstone
+            Dive into Jaipur&apos;s artistry—blue pottery, block printing, gemstone
             carving—with real artisans <br />
             <strong>3. Sunset at Nahargarh Fort</strong> <br />
             A private guided walk ending with chai on the rooftop, overlooking
@@ -79,7 +79,7 @@ const ArticlesPage = () => {
             <strong>
               🧠 Plan Smart. Travel Easy. <br />
             </strong>
-            <strong>CityHelps Jaipur</strong> is not just about sightseeing—it's
+            <strong>CityHelps Jaipur</strong> is not just about sightseeing—it&apos;s
             about <strong>experiencing Jaipur the local way</strong>. Whether
             you want a structured <strong>day itinerary</strong> or prefer to
             explore with freedom and backup, we’ve got you. <br />
@@ -106,7 +106,7 @@ const ArticlesPage = () => {
       content: (
         <>
           <p>
-            Planning a solo trip to Jaipur? Whether you're a woman traveler,
+            Planning a solo trip to Jaipur? Whether you&apos;re a woman traveler,
             digital nomad, or free-spirited explorer, CityHelps Jaipur is your
             trusted local companion. We combine authentic experiences, real-time
             help, and complete safety to give you the best solo travel
@@ -121,7 +121,7 @@ const ArticlesPage = () => {
             - 🛕 Hidden temples known only to locals <br />
             - 🧶 Home-based block printing workshops in Amer <br />
             - 🐪 Camel sunset ride ending with chai and folk music <br />
-            - 🛍️ Secret shopping lanes with Jaipur's best-kept bargains <br />
+            - 🛍️ Secret shopping lanes with Jaipur&apos;s best-kept bargains <br />
             These are the <strong>real hidden gems in Jaipur</strong>,
             handpicked to give you immersive joy without the tourist traps.
           </p>
@@ -133,12 +133,12 @@ const ArticlesPage = () => {
             <strong>
               safety is the top concern for solo female travelers in India
             </strong>
-            . That's why CityHelps Jaipur ensures: <br />
+            . That&apos;s why CityHelps Jaipur ensures: <br />
             - ✅ Verified guides, drivers, and hosts <br />
             - ✅ Optional female-led experiences <br />
             - ✅ 24/7 support via WhatsApp and call <br />
             - ✅ Transparent pricing, no hidden commissions <br />
-            We don't just plan your day — we've got your back, always.
+            We don&apos;t just plan your day — we&apos;ve got your back, always.
           </p>
           <p>
             <strong>
@@ -152,7 +152,7 @@ const ArticlesPage = () => {
             - Evening: Rooftop puppet show or Nahargarh Fort hike <br />
             - Optional swap: Replace monuments with block-printing, jewelry
             making, or food walks <br />
-            Whether you're into history, art, or food, our Jaipur travel planner
+            Whether you&apos;re into history, art, or food, our Jaipur travel planner
             makes it <strong>fun, flexible, and yours.</strong>
           </p>
           <p>

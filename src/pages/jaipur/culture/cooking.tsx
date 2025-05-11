@@ -82,12 +82,12 @@ const Cooking = () => {
         )}
 
         <p>
-          Food is not just what you eat—it's how people welcome, bless, and share joy. In Jaipur, cooking is
-          an expression of culture, hospitality, and heritage. And there's no better way to experience it than
+          Food is not just what you eat—it&apos;s how people welcome, bless, and share joy. In Jaipur, cooking is
+          an expression of culture, hospitality, and heritage. And there&apos;s no better way to experience it than
           stepping into a local kitchen.
         </p>
         <p>
-          With CityHelps, you're invited into the homes of warm, welcoming families who teach you how to cook
+          With CityHelps, you&apos;re invited into the homes of warm, welcoming families who teach you how to cook
           authentic Rajasthani dishes, the way their grandmothers taught them—with spice, soul, and stories.
         </p>
 
@@ -99,7 +99,7 @@ const Cooking = () => {
           sleeves and cook at least three dishes:
         </p>
         <ul>
-          <li>🟡 Dal Baati Churma – Rajasthan's signature dish</li>
+          <li>🟡 Dal Baati Churma – Rajasthan&apos;s signature dish</li>
           <li>🥟 Gatte ki Sabzi – Chickpea dumplings in yogurt curry</li>
           <li>🍛 Laal Maas – A fiery mutton delicacy (on request)</li>
           <li>🔥 Tandoori Roti & Mint Chutney – From scratch on clay or iron plates</li>
@@ -128,7 +128,7 @@ const Cooking = () => {
           <li>💍 Marriage traditions</li>
           <li>🎉 Festivals and fasts</li>
           <li>🔮 Astrology and local beliefs</li>
-          <li>🏘️ What it's like living in a haveli or joint family</li>
+          <li>🏘️ What it&apos;s like living in a haveli or joint family</li>
         </ul>
         <p>
           Many hosts are rich in heritage, and CityHelps provides interpreters on request.
@@ -136,7 +136,7 @@ const Cooking = () => {
 
         <h3>💡 Insider Tip</h3>
         <p>
-          Ask your host if they're open to sharing their family spice mix recipes—you'll feel like home in
+          Ask your host if they&apos;re open to sharing their family spice mix recipes—you&apos;ll feel like home in
           seconds back in your own kitchen.
         </p>
 

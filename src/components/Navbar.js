@@ -13,7 +13,6 @@ import ResetPasswordPopupContent from "@/components/ResetPasswordPopupContent";
 import { useAuth } from "@/contexts/AuthContext";
 import { HiOutlineMenuAlt1 } from "react-icons/hi";
 import {
-  FiMenu,
   FiX,
   FiUser,
   FiShoppingCart,
@@ -22,7 +21,6 @@ import {
   FiClock,
   FiDollarSign,
 } from "react-icons/fi";
-import { RiArrowDropDownLine } from "react-icons/ri";
 
 export default function Navigationbar() {
   const [panelOpen, setPanelOpen] = useState(false);

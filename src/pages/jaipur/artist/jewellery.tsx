@@ -96,7 +96,7 @@ const Jewellery = () => {
           artisan is a master of their craft.
         </p>
 
-        <h2>🔍 What You'll Explore</h2>
+        <h2>🔍 What You&apos;ll Explore</h2>
         <p>Our curated jewellery experiences let you witness and engage with:</p>
 
         <h3>🛕 Kundan and Meenakari Work</h3>
@@ -119,7 +119,7 @@ const Jewellery = () => {
           <li>📘 Learn how different gems are sourced—from Tanzanite to Emerald to Topaz</li>
           <li>🧪 Understand the difference between natural, heat-treated, and synthetic stones</li>
           <li>
-            At CityHelps-partnered workshops, you're invited to handle the stones, ask questions, and
+            At CityHelps-partnered workshops, you&apos;re invited to handle the stones, ask questions, and
             gain real insight—without pushy sales or gimmicks.
           </li>
         </ul>

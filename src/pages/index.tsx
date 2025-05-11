@@ -818,7 +818,7 @@ export default function Home() {
         </details>
 
         <details>
-          <summary>What's Included</summary>
+          <summary>What&apos;s Included</summary>
           <ul>
             {tourDetails.included.map((item, i) => (
               <li key={i}>✅ {item}</li>
@@ -827,7 +827,7 @@ export default function Home() {
         </details>
 
         <details>
-          <summary>What's Not Included</summary>
+          <summary>What&apos;s Not Included</summary>
           <ul>
             {tourDetails.excluded.map((item, i) => (
               <li key={i}>❌ {item}</li>

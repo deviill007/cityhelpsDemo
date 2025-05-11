@@ -95,7 +95,7 @@ const Carpets = () => {
           and artisan-run workshops where every knot is tied with purpose—and pride.
         </p>
 
-        <h2>👀 What You'll See</h2>
+        <h2>👀 What You&apos;ll See</h2>
         <h3>🧶 Hand-Knotting in Action</h3>
         <p>
           At verified showrooms and studios, you’ll witness master weavers seated on wooden looms, tying
@@ -105,7 +105,7 @@ const Carpets = () => {
         <ul>
           <li>✅ Understand how the knot density defines quality (some rugs have over 800 knots per square inch!)</li>
           <li>✅ Watch artisans work from graph patterns or create freehand motifs</li>
-          <li>✅ Try tying a few knots yourself if you're up for it!</li>
+          <li>✅ Try tying a few knots yourself if you&apos;re up for it!</li>
         </ul>
 
         <h3>🎨 Designs That Tell a Story</h3>
