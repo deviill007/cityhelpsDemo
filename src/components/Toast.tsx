@@ -17,10 +17,7 @@ export default function Toast({
   const [shouldStartProgress, setShouldStartProgress] = useState(!isLoading);
 
   useEffect(() => {
-    // If it's loading, don't start progress
-    if (isLoading || !shouldStartProgress) return;
-
-    if (isHovered) return;
+    if (isLoading || !shouldStartProgress || isHovered) return;
 
     const interval = setInterval(() => {
       setProgress((p) => {
@@ -29,98 +26,137 @@ export default function Toast({
           onClose();
           return 0;
         }
-        return p - 2;
+        return p - 1;
       });
-    }, 100);
+    }, 50);
 
     return () => clearInterval(interval);
   }, [onClose, isHovered, isLoading, shouldStartProgress]);
 
-  // When loading state changes to false, start the progress
   useEffect(() => {
     if (!isLoading) {
       setShouldStartProgress(true);
     }
   }, [isLoading]);
 
-  const bgColor = {
-    success: "#d4edda",
-    error: "#f8d7da",
-    info: "#cce5ff",
-    loading: "#e2e3e5",
-  };
-
   const textColor = {
-    success: "#155724",
-    error: "#721c24",
-    info: "#004085",
-    loading: "#383d41",
-  };
-
-  const progressColor = {
     success: "#28a745",
     error: "#dc3545",
     info: "#007bff",
     loading: "#6c757d",
   };
 
+  const progressColor = {
+    success: "#28a745",
+    error: "#dc3545",
+    info: "#007bff",
+    loading: "#adb5bd",
+  };
+
   return (
     <div
       style={{
-        width: "100%",
-        height: "70px",
         position: "fixed",
-        top: 0,
-        left: 0,
-        backgroundColor: bgColor[type],
-        color: textColor[type],
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        padding: "0 20px",
+        top: "20px",
+        left: "50%",
+        transform: "translateX(-50%)",
+        width: "90%",
+        maxWidth: "500px",
+        background: "#ffffff",
+        borderRadius: "16px",
+        padding: "16px 20px",
+        boxShadow: `
+          8px 8px 20px #d1d9e6,
+          -8px -8px 20px #ffffff
+        `,
         zIndex: 9999,
-        boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
+        display: "flex",
         flexDirection: "column",
+        overflow: "hidden",
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {shouldStartProgress && (
-        <div
-          style={{
-            width: "100%",
-            height: "4px",
-            backgroundColor: progressColor[type],
-            transform: `translateX(-${100 - progress}%)`,
-            transition: "transform 0.1s linear",
-          }}
-        />
-      )}
-
+      {/* Content */}
       <div
         style={{
           display: "flex",
-          width: "100%",
           alignItems: "center",
           justifyContent: "space-between",
-        maxWidth: "600px",
-          flex: 1,
+          gap: "12px",
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
           {isLoading && (
-            <ClipLoader
-              size={18}
-              color={textColor[type]}
-              loading={isLoading}
-            />
+            <ClipLoader size={18} color={textColor[type]} loading={isLoading} />
           )}
-          <p style={{ margin: 0, fontWeight: 600 }}>{message}</p>
+          <p
+            style={{
+              margin: 0,
+              fontWeight: 500,
+              fontSize: "1rem",
+              color: "#333",
+            }}
+          >
+            {message}
+          </p>
         </div>
-        <button className="close-popup" onClick={onClose}>
+        <button
+          onClick={onClose}
+          style={{
+            background: "#ffffff",
+            border: "none",
+            color: "#888",
+            fontSize: "20px",
+            fontWeight: "bold",
+            cursor: "pointer",
+            boxShadow: `
+              3px 3px 6px #d1d9e6,
+              -3px -3px 6px #ffffff
+            `,
+            borderRadius: "50%",
+            width: "32px",
+            height: "32px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            transition: "all 0.2s",
+          }}
+          onMouseEnter={(e) =>
+            (e.currentTarget.style.color = textColor[type])
+          }
+          onMouseLeave={(e) =>
+            (e.currentTarget.style.color = "#888")
+          }
+        >
           &times;
         </button>
       </div>
+
+      {/* Progress Bar */}
+      {shouldStartProgress && (
+        <div
+          style={{
+            marginTop: "12px",
+            height: "6px",
+            width: "100%",
+            borderRadius: "8px",
+            background: "#e0e5ec",
+            boxShadow: "inset 2px 2px 5px #d1d9e6, inset -2px -2px 5px #ffffff",
+            overflow: "hidden",
+          }}
+        >
+          <div
+            style={{
+              height: "100%",
+              width: `${progress}%`,
+              background: progressColor[type],
+              borderRadius: "8px",
+              transition: "width 0.1s linear",
+            }}
+          />
+        </div>
+      )}
     </div>
   );
 }

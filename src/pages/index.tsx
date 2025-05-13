@@ -5,11 +5,9 @@ import { useRouter } from "next/router";
 import { useSearchParams } from "next/navigation";
 import Popup from "@/components/Popup";
 import HomePagePopupContent from "@/components/HomePagePopupContent";
-import backClouds from "@/components/animations/back_clouds.jpg";
-import midFort from "@/components/animations/mid_fort.png";
-import frontGal from "@/components/animations/front_gall.png";
 import React from "react";
-import carImage from "@/components/animations/transport.png"
+import carImage from "@/components/animations/plane.png";
+import { IoMdArrowRoundBack } from "react-icons/io";
 
 const defaultPlan = [
   {
@@ -17,21 +15,21 @@ const defaultPlan = [
     name: "Optional: Sunrise Rooftop Yoga",
     price: 600,
     category: "Culture",
-    img: "🧘",
+    imageUrl: "/images/jaipur/yoga.png", // Add your image path
     description: "Start your day grounded with yoga on a heritage rooftop.",
     optional: true,
     alternatives: [
       {
         name: "Morning Walk + Temple Visit",
         price: 400,
-        img: "🚶‍♂",
+        imageUrl: "/images/jaipur/temple.jpg",
         description:
           "Leisurely walk through quiet lanes ending with temple darshan.",
       },
       {
         name: "Tea with Locals",
         price: 200,
-        img: "🍵",
+        imageUrl: "/images/chai.jpg",
         description: "Visit a local chaiwala and share morning stories.",
       },
     ],
@@ -41,7 +39,7 @@ const defaultPlan = [
     name: "Amber Fort & Sheesh Mahal",
     price: 500,
     category: "Classic",
-    img: "🏯",
+    imageUrl: "/images/jaipur/AmberFort.jpg",
     description:
       "Explore the grand Amber Fort, including the mirror palace (Sheesh Mahal), courtyards, and panoramic views of Maota Lake.",
     alternatives: [],
@@ -51,7 +49,7 @@ const defaultPlan = [
     name: "Panna Meena Ka Kund (Stepwell)",
     price: 100,
     category: "Classic",
-    img: "🪜",
+    imageUrl: "/images/jaipur/PannaMeena.jpg",
     description:
       "Visit this symmetrical 16th-century stepwell—a hidden gem known for its photogenic zigzag staircases.",
     alternatives: [],
@@ -61,20 +59,20 @@ const defaultPlan = [
     name: "Jal Mahal + Chai Stop",
     price: 100,
     category: "Classic",
-    img: "🍵",
+    imageUrl: "/images/jaipur/JalMahal.jpg",
     description:
       "Scenic photo stop at the Water Palace in Man Sagar Lake with a quick kulhad chai break.",
     alternatives: [
       {
         name: "Block Printing Workshop",
         price: 800,
-        img: "🖌",
+        imageUrl: "/images/jaipur/textileBlock.jpg",
         description: "Hands-on textile printing at an artisan studio.",
       },
       {
         name: "Miniature Painting / Pottery",
         price: 800,
-        img: "🎨",
+        imageUrl: "/images/jaipur/pottery.jpg",
         description:
           "Create your own blue pottery or learn intricate miniature painting.",
       },
@@ -85,7 +83,7 @@ const defaultPlan = [
     name: "Home Cooking + Lunch",
     price: 1500,
     category: "Culture",
-    img: "🍛",
+    imageUrl: "/images/jaipur/cooking.jpg",
     description:
       "Cook and eat with a Rajasthani family in their home. Learn regional recipes and stories behind each dish.",
     alternatives: [],
@@ -95,21 +93,21 @@ const defaultPlan = [
     name: "City Palace + Jantar Mantar",
     price: 300,
     category: "Classic",
-    img: "🏰",
+    imageUrl: "/images/jaipur/JantarMantar.jpg",
     description:
       "Visit the royal City Palace complex and Jantar Mantar observatory—both UNESCO heritage sites.",
     alternatives: [
       {
         name: "Cultural Street Walk",
         price: 500,
-        img: "🚶",
+        imageUrl: "/images/street-walk.jpg",
         description:
-          "Explore artisan lanes, temples, and Jaipur’s vibrant local life on foot.",
+          "Explore artisan lanes, temples, and Jaipur's vibrant local life on foot.",
       },
       {
         name: "Hidden Temple Visit",
         price: 300,
-        img: "🛕",
+        imageUrl: "/images/jaipur/temple.jpg",
         description:
           "Visit lesser-known, spiritual temples with a cultural guide.",
       },
@@ -120,7 +118,7 @@ const defaultPlan = [
     name: "Nahargarh Sunset Point",
     price: 200,
     category: "Classic",
-    img: "🌇",
+    imageUrl: "/images/jaipur/NahargarhSunset.jpg",
     description:
       "Enjoy panoramic views of Jaipur at golden hour from the Nahargarh Fort ramparts.",
     alternatives: [],
@@ -130,9 +128,9 @@ const defaultPlan = [
     name: "Govind Dev Ji Aarti",
     price: 0,
     category: "Culture",
-    img: "🪔",
+    imageUrl: "/images/jaipur/GovindDevJi.jpg",
     description:
-      "Evening temple aarti with joyful chanting at one of Jaipur’s most beloved Krishna temples.",
+      "Evening temple aarti with joyful chanting at one of Jaipur's most beloved Krishna temples.",
     alternatives: [],
   },
   {
@@ -140,7 +138,7 @@ const defaultPlan = [
     name: "Optional: Local Market Visit or Rooftop Dinner",
     price: 0,
     category: "Culture",
-    img: "🛍",
+    imageUrl: "/images/rooftop-dinner.jpg",
     description:
       "Explore night markets or enjoy a rooftop dinner with city views.",
     optional: true,
@@ -148,27 +146,28 @@ const defaultPlan = [
       {
         name: "Heritage Hotel Cultural Show",
         price: 600,
-        img: "🎭",
+        imageUrl: "/images/cultural-show.jpg",
         description:
           "Enjoy a folk dance and music performance with traditional dinner.",
       },
       {
         name: "Night Bazaar + Food Tasting",
         price: 400,
-        img: "🍢",
+        imageUrl: "/images/night-bazaar.jpg",
         description:
           "Walk through lively local bazaars and sample Rajasthani snacks.",
       },
     ],
   },
 ];
+
 const defaultPlanDay2 = [
   {
     time: "8:00 AM",
     name: "Albert Hall Museum",
     price: 300,
     category: "Classic",
-    img: "🏛️",
+    imageUrl: "/images/albert-hall.jpg",
     description: "Explore one of the oldest museums in Rajasthan.",
     optional: false,
     alternatives: [],
@@ -178,7 +177,7 @@ const defaultPlanDay2 = [
     name: "Galta Ji Monkey Temple",
     price: 200,
     category: "Spiritual",
-    img: "🐒",
+    imageUrl: "/images/monkey-temple.jpg",
     description: "Beautiful temple surrounded by hills and monkeys.",
     optional: false,
     alternatives: [],
@@ -188,7 +187,7 @@ const defaultPlanDay2 = [
     name: "Sisodia Rani Garden",
     price: 250,
     category: "Nature",
-    img: "🌺",
+    imageUrl: "/images/garden.jpg",
     description: "A peaceful garden perfect for a relaxing stroll.",
     optional: true,
     alternatives: [],
@@ -198,7 +197,7 @@ const defaultPlanDay2 = [
     name: "Patrika Gate",
     price: 150,
     category: "Photo Spot",
-    img: "🎨",
+    imageUrl: "/images/patrika-gate.jpg",
     description: "Instagram-famous gate with colorful Rajasthani art.",
     optional: true,
     alternatives: [],
@@ -388,16 +387,16 @@ export default function Home() {
     name: string;
     price: number;
     category: string;
-    img: string;
+    imageUrl: string; // Image path for main item
     description: string;
     optional: boolean;
+    selected: boolean; // For optional items' selection state
     alternatives: {
       name: string;
       price: number;
-      img: string;
+      imageUrl: string; // Image path for alternatives
       description: string;
     }[];
-    selected: boolean;
   };
 
   const [itinerary, setItinerary] = useState<ItineraryItem[]>([]);
@@ -410,6 +409,10 @@ export default function Home() {
   const [travellers, setTravellers] = useState(1);
   const [planName, setPlanName] = useState("1 Day Sightseeing in");
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [showReplaceDropdown, setShowReplaceDropdown] = useState(-1);
+  const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 });
+  const [innerTab, setInnerTab] = useState<1 | 2 | null>(null);
+  const replaceButtonRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   // Trigger popup after 5 seconds
   useEffect(() => {
@@ -425,37 +428,37 @@ export default function Home() {
     setIsPopupOpen(false); // Close the popup
   };
 
-  useEffect(() => {
-    const parallaxElements =
-      document.querySelectorAll<HTMLElement>(".parallax");
+  // useEffect(() => {
+  //   const parallaxElements =
+  //     document.querySelectorAll<HTMLElement>(".parallax");
 
-    const handleMouseMove = (e: MouseEvent) => {
-      const xValue = e.clientX - window.innerWidth / 2;
-      const yValue = e.clientY - window.innerHeight / 2;
+  //   const handleMouseMove = (e: MouseEvent) => {
+  //     const xValue = e.clientX - window.innerWidth / 2;
+  //     const yValue = e.clientY - window.innerHeight / 2;
 
-      parallaxElements.forEach((el) => {
-        const speedx = parseFloat(el.dataset.speedx || "0");
-        const speedy = parseFloat(el.dataset.speedy || "0");
-        const offset = el.dataset.offset || "0";
+  //     parallaxElements.forEach((el) => {
+  //       const speedx = parseFloat(el.dataset.speedx || "0");
+  //       const speedy = parseFloat(el.dataset.speedy || "0");
+  //       const offset = el.dataset.offset || "0";
 
-        el.style.transform = `translate(-50%, calc(-50% + ${
-          yValue * speedy
-        }px + ${offset})) translateX(${-xValue * speedx}px)`;
-      });
-    };
+  //       el.style.transform = `translate(-50%, calc(-50% + ${
+  //         yValue * speedy
+  //       }px + ${offset})) translateX(${-xValue * speedx}px)`;
+  //     });
+  //   };
 
-    // Initialize positions
-    parallaxElements.forEach((el) => {
-      const offset = el.dataset.offset || "0";
-      el.style.transform = `translate(-50%, calc(-50% + ${offset}))`;
-    });
+  //   // Initialize positions
+  //   parallaxElements.forEach((el) => {
+  //     const offset = el.dataset.offset || "0";
+  //     el.style.transform = `translate(-50%, calc(-50% + ${offset}))`;
+  //   });
 
-    window.addEventListener("mousemove", handleMouseMove);
+  //   window.addEventListener("mousemove", handleMouseMove);
 
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener("mousemove", handleMouseMove);
+  //   };
+  // }, []);
 
   useEffect(() => {
     const plan = selectedDay === "1 Day" ? defaultPlan : defaultPlanDay2;
@@ -496,7 +499,6 @@ export default function Home() {
   const handleReplace = (index: number, newItem: (typeof defaultPlan)[0]) => {
     const original = itinerary[index];
 
-    // Check if original already exists in newItem.alternatives
     const isOriginalAlreadyThere = newItem.alternatives?.some(
       (alt) => alt.name === original.name
     );
@@ -506,7 +508,7 @@ export default function Home() {
       ...newItem,
       time: original.time,
       selected: true,
-      optional: true,
+      optional: original.optional,
       alternatives: isOriginalAlreadyThere
         ? [...newItem.alternatives]
         : [
@@ -514,7 +516,7 @@ export default function Home() {
             {
               name: original.name,
               price: original.price,
-              img: original.img,
+              imageUrl: original.imageUrl,
               description: original.description,
             },
           ],
@@ -547,58 +549,6 @@ export default function Home() {
       <div className={styles.home}>
         {/* Hero Section */}
         <div className={styles.hero}>
-          {/* Background Layer (moves slowest) */}
-          <div
-            className={`${styles.parallax} parallax`}
-            data-speedx="0.15"
-            data-speedy="0.15"
-            data-offset="10px"
-          >
-            <Image
-              src={backClouds}
-              alt="Background Clouds"
-              fill
-              style={{ objectFit: "cover" }}
-              priority
-            />
-          </div>
-
-          {/* Middle Layer */}
-          <div
-            className={`${styles.parallax} ${styles.midLayer} parallax`}
-            data-speedx="0.1"
-            data-speedy="0.1"
-            data-offset="10px"
-          >
-            <Image
-              src={midFort}
-              alt="Middle Fort"
-              fill
-              style={{
-                objectFit: "cover",
-                transform: "translateY(300px) scale(.7)",
-              }}
-              priority
-            />
-          </div>
-
-          {/* Foreground Layer (moves fastest) */}
-          <div
-            className={`${styles.parallax} parallax`}
-            data-speedx="0.05"
-            data-speedy="0.05"
-            data-offset="10px"
-          >
-            <Image
-              src={frontGal}
-              alt="Front Galaxy"
-              fill
-              style={{ objectFit: "cover", transform: "scale(.9)" }}
-              priority
-            />
-          </div>
-
-          {/* Content */}
           <div className={styles.heroContent}>
             <h2>Explore Jaipur like a local</h2>
             <p>
@@ -649,223 +599,355 @@ export default function Home() {
         {/* Content Section */}
         <div className={styles.hero2}>
           {activeTab === 1 && (
-  <div className={styles.itineraryTab}>
-    <div className={styles.topBar}>
-      <button onClick={resetToDefault} className={styles.button}>
-        Reset Default
-      </button>
-      <select
-        value={selectedDay}
-        onChange={(e) => setSelectedDay(e.target.value)}
-        className={styles.dropdown}
-      >
-        <option>1 Day</option>
-        <option>2 Day</option>
-      </select>
-    </div>
-
-    <div className={styles.mainContainer}>
-      <div className={styles.itineraryContainer}>
-        {/* Cards Grid on Left */}
-        <div className={styles.cardsGrid}>
-          {itinerary.map((item, index) => (
-            <React.Fragment key={index}>
-              <div className={styles.card}>
-                <div className={styles.cardHeader}>
-                  {item.optional && (
-                    <input
-                      type="checkbox"
-                      className={styles.checkbox}
-                      checked={item.selected}
-                      onChange={(e) => {
-                        const updated = [...itinerary];
-                        updated[index].selected = e.target.checked;
-                        setItinerary(updated);
-                      }}
+            <div className={styles.itineraryTab}>
+              {innerTab === null && (
+                <div className={styles.selectionBlocks}>
+                  <div
+                    className={styles.selectionBlock}
+                    onClick={() => setInnerTab(1)}
+                  >
+                    <Image
+                      src="/images/jaipur/Homestay.jpg"
+                      alt="Sightseeing"
+                      width={500}
+                      height={500}
                     />
-                  )}
-
-                  <div className={styles.titleBlock}>
-                    <h3>{item.name}</h3>
-                    <p className={styles.category}>
-                      {item.optional ? "Optional" : "Mandatory"} • {item.category}
-                    </p>
+                    <div className={styles.selectionBlockText}>
+                      <h2>Homestays</h2>
+                      <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Autem quisquam similique nesciunt dolore blanditiis quos
+                        sapiente necessitatibus. Harum asperiores placeat, unde
+                      </p>
+                    </div>
                   </div>
-
-                  <div className={styles.metaBlock}>
-                    <span className={styles.time}>{item.time}</span>
-                    <span className={styles.emoji}>{item.img}</span>
-                    <span className={styles.price}>₹{item.price}</span>
-                  </div>
-                </div>
-
-                <p className={styles.description}>{item.description}</p>
-
-                {item.alternatives.length > 0 && (
-                  <div className={styles.replaceBox}>
-                    <select
-                      className={styles.dropdown}
-                      onChange={(e) => {
-                        const selectedAlt =
-                          item.alternatives[parseInt(e.target.value)];
-                        if (selectedAlt) {
-                          handleReplace(index, {
-                            ...selectedAlt,
-                            time: item.time,
-                            category: item.category,
-                            optional: true,
-                            alternatives: item.alternatives,
-                          });
-                        }
-                      }}
-                      defaultValue=""
-                    >
-                      <option value="" disabled>
-                        Replace
-                      </option>
-                      {item.alternatives.map((alt, i) => (
-                        <option key={i} value={i}>
-                          {alt.img} {alt.name} (₹{alt.price})
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                )}
-              </div>
-              
-              {/* Animated Path Line with Car after every 4 cards */}
-              {(index + 1) % 4 === 0 && index !== itinerary.length - 1 && (
-                <div className={styles.pathContainer} key={`path-${index}`}>
-                  <div className={styles.pathLine}>
-                    <div className={styles.car} style={{ '--row-index': Math.floor(index / 4) } as React.CSSProperties}>
-                      {/* 🏎️💨 */}
-                      <Image
-                        src={carImage}
-                        alt="Car Image"
-                        width={40}
-                        height={40}
-                      />
+                  <div
+                    className={styles.selectionBlock}
+                    onClick={() => setInnerTab(2)}
+                  >
+                    <Image
+                      src="/images/jaipur/Sightseeing.jpg"
+                      alt="Sightseeing"
+                      width={500}
+                      height={500}
+                    />
+                    <div className={styles.selectionBlockText}>
+                      <h2>Sightseeing</h2>
+                      <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Autem quisquam similique nesciunt dolore blanditiis quos
+                        sapiente necessitatibus. Harum asperiores placeat, unde
+                      </p>
                     </div>
                   </div>
                 </div>
               )}
-            </React.Fragment>
-          ))}
-        </div>
 
-        {/* Payment Box on Right */}
-        <div className={styles.paymentBox}>
-          <div className={styles.planInfo}>
-            <h3>🗺️ Itinerary Plan</h3>
-            <h2>{planName}</h2>
-            
-            <div className={styles.inputGroup}>
-              <label>Travel Dates</label>
-              <div className={styles.dateInputs}>
-                <input
-                  type="date"
-                  value={travelFrom}
-                  onChange={(e) => setTravelFrom(e.target.value)}
-                  className={styles.dateInput}
-                />
-                <span>to</span>
-                <input
-                  type="date"
-                  value={travelTill}
-                  onChange={(e) => setTravelTill(e.target.value)}
-                  className={styles.dateInput}
-                />
-              </div>
+              {innerTab === 1 && (
+                <div className={styles.innerContent}>
+                  <button
+                    className={styles.button}
+                    onClick={() => setInnerTab(null)}
+                  >
+                    <IoMdArrowRoundBack size={20}/>
+                    Back
+                  </button>
+                  <div className={styles.homestayContent}>
+                    <h2>Homestays</h2>
+                    <p>Show list of homestays here...</p>
+                  </div>
+                </div>
+              )}
+
+              {innerTab === 2 && (
+                <div className={styles.innerContent}>
+                  <button
+                    className={styles.button}
+                    onClick={() => setInnerTab(null)}
+                  >
+                    <IoMdArrowRoundBack size={20}/>
+                    Back
+                  </button>
+
+                  <div className={styles.itineraryTab}>
+                    <div className={styles.topBar}>
+                      <button
+                        onClick={resetToDefault}
+                        className={styles.button}
+                      >
+                        Reset Default
+                      </button>
+                      <select
+                        value={selectedDay}
+                        onChange={(e) => setSelectedDay(e.target.value)}
+                        className={styles.dropdown}
+                      >
+                        <option>1 Day</option>
+                        <option>2 Day</option>
+                      </select>
+                    </div>
+
+                    <div className={styles.mainContainer}>
+                      <div className={styles.itineraryContainer}>
+                        {/* Cards Grid on Left */}
+                        <div className={styles.cardsGrid}>
+                          {itinerary.map((item, index) => (
+                            <React.Fragment key={index}>
+                              <div
+                                className={`${styles.card} ${
+                                  item.optional && !item.selected
+                                    ? styles.dullCard
+                                    : ""
+                                }`}
+                              >
+                                {/* Card Buttons */}
+                                <div className={styles.cardButtons}>
+                                  {item.optional && (
+                                    <label className={styles.checkboxContainer}>
+                                      <input
+                                        type="checkbox"
+                                        checked={item.selected}
+                                        onChange={(e) => {
+                                          const updated = [...itinerary];
+                                          updated[index].selected =
+                                            e.target.checked;
+                                          setItinerary(updated);
+                                        }}
+                                      />
+                                      <span className={styles.checkmark}></span>
+                                    </label>
+                                  )}
+
+                                  {item.alternatives.length > 0 && (
+                                    <button
+                                      className={styles.replaceButton}
+                                      ref={(el) => {
+                                        replaceButtonRefs.current[index] = el;
+                                      }}
+                                      // assign ref
+                                      onClick={() => {
+                                        const btn =
+                                          replaceButtonRefs.current[index];
+                                        if (btn) {
+                                          const rect =
+                                            btn.getBoundingClientRect();
+                                          setDropdownPosition({
+                                            top:
+                                              rect.bottom + window.scrollY + 5, // few px below button
+                                            left: rect.left + window.scrollX,
+                                          });
+                                        }
+                                        setShowReplaceDropdown(
+                                          index === showReplaceDropdown
+                                            ? -1
+                                            : index
+                                        ); // toggle
+                                      }}
+                                    >
+                                      <Image
+                                        src="/icons/replace.png"
+                                        alt="Replace"
+                                        width={20}
+                                        height={20}
+                                      />
+                                    </button>
+                                  )}
+                                </div>
+
+                                {/* Card Image */}
+                                <div className={styles.cardImage}>
+                                  <Image
+                                    src={item.imageUrl}
+                                    alt={item.name}
+                                    width={1000}
+                                    height={1000}
+                                    // layout="responsive"
+                                  />
+                                </div>
+
+                                {/* Meta Info */}
+                                <div className={styles.metaInfo}>
+                                  <span className={styles.time}>
+                                    {item.time}
+                                  </span>
+                                  <span className={styles.price}>
+                                    ₹{item.price}
+                                  </span>
+                                </div>
+
+                                {/* Title */}
+                                <h3 className={styles.cardTitle}>
+                                  {item.name}
+                                </h3>
+
+                                {/* Description (shown on hover) */}
+                                <div className={styles.cardDescription}>
+                                  <p>{item.description}</p>
+                                </div>
+
+                                {/* Replace Dropdown */}
+                              </div>
+
+                              {/* Animated Path Line with Car after every 4 cards */}
+                              {(index + 1) % 4 === 0 &&
+                                index !== itinerary.length - 1 && (
+                                  <div
+                                    className={styles.pathContainer}
+                                    key={`path-${index}`}
+                                  >
+                                    <div className={styles.pathLine}>
+                                      <div
+                                        className={styles.car}
+                                        style={
+                                          {
+                                            "--row-index": Math.floor(
+                                              index / 4
+                                            ),
+                                          } as React.CSSProperties
+                                        }
+                                      >
+                                        <Image
+                                          src={carImage}
+                                          alt="Car Image"
+                                          width={40}
+                                          height={40}
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                )}
+                            </React.Fragment>
+                          ))}
+                        </div>
+
+                        {/* Payment Box on Right */}
+                        <div className={styles.paymentBox}>
+                          <div className={styles.planInfo}>
+                            <h3>🗺️ Itinerary Plan</h3>
+                            <h2>{planName}</h2>
+
+                            <div className={styles.inputGroup}>
+                              <label>Travel Dates</label>
+                              <div className={styles.dateInputs}>
+                                <input
+                                  type="date"
+                                  value={travelFrom}
+                                  onChange={(e) =>
+                                    setTravelFrom(e.target.value)
+                                  }
+                                  className={styles.dateInput}
+                                />
+                                <span>to</span>
+                                <input
+                                  type="date"
+                                  value={travelTill}
+                                  onChange={(e) =>
+                                    setTravelTill(e.target.value)
+                                  }
+                                  className={styles.dateInput}
+                                />
+                              </div>
+                            </div>
+
+                            <div className={styles.inputGroup}>
+                              <label>Number of Travellers</label>
+                              <input
+                                type="number"
+                                min="1"
+                                value={travellers}
+                                onChange={(e) =>
+                                  setTravellers(Number(e.target.value))
+                                }
+                                className={styles.travellerInput}
+                              />
+                            </div>
+
+                            <div className={styles.priceSummary}>
+                              <div className={styles.priceRow}>
+                                <span>Subtotal</span>
+                                <span>₹{totalPrice}</span>
+                              </div>
+                              <div className={styles.priceRow}>
+                                <span>Taxes & Fees</span>
+                                <span>
+                                  ₹{(totalPrice * 0.18 * 0).toFixed(2)}
+                                </span>
+                              </div>
+                              <div className={styles.totalPrice}>
+                                <span>Total</span>
+                                <span>₹{(totalPrice * 1).toFixed(2)}</span>
+                              </div>
+                            </div>
+
+                            <button className={styles.buyButton}>
+                              Buy Itinerary
+                            </button>
+                            <button className={styles.cartButton}>
+                              Add to Cart
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Description at Bottom */}
+                      <div className={styles.descriptionSection}>
+                        <details>
+                          <summary>Tour Description</summary>
+                          <p>{tourDetails.description}</p>
+                        </details>
+
+                        <details>
+                          <summary>What&apos;s Included</summary>
+                          <ul>
+                            {tourDetails.included.map((item, i) => (
+                              <li key={i}>✅ {item}</li>
+                            ))}
+                          </ul>
+                        </details>
+
+                        <details>
+                          <summary>What&apos;s Not Included</summary>
+                          <ul>
+                            {tourDetails.excluded.map((item, i) => (
+                              <li key={i}>❌ {item}</li>
+                            ))}
+                          </ul>
+                        </details>
+
+                        <details>
+                          <summary>Pickup Details</summary>
+                          <p>{tourDetails.pickupDetails}</p>
+                        </details>
+
+                        <details>
+                          <summary>Additional Information</summary>
+                          <ul>
+                            {tourDetails.additionalInfo.map((info, i) => (
+                              <li key={i}>📌 {info}</li>
+                            ))}
+                          </ul>
+                        </details>
+
+                        <details>
+                          <summary>Terms and Conditions</summary>
+                          <ul>
+                            {tourDetails.terms.map((term, i) => (
+                              <li key={i}>📄 {term}</li>
+                            ))}
+                          </ul>
+                        </details>
+
+                        <details>
+                          <summary>Our Liabilities & Limitations</summary>
+                          <p>{tourDetails.liability}</p>
+                        </details>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
-
-            <div className={styles.inputGroup}>
-              <label>Number of Travellers</label>
-              <input
-                type="number"
-                min="1"
-                value={travellers}
-                onChange={(e) => setTravellers(Number(e.target.value))}
-                className={styles.travellerInput}
-              />
-            </div>
-
-            <div className={styles.priceSummary}>
-              <div className={styles.priceRow}>
-                <span>Subtotal</span>
-                <span>₹{totalPrice}</span>
-              </div>
-              <div className={styles.priceRow}>
-                <span>Taxes & Fees</span>
-                <span>₹{(totalPrice * 0.18 * 0).toFixed(2)}</span>
-              </div>
-              <div className={styles.totalPrice}>
-                <span>Total</span>
-                <span>₹{(totalPrice * 1).toFixed(2)}</span>
-              </div>
-            </div>
-
-            <button className={styles.buyButton}>Buy Itinerary</button>
-            <button className={styles.cartButton}>Add to Cart</button>
-          </div>
-        </div>
-      </div>
-
-      {/* Description at Bottom */}
-      <div className={styles.descriptionSection}>
-        <details>
-          <summary>Tour Description</summary>
-          <p>{tourDetails.description}</p>
-        </details>
-
-        <details>
-          <summary>What&apos;s Included</summary>
-          <ul>
-            {tourDetails.included.map((item, i) => (
-              <li key={i}>✅ {item}</li>
-            ))}
-          </ul>
-        </details>
-
-        <details>
-          <summary>What&apos;s Not Included</summary>
-          <ul>
-            {tourDetails.excluded.map((item, i) => (
-              <li key={i}>❌ {item}</li>
-            ))}
-          </ul>
-        </details>
-
-        <details>
-          <summary>Pickup Details</summary>
-          <p>{tourDetails.pickupDetails}</p>
-        </details>
-
-        <details>
-          <summary>Additional Information</summary>
-          <ul>
-            {tourDetails.additionalInfo.map((info, i) => (
-              <li key={i}>📌 {info}</li>
-            ))}
-          </ul>
-        </details>
-
-        <details>
-          <summary>Terms and Conditions</summary>
-          <ul>
-            {tourDetails.terms.map((term, i) => (
-              <li key={i}>📄 {term}</li>
-            ))}
-          </ul>
-        </details>
-
-        <details>
-          <summary>Our Liabilities & Limitations</summary>
-          <p>{tourDetails.liability}</p>
-        </details>
-      </div>
-    </div>
-  </div>
-)}
+          )}
 
           {activeTab === 2 && (
             <div className={styles.sidebarLayout}>
@@ -897,7 +979,7 @@ export default function Home() {
                       <Image
                         src={item.img}
                         alt={item.title}
-                        className={styles.cardImage}
+                        className={styles.ecardImage}
                         width={500}
                         height={300}
                       />
@@ -976,6 +1058,39 @@ export default function Home() {
       <Popup isOpen={isPopupOpen} onClose={closePopup}>
         <HomePagePopupContent onClose={closePopup} />
       </Popup>
+      {showReplaceDropdown !== -1 && (
+        <div
+          className={styles.replaceDropdown}
+          style={{
+            position: "absolute",
+            top: dropdownPosition.top,
+            left: dropdownPosition.left,
+            zIndex: 999,
+          }}
+        >
+          {itinerary[showReplaceDropdown].alternatives.map((alt, i) => (
+            <div
+              key={i}
+              className={styles.replaceOption}
+              onClick={() => {
+                handleReplace(showReplaceDropdown, {
+                  ...alt,
+                  time: itinerary[showReplaceDropdown].time,
+                  category: itinerary[showReplaceDropdown].category,
+                  optional: true,
+                  alternatives: itinerary[showReplaceDropdown].alternatives,
+                });
+                setShowReplaceDropdown(-1);
+              }}
+            >
+              <div className={styles.replaceInfo}>
+                <span>{alt.name}</span>
+                <span>₹{alt.price}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </>
   );
 }

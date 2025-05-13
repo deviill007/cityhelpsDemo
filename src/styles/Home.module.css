@@ -31,32 +31,11 @@
   justify-content: center;
   text-align: center;
   color: white;
-}
-
-.parallax {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 120%;
-  height: 200%;
-  will-change: transform;
-  z-index: -1;
-}
-
-/* Layer-specific z-index */
-.parallax:nth-child(1) {
-  z-index: 1;
-}
-.parallax:nth-child(2) {
-  z-index: 2;
-  height: 250%;
-}
-.parallax:nth-child(3) {
-  z-index: 3;
-}
-
-.midLayer {
-  transform: translate(-50%, calc(-50% + 350px));
+  background-image: url("/images/HeroImage.png");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
 }
 
 .heroContent {
@@ -78,10 +57,11 @@
   margin: 10px;
 }
 .heroContent h2 {
+  font-size: 24px;
   margin: 0;
 }
 .heroContent p {
-  font-size: 1.1rem;
+  font-size: 14px;
   max-width: 700px;
 }
 
@@ -182,182 +162,103 @@
   align-items: center;
   padding: 20px;
 }
+.itineraryTab {
+  padding: 20px;
+}
 
-/* Unique experiences */
-.sidebarLayout {
+.selectionBlocks {
   display: flex;
-  flex-wrap: wrap;
   flex-direction: column;
-  min-height: 500px;
-  max-width: 1300px;
-  width: 100%;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
-  border-radius: 20px;
-}
-
-.sidebarButtons {
-  display: flex;
-  justify-content: flex-end;
-  gap: 12px;
-  min-width: 220px;
-  border-radius: 5px;
-  padding: 20px 15px;
-}
-
-.sidebarButtons p {
-  padding: 14px 18px;
-  font-size: 12px;
-  font-weight: 500;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  color: #333;
-  background-color: #f5f5f5;
-  border: 1.5px solid transparent;
-  letter-spacing: 0.3px;
-}
-
-.sidebarButtons p:hover {
-  background-color: #fff;
-  border-color: var(--hover-color);
-  color: var(--primary-color);
-  box-shadow: 0 0 0 2px rgba(228, 125, 49, 0.1);
-}
-
-.activeBtn {
-  background: linear-gradient(135deg, var(--hover-color), var(--active-color));
-  color: #ffffff !important;
-  border-color: var(--primary-color);
-  box-shadow: 0 4px 12px rgba(228, 125, 49, 0.25);
-}
-
-/* Custom Plan */
-.queryContainer {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
-  padding: 2rem;
-  border-radius: 20px;
-  background: var(--light-text);
-  max-width: 1200px;
-  margin-inline: auto;
-  margin-top: 2rem;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
-  align-items: stretch;
-}
-
-/* Image Section */
-.imageSection {
-  flex: 1;
-  min-width: 300px;
-  max-width: 500px;
-  display: flex;
+  gap: 30px;
   align-items: center;
-  justify-content: center;
+  margin: 40px 10px 20px 10px;
 }
 
-.imageSection img {
+.selectionBlock {
+  position: relative;
   width: 100%;
-  height: auto;
-  border-radius: 20px;
+  max-width: 900px;
+  height: 220px;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  background-color: #fff;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+.selectionBlock:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Background image */
+.selectionBlock img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  z-index: 1;
 }
 
-/* Form Section */
-.formSection {
-  flex: 1;
-  min-width: 320px;
-  padding: 2rem;
-  background: var(--light-text);
-  border-radius: 20px;
+/* Gradient overlay for text readability */
+.selectionBlock::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0) 30%, #ffffff 80%);
+  z-index: 2;
+}
+
+/* Text content */
+.selectionBlockText {
+  position: relative;
+  z-index: 3;
+  height: 100%;
+  width: 40%;
+  padding: 30px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
+  align-items: flex-end;
 }
 
-.formSection h2 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  font-family: "BlackChancery", sans-serif;
+.selectionBlockText h2 {
+  margin: 0 0 12px;
+  font-size: 26px;
   color: var(--dark-text);
 }
 
-.formSection h2 span {
-  color: var(--hover-color);
-}
-
-/* Form Structure */
-.queryForm {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.row {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.field {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.field label {
-  font-weight: 600;
-  font-size: 0.9rem;
-  margin-bottom: 0.4rem;
+.selectionBlockText p {
+  margin: 0;
+  font-size: 14px;
   color: var(--dark-text);
+  line-height: 1.5;
 }
 
-.field input,
-.field textarea {
-  padding: 0.75rem 1rem;
-  border: 1px solid var(--hover-color);
-  border-radius: 10px;
-  font-size: 0.95rem;
+.innerContent {
+  padding: 20px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+.homestayContent {
+  padding: 20px;
   background: #fff;
-  transition: border 0.3s ease;
+  border-radius: 8px;
 }
 
-.field input:focus,
-.field textarea:focus {
-  border-color: var(--active-color);
-  outline: none;
+.daySightseeing {
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
 }
-
-/* Specific to Textarea */
-.field textarea {
-  resize: vertical;
-  min-height: 150px;
-}
-
-/* Responsive Adjustments */
-@media (max-width: 960px) {
-  .queryContainer {
-    flex-direction: column;
-    align-items: center;
-    padding: 1.5rem;
-  }
-
-  .formSection {
-    width: 100%;
-    padding: 1.5rem;
-  }
-
-  .imageSection {
-    width: 100%;
-    max-width: 100%;
-  }
-
-  .row {
-    flex-direction: column;
-  }
-}
-
 /* Itinerary Tab Container */
 .itineraryTab {
   width: 100%;
@@ -384,6 +285,10 @@
 }
 
 .button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
   padding: 10px 20px;
   background: var(--primary-color);
   color: var(--light-text);
@@ -415,7 +320,6 @@
   color: var(--dark-text);
   min-width: 120px;
 }
-
 /* Main Content Layout */
 .itineraryContainer {
   display: flex;
@@ -429,18 +333,23 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 25px;
-  position: relative;
+  max-height: 600px;         /* Limit height */
+  overflow-y: auto;          /* Enable vertical scrolling */
+  padding-right: 10px;       /* Optional: avoid scrollbar overlapping content */
+  scrollbar-gutter: stable;  /* Keeps layout stable when scrollbar appears (modern browsers) */
 }
+
 
 .card {
   background: white;
   border-radius: 12px;
-  padding: 20px;
+  padding: 0;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
   position: relative;
   z-index: 1;
-  border: 1px solid var(--border-color);
+  overflow: hidden;
+  height: 300px;
 }
 
 .card:hover {
@@ -449,64 +358,178 @@
   border-color: var(--primary-color);
 }
 
-.cardHeader {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 12px;
+.dullCard {
+  opacity: 0.6;
+  filter: grayscale(50%);
 }
 
-.titleBlock h3 {
+.cardButtons {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 8px;
+  z-index: 2;
+}
+
+.checkboxContainer {
+  display: block;
+  position: relative;
+  cursor: pointer;
+}
+
+.checkmark {
+  display: block;
+  width: 24px;
+  height: 24px;
+  background: white;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+}
+
+.checkboxContainer input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.checkboxContainer input:checked ~ .checkmark {
+  background-color: var(--primary-color);
+}
+
+.replaceButton {
+  background: white;
+  border: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 1px 3px var(--shadow-color);
+}
+
+.cardImage {
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+  object-fit: cover;
+}
+
+.cardImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.card:hover .cardImage img {
+  transform: scale(1.05);
+}
+
+.metaInfo {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px;
+  font-size: 14px;
+  color: var(--dark-text);
+  background: white;
+}
+
+.cardTitle {
+  padding: 0 12px 12px;
   margin: 0;
   font-size: 16px;
   color: var(--dark-text);
 }
 
-.category {
-  font-size: 12px;
-  color: var(--grey-text);
-  margin: 4px 0 0;
+.cardDescription {
+  max-height: 0px;
+  overflow: hidden;
+  padding: 0 12px;
+  font-size: 14px;
+  color: var(--dark-text);
+  font-weight: 600;
+  line-height: 1.5;
+  transition: all 0.3s ease;
+  position: absolute;
+  bottom: 0;
+  background-color: var(--light-text);
+  min-height: 200px;
+  transform: rotateX(-90deg);
+  width: 100%;
 }
 
-.metaBlock {
+.card:hover .cardDescription {
+  min-height: 100%;
+  transform: rotateX(0);
+  padding: 0 12px 12px;
+}
+.cardDescription p {
+  margin-top: 20px;
+}
+.replaceDropdown {
+  background: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  padding: 10px;
+  width: 300px;
+  border-radius: 6px;
+  position: absolute; /* keep this */
+  z-index: 999;
+}
+
+.replaceOption {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-left: auto;
-}
-
-.time {
-  font-size: 14px;
-  color: var(--grey-text);
-}
-
-.emoji {
-  font-size: 20px;
-}
-
-.price {
-  font-weight: bold;
-  color: #2e7d32;
-}
-
-.description {
-  font-size: 14px;
-  color: var(--grey-text);
-  margin: 10px 0;
-  line-height: 1.5;
-}
-
-.replaceBox {
-  margin-top: 15px;
-}
-
-.replaceBox select {
-  width: 100%;
   padding: 8px;
-  border-radius: 6px;
-  border: 1px solid var(--border-color);
-  font-size: 14px;
-  background-color: white;
+  cursor: pointer;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.replaceOption:hover {
+  background: var(--disable-color);
+}
+
+.replaceImage {
+  width: 60px;
+  height: 60px;
+  margin-right: 10px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.replaceImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.replaceInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.replaceInfo span:first-child {
+  font-weight: 500;
   color: var(--dark-text);
+}
+
+.replaceInfo span:last-child {
+  color: #2e7d32;
+  font-weight: bold;
+}
+.cardImage {
+  width: 100%;
+  height: 180px; /* Fixed height */
+  overflow: hidden;
+}
+
+.cardImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* This ensures images fill the space while maintaining aspect ratio */
 }
 
 /* Animated Path with Car */
@@ -539,7 +562,6 @@
   left: 0;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 24px;
   animation: moveCar 4s linear infinite;
   animation-delay: calc(var(--row-index) * 4s);
   opacity: 0;
@@ -575,7 +597,6 @@
   position: sticky;
   top: 20px;
   border: 1px solid var(--border-color);
-  /* order: -1; */
 }
 
 .paymentBox h3 {
@@ -776,19 +797,6 @@
   top: 0;
 }
 
-/* Animation Keyframes */
-@keyframes gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
 /* Utility Classes */
 .highlighted {
   background-color: var(--highlight-color) !important;
@@ -797,124 +805,188 @@
   z-index: 2 !important;
 }
 
-/* Component Styles */
-.titleBlock h3 {
-  margin: 0;
-  font-size: 16px;
-  color: var(--dark-text);
+/* Optional fade animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.category {
+/* Unique experiences */
+.sidebarLayout {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  min-height: 500px;
+  max-width: 1300px;
+  width: 100%;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+  border-radius: 20px;
+}
+
+.sidebarButtons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  min-width: 220px;
+  border-radius: 5px;
+  padding: 20px 15px;
+}
+
+.sidebarButtons p {
+  padding: 14px 18px;
   font-size: 12px;
-  color: var(--grey-text);
-  margin: 4px 0 0;
-}
-
-.metaBlock {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-left: auto;
-}
-
-.time {
-  font-size: 14px;
-  color: var(--grey-text);
-}
-
-.emoji {
-  font-size: 20px;
-}
-
-.price {
-  font-weight: bold;
-  color: #2e7d32;
-}
-
-.description {
-  font-size: 14px;
-  color: var(--grey-text);
-  margin: 10px 0;
-  line-height: 1.5;
-}
-
-.replaceBox {
-  margin-top: 15px;
-}
-
-.replaceBox select {
-  width: 100%;
-  padding: 8px;
-  border-radius: 6px;
-  border: 1px solid var(--border-color);
-  font-size: 14px;
-}
-
-.cardHeader {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 12px;
-}
-
-.inputGroup {
-  margin-bottom: 20px;
-}
-
-.inputGroup label {
-  display: block;
-  margin-bottom: 8px;
   font-weight: 500;
-  color: var(--grey-text);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  color: #333;
+  background-color: #f5f5f5;
+  border: 1.5px solid transparent;
+  letter-spacing: 0.3px;
 }
 
-.dateInputs {
+.sidebarButtons p:hover {
+  background-color: #fff;
+  border-color: var(--hover-color);
+  color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(228, 125, 49, 0.1);
+}
+
+.activeBtn {
+  background: linear-gradient(135deg, var(--hover-color), var(--active-color));
+  color: #ffffff !important;
+  border-color: var(--primary-color);
+  box-shadow: 0 4px 12px rgba(228, 125, 49, 0.25);
+}
+
+/* Custom Plan */
+.queryContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding: 2rem;
+  border-radius: 20px;
+  background: var(--light-text);
+  max-width: 1200px;
+  margin-inline: auto;
+  margin-top: 2rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+  align-items: stretch;
+}
+
+/* Image Section */
+.imageSection {
+  flex: 1;
+  min-width: 300px;
+  max-width: 500px;
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
 }
 
-.dateInput,
-.travellerInput {
+.imageSection img {
   width: 100%;
-  padding: 10px;
-  border: 1px solid var(--border-color);
-  border-radius: 6px;
-  font-size: 14px;
+  height: auto;
+  border-radius: 20px;
+  object-fit: cover;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
 }
 
-.priceRow {
+/* Form Section */
+.formSection {
+  flex: 1;
+  min-width: 320px;
+  padding: 2rem;
+  background: var(--light-text);
+  border-radius: 20px;
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
-  font-size: 14px;
-  color: var(--grey-text);
+  flex-direction: column;
+  justify-content: center;
 }
 
-.totalPrice {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 15px;
-  padding-top: 15px;
-  border-top: 1px solid var(--border-color);
-  font-weight: bold;
-  font-size: 18px;
-}
-
-.descriptionSection summary {
-  font-weight: bold;
-  cursor: pointer;
-  padding: 8px 0;
-  font-size: 16px;
+.formSection h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  font-family: "BlackChancery", sans-serif;
   color: var(--dark-text);
-  list-style: none;
 }
 
-.descriptionSection p,
-.descriptionSection ul {
-  margin: 15px 0 0 20px;
-  color: var(--grey-text);
-  line-height: 1.6;
+.formSection h2 span {
+  color: var(--hover-color);
 }
+
+/* Form Structure */
+.queryForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.field label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 0.4rem;
+  color: var(--dark-text);
+}
+
+.field input,
+.field textarea {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--hover-color);
+  border-radius: 10px;
+  font-size: 0.95rem;
+  background: #fff;
+  transition: border 0.3s ease;
+}
+
+.field input:focus,
+.field textarea:focus {
+  border-color: var(--active-color);
+  outline: none;
+}
+
+/* Specific to Textarea */
+.field textarea {
+  resize: vertical;
+  min-height: 150px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 960px) {
+  .queryContainer {
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem;
+  }
+
+  .formSection {
+    width: 100%;
+    padding: 1.5rem;
+  }
+
+  .imageSection {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .row {
+    flex-direction: column;
+  }
+}
+
+
 
 /* Experience Card Designs */
 .ecardContainer {
@@ -943,7 +1015,7 @@
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
 }
 
-.cardImage {
+.ecardImage {
   width: 100%;
   height: 160px;
   object-fit: cover;
@@ -958,21 +1030,32 @@
 }
 
 /* responsiveness */
-@media (min-width: 1200px) {
+@media (max-width: 1200px) {
   .cardsGrid {
     grid-template-columns: repeat(4, 1fr);
   }
   .heroContent {
     padding: 35px;
   }
-  .heroContent h2 {
-    font-size: 2.2rem;
-  }
-  .heroContent p {
-    font-size: 1rem;
+.heroContent h2 {
+  font-size: 18px;
+  margin: 5px;
+}
+.heroContent p {
+  font-size: 12px;
+  max-width: 700px;
+}
+
+  .hero {
+    height: 60vh;
+    background-size: cover;
   }
 }
 @media (max-width: 1024px) {
+  .hero {
+    height: 50vh;
+    background-size: cover;
+  }
   .itineraryContainer {
     flex-direction: column;
   }
@@ -996,25 +1079,26 @@
     padding: 30px;
   }
   .heroContent h2 {
-    font-size: 2rem;
+    font-size: 18px;
+  }
+  .heroContent p{
+    max-width: 400px;
   }
 }
 @media (max-width: 768px) {
-  .hero h2 {
-    font-size: 28px;
-    margin-bottom: 0px;
+    .hero {
+    height: 45vh;
+    background-size: 110%;
+    background-size: cover;
   }
-  .hero p {
-    font-size: 16px;
-  }
-  .heroContent {
-    padding: 25px;
+  .heroContent{
+    padding: 20px;
   }
   .heroContent h2 {
-    font-size: 1.75rem;
+    font-size: 18px;
   }
-  .heroContent p {
-    font-size: 1rem;
+  .heroContent p{
+    font-size: 14px;
   }
   .heroContent .button {
     padding: 10px 20px;
@@ -1084,11 +1168,14 @@
   .time {
     font-size: 14px;
   }
+  .dateInputs{
+    flex-direction: column;
+  }
   .tabContent {
     padding: 0;
   }
   .ecardContainer {
-    padding: 0;
+    padding: 10;
   }
   .sidebarLayout {
     width: 90%;
@@ -1097,7 +1184,7 @@
     display: none;
   }
   .paymentBox {
-    order: 0; /* Reset order */
+    order: 0; 
     position: sticky;
     top: 20px;
     height: fit-content;
@@ -1109,6 +1196,9 @@
 
   .cardsGrid {
     grid-template-columns: repeat(2, 1fr);
+    max-height: none;
+    overflow-y: visible;
+    padding-right: 0;
   }
   .topBar {
     flex-direction: column;
@@ -1119,7 +1209,7 @@
   .button,
   .dropdown {
     width: 100%;
-    max-width: 300px;
+    max-width: 100px;
   }
 
   .cardsGrid {
@@ -1140,14 +1230,15 @@
   .mainContainer {
     padding: 0 15px;
   }
-  .heroContent {
-    padding: 20px;
+  .heroContent{
+    padding: 14px;
   }
   .heroContent h2 {
-    font-size: 1.5rem;
+    font-size: 16px;
   }
-  .heroContent p {
-    font-size: 0.95rem;
+  .heroContent p{
+    font-size: 12px;
+    max-width: 300px;
   }
   .heroContent .button {
     padding: 10px 18px;

@@ -125,11 +125,6 @@ export default function LoginPopupContent({ onClose, onLoginSuccess }: Props) {
   const sendOtp = async () => {
     if (cooldown > 0) return;
     setIsOtpLoading(true);
-    showToast({
-      message: "Sending OTP...",
-      type: "loading",
-      isLoading: true,
-    });
     try {
       const res = await fetch("/api/auth/sendOtp", {
         method: "POST",
@@ -210,11 +205,7 @@ export default function LoginPopupContent({ onClose, onLoginSuccess }: Props) {
 
     setIsLoginLoading(true);
     // Show loading toast
-    showToast({
-      message: "Logging in...",
-      type: "loading",
-      isLoading: true,
-    });
+
 
     try {
       const res = await fetch("/api/auth/login", {
@@ -266,12 +257,7 @@ export default function LoginPopupContent({ onClose, onLoginSuccess }: Props) {
   const handleGoogleLogin = async () => {
     setGoogleError("");
     setIsGoogleLoading(true);
-    // Show loading toast immediately
-    // showToast({
-    //   message: "Connecting to Google...",
-    //   type: "loading",
-    //   isLoading: true
-    // });
+
 
     try {
       if (!window.google?.accounts) {
@@ -365,12 +351,6 @@ export default function LoginPopupContent({ onClose, onLoginSuccess }: Props) {
 
     setIsResetRequesting(true);
 
-    // Show loading toast (no progress bar)
-    showToast({
-      message: "Sending password reset link...",
-      type: "loading",
-      isLoading: true,
-    });
 
     try {
       const res = await fetch("/api/auth/request-reset", {

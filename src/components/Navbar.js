@@ -329,13 +329,7 @@ export default function Navigationbar() {
           </Link>
           <Link href="/cart" onClick={() => setIsMobileMenuOpen(false)}>
             <div className="user-icon">
-              <Image
-                height={20}
-                width={20}
-                src="/icons/shopping-cart.png"
-                alt="cart icon"
-              />
-              <div className="username">Cart</div>
+             <FiShoppingCart size={20} />
             </div>
           </Link>
           <div className="user-wrapper">
