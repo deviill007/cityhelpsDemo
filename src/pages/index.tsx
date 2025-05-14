@@ -415,14 +415,19 @@ export default function Home() {
   const replaceButtonRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   // Trigger popup after 5 seconds
-  useEffect(() => {
+useEffect(() => {
+  const hasSeenHomePopup = sessionStorage.getItem("hasSeenHomePopup");
+
+  if (!hasSeenHomePopup) {
     const timer = setTimeout(() => {
       setIsPopupOpen(true);
-    }, 100); // 5 seconds after page load
+      sessionStorage.setItem("hasSeenHomePopup", "true");
+    }, 100); // show after 100ms
 
-    // Cleanup timer on unmount
     return () => clearTimeout(timer);
-  }, []);
+  }
+}, []);
+
 
   const closePopup = () => {
     setIsPopupOpen(false); // Close the popup
@@ -602,25 +607,7 @@ export default function Home() {
             <div className={styles.itineraryTab}>
               {innerTab === null && (
                 <div className={styles.selectionBlocks}>
-                  <div
-                    className={styles.selectionBlock}
-                    onClick={() => setInnerTab(1)}
-                  >
-                    <Image
-                      src="/images/jaipur/Homestay.jpg"
-                      alt="Sightseeing"
-                      width={500}
-                      height={500}
-                    />
-                    <div className={styles.selectionBlockText}>
-                      <h2>Homestays</h2>
-                      <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Autem quisquam similique nesciunt dolore blanditiis quos
-                        sapiente necessitatibus. Harum asperiores placeat, unde
-                      </p>
-                    </div>
-                  </div>
+                  {/* Sightseeing (enabled) */}
                   <div
                     className={styles.selectionBlock}
                     onClick={() => setInnerTab(2)}
@@ -640,6 +627,27 @@ export default function Home() {
                       </p>
                     </div>
                   </div>
+
+                  {/* Homestays (disabled) */}
+                  <div
+                    className={`${styles.selectionBlock} ${styles.disabledBlock}`}
+                  >
+                    <span className={styles.comingSoonBadge}>Coming Soon</span>
+                    <Image
+                      src="/images/jaipur/Homestay.jpg"
+                      alt="Homestay"
+                      width={500}
+                      height={500}
+                    />
+                    <div className={styles.selectionBlockText}>
+                      <h2>Homestays</h2>
+                      <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Autem quisquam similique nesciunt dolore blanditiis quos
+                        sapiente necessitatibus. Harum asperiores placeat, unde
+                      </p>
+                    </div>
+                  </div>
                 </div>
               )}
 
@@ -649,7 +657,7 @@ export default function Home() {
                     className={styles.button}
                     onClick={() => setInnerTab(null)}
                   >
-                    <IoMdArrowRoundBack size={20}/>
+                    <IoMdArrowRoundBack size={20} />
                     Back
                   </button>
                   <div className={styles.homestayContent}>
@@ -665,11 +673,10 @@ export default function Home() {
                     className={styles.button}
                     onClick={() => setInnerTab(null)}
                   >
-                    <IoMdArrowRoundBack size={20}/>
+                    <IoMdArrowRoundBack size={20} />
                     Back
                   </button>
 
-                  <div className={styles.itineraryTab}>
                     <div className={styles.topBar}>
                       <button
                         onClick={resetToDefault}
@@ -734,7 +741,7 @@ export default function Home() {
                                           setDropdownPosition({
                                             top:
                                               rect.bottom + window.scrollY + 5, // few px below button
-                                            left: rect.left + window.scrollX,
+                                            left: rect.right + window.scrollX,
                                           });
                                         }
                                         setShowReplaceDropdown(
@@ -789,7 +796,7 @@ export default function Home() {
                               </div>
 
                               {/* Animated Path Line with Car after every 4 cards */}
-                              {(index + 1) % 4 === 0 &&
+                              {(index + 1) % 3 === 0 &&
                                 index !== itinerary.length - 1 && (
                                   <div
                                     className={styles.pathContainer}
@@ -851,15 +858,38 @@ export default function Home() {
 
                             <div className={styles.inputGroup}>
                               <label>Number of Travellers</label>
-                              <input
-                                type="number"
-                                min="1"
-                                value={travellers}
-                                onChange={(e) =>
-                                  setTravellers(Number(e.target.value))
-                                }
-                                className={styles.travellerInput}
-                              />
+                              <div className={styles.travellerInputWrapper}>
+                                <button
+                                  type="button"
+                                  className={styles.counterButton}
+                                  onClick={() =>
+                                    setTravellers((prev) =>
+                                      Math.max(1, prev - 1)
+                                    )
+                                  }
+                                >
+                                  −
+                                </button>
+                                <input
+                                  type="number"
+                                  min="1"
+                                  value={travellers}
+                                  onChange={(e) => {
+                                    const val = Number(e.target.value);
+                                    if (val >= 1) setTravellers(val);
+                                  }}
+                                  className={styles.travellerInput}
+                                />
+                                <button
+                                  type="button"
+                                  className={styles.counterButton}
+                                  onClick={() =>
+                                    setTravellers((prev) => prev + 1)
+                                  }
+                                >
+                                  +
+                                </button>
+                              </div>
                             </div>
 
                             <div className={styles.priceSummary}>
@@ -943,7 +973,6 @@ export default function Home() {
                         </details>
                       </div>
                     </div>
-                  </div>
                 </div>
               )}
             </div>

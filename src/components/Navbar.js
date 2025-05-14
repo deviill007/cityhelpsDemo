@@ -36,6 +36,7 @@ export default function Navigationbar() {
   const { user, setUser, logout } = useAuth();
   const router = useRouter();
   const showToast = useToast();
+  const isMobile = typeof window !== "undefined" && window.innerWidth <= 768;
 
   useEffect(() => {
     if (router.pathname === "/reset/[token]") {
@@ -288,7 +289,7 @@ export default function Navigationbar() {
                   </div>
                 )}
 
-                <div
+                {/* <div
                   className="profile-option"
                   onClick={() => setPopupType("currency")}
                 >
@@ -306,7 +307,7 @@ export default function Navigationbar() {
                       alt=""
                     />
                   </div>
-                </div>
+                </div> */}
               </div>
             )}
           </div>
@@ -328,21 +329,21 @@ export default function Navigationbar() {
             Support
           </Link>
           <Link href="/cart" onClick={() => setIsMobileMenuOpen(false)}>
-            <div className="user-icon">
+            {/* <div className="user-icon"> */}
              <FiShoppingCart size={20} />
-            </div>
+            {/* </div> */}
           </Link>
           <div className="user-wrapper">
             <div
-              className="user-icon"
-              ref={iconRef}
-              onMouseEnter={handleMouseEnter}
-              onClick={() => {
-                if (!openedByHover.current) {
-                  setPanelOpen((prev) => !prev);
-                }
-              }}
-            >
+  className="user-icon"
+  ref={iconRef}
+  onMouseEnter={!isMobile ? handleMouseEnter : undefined}
+  onClick={() => {
+    if (!openedByHover.current || isMobile) {
+      setPanelOpen((prev) => !prev);
+    }
+  }}
+>
               <FiUser size={20} />
               <div className="username">
                 {user?.name?.split(" ")[0] || "Profile"}
@@ -441,7 +442,7 @@ export default function Navigationbar() {
                     setIsMobileMenuOpen(false);
                   }}
                 >
-                  <div className="option-left">
+                  {/* <div className="option-left">
                     <FiDollarSign size={20} />
                     <span>Currency</span>
                   </div>
@@ -454,7 +455,7 @@ export default function Navigationbar() {
                       src="/icons/next.png"
                       alt=""
                     />
-                  </div>
+                  </div> */}
                 </div>
               </div>
             )}
