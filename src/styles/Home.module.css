@@ -31,7 +31,7 @@
   justify-content: center;
   text-align: center;
   color: white;
-  background-image: url("../components/animations/heroImage.jpg");
+  background-image: url("../components/animations/HeroImage2.jpg");
   background-size: 110%;
   background-position: center;
   background-attachment: fixed;
@@ -45,12 +45,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); */
   border-radius: 10px;
   color: #333;
   font-weight: 500;
@@ -197,25 +197,9 @@
 
 /* Background image */
 .selectionBlock img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
   height: 100%;
   object-fit: cover;
   z-index: 1;
-}
-
-/* Gradient overlay for text readability */
-.selectionBlock::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to right, rgba(255, 255, 255, 0) 30%, #ffffff 80%);
-  z-index: 2;
 }
 
 /* Text content */
@@ -242,35 +226,26 @@
   font-size: 14px;
   color: var(--dark-text);
   line-height: 1.5;
+  text-align: end;
 }
-.selectionBlock span{
+.selectionBlock span {
   position: absolute;
   top: 0;
   left: 0;
-  background-color: var(--primary-color);
-}
-/* Disable pointer events and reduce hover effect */
-.disabledBlock {
-  pointer-events: none;
-  opacity: 0.7;
-  cursor: default;
+  z-index: 4;
 }
 
+.disabledBlock {
+  pointer-events: none;
+  cursor: default;
+}
 .comingSoonBadge {
   position: absolute;
-  top: 12px;
-  right: 0px;
-  background-color: #ff5e5e;
-  color: white;
-  font-size: 12px;
-  font-weight: bold;
-  padding: 6px 10px;
-  border-radius: 8px;
+  top: 0;
+  left: 10px;
   z-index: 4;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  height: 30px;
+  width: 100px; /* or adjust as needed */
+  height: auto;
 }
 
 
@@ -278,11 +253,11 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   gap: 10px;
-  max-width: 1300px;
   padding: 20px;
   animation: fadeIn 0.3s ease-in-out;
+  margin-top: 100px;
 }
 .homestayContent {
   padding: 20px;

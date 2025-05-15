@@ -1,25 +1,24 @@
-/* components/404.module.css */
-
 .container {
   text-align: center;
   margin-top: 50px;
+  padding: 0 20px;
 }
 
 .title {
   font-size: 30px;
-  color: #e47d31;
+  color: var(--primary-color);
   margin-top: 20px;
 }
 
 .subtitle {
   font-size: 20px;
-  color: #e47d31;
+  color: var(--primary-color);
   margin-top: 10px;
 }
 
 .description {
   font-size: 14px;
-  color: #333;
+  color: var(--dark-text);
   padding: 20px;
   margin-bottom: 10px;
 }
@@ -27,24 +26,31 @@
 .homeButton {
   display: inline-block;
   font-size: 18px;
-  color: #fff;
+  color: var(--light-text);
   padding: 12px 24px;
-  background-color: #e47d31;
+  background-color: var(--primary-color);
   margin: 10px;
   border-radius: 10px;
   text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.homeButton:hover {
+  background-color: var(--hover-color);
 }
 
 .supportText {
   font-size: 14px;
-  color: #333;
+  color: var(--dark-text);
   padding: 20px;
   margin-top: 10px;
 }
 
 .supportEmail {
-  color: #e47d31;
+  color: var(--primary-color);
+  font-weight: 500;
 }
+
 .lottieWrapper {
   width: 100%;
   max-width: 500px;
@@ -61,6 +67,7 @@
   .lottieWrapper {
     max-width: 300px;
   }
+
   .container {
     padding: 30px 20px;
   }

@@ -19,7 +19,7 @@ import {
   FiLogIn,
   FiLogOut,
   FiClock,
-  FiDollarSign,
+  // FiDollarSign,
 } from "react-icons/fi";
 
 export default function Navigationbar() {
@@ -141,7 +141,7 @@ export default function Navigationbar() {
 
   return (
     <div className="navbar">
-      <div className="logo">CityHelps</div>
+      <div className="logo" onClick={() => router.push("/")}>CityHelps</div>
 
       <button
         className="menu-button"
