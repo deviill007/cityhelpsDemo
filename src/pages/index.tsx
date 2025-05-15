@@ -257,7 +257,7 @@ useEffect(() => {
                     <div className={styles.selectionBlockText}>
                       <h2>Sightseeing</h2>
                       <p>
-                        Explore the city's iconic landmarks and hidden gems with expert local guides.
+                        Explore the city&apos;s iconic landmarks and hidden gems with expert local guides.
                       </p>
                     </div>
                   </div>

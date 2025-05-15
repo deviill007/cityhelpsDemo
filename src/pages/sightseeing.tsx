@@ -201,8 +201,8 @@ const defaultPlanDay2 = [
   },
 ];
 
-export default function sightseeing() {
-      const router = useRouter();
+export default function Sightseeing() {
+  const router = useRouter();
 
   const tourDetails = {
     description: `Experience Jaipur like a local by taking an autorickshaw (also known as tuk-tuk in Southeast Asia) on this full-day sightseeing tour. Your friendly driver will pick you up from your hotel and take you to all the must-see attractions, such as the City Palace, Hawa Mahal or “Palace of Winds”, Jantar Mantar observatory, and Amber Fort. Get ready for an authentic and immersive experience of Jaipur’s rich culture and history!`,
@@ -265,7 +265,6 @@ export default function sightseeing() {
   };
 
   const [itinerary, setItinerary] = useState<ItineraryItem[]>([]);
-
   const [selectedDay, setSelectedDay] = useState("1 Day");
   const [travelFrom, setTravelFrom] = useState("");
   const [travelTill, setTravelTill] = useState("");
@@ -340,32 +339,14 @@ export default function sightseeing() {
 
   const totalPrice = basePrice * travellers;
 
-  const tabsRef = useRef<HTMLDivElement | null>(null);
-
-  const handleScrollToTabs = () => {
-    const navbarHeight = 69;
-    if (tabsRef.current) {
-      const top = tabsRef.current.getBoundingClientRect().top + window.scrollY;
-      window.scrollTo({
-        top: top - navbarHeight,
-        behavior: "smooth",
-      });
-    }
-  };
-
   return (
     <>
       <div className={styles.innerContent}>
-        
-
         <div className={styles.topBar}>
-            <button className={styles.button} 
-            onClick={() => router.back()}
-
-        >
-          <IoMdArrowRoundBack size={20} />
-          Back
-        </button>
+          <button className={styles.button} onClick={() => router.back()}>
+            <IoMdArrowRoundBack size={20} />
+            Back
+          </button>
           <button onClick={resetToDefault} className={styles.button}>
             Reset Default
           </button>
