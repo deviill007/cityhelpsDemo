@@ -2,9 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import styles from "@/styles/Home.module.css";
 import React from "react";
-import carImage from "@/components/animations/plane.png";
-import { IoMdArrowRoundBack } from "react-icons/io";
-import { useRouter } from "next/router";
 
 const defaultPlan = [
   {
@@ -135,7 +132,7 @@ const defaultPlan = [
     name: "Optional: Local Market Visit or Rooftop Dinner",
     price: 0,
     category: "Culture",
-    imageUrl: "/images/rooftop-dinner.jpg",
+    imageUrl: "/images/jaipur/temple.jpg",
     description:
       "Explore night markets or enjoy a rooftop dinner with city views.",
     optional: true,
@@ -202,8 +199,6 @@ const defaultPlanDay2 = [
 ];
 
 export default function Sightseeing() {
-  const router = useRouter();
-
   const tourDetails = {
     description: `Experience Jaipur like a local by taking an autorickshaw (also known as tuk-tuk in Southeast Asia) on this full-day sightseeing tour. Your friendly driver will pick you up from your hotel and take you to all the must-see attractions, such as the City Palace, Hawa Mahal or “Palace of Winds”, Jantar Mantar observatory, and Amber Fort. Get ready for an authentic and immersive experience of Jaipur’s rich culture and history!`,
 
@@ -343,10 +338,14 @@ export default function Sightseeing() {
     <>
       <div className={styles.innerContent}>
         <div className={styles.topBar}>
-          <button className={styles.button} onClick={() => router.back()}>
+          {/* <h2>Headline:
+Partly Planned, Fully Yours – Jaipur in a Day
+Subheadline:
+Blend iconic landmarks with handpicked activities you can customize. Perfect balance of guidance and freedom.</h2> */}
+          {/* <button className={styles.button} onClick={() => router.back()}>
             <IoMdArrowRoundBack size={20} />
             Back
-          </button>
+          </button> */}
           <button onClick={resetToDefault} className={styles.button}>
             Reset Default
           </button>
@@ -446,29 +445,6 @@ export default function Sightseeing() {
 
                     {/* Replace Dropdown */}
                   </div>
-
-                  {/* Animated Path Line with Car after every 4 cards */}
-                  {(index + 1) % 3 === 0 && index !== itinerary.length - 1 && (
-                    <div className={styles.pathContainer} key={`path-${index}`}>
-                      <div className={styles.pathLine}>
-                        <div
-                          className={styles.car}
-                          style={
-                            {
-                              "--row-index": Math.floor(index / 4),
-                            } as React.CSSProperties
-                          }
-                        >
-                          <Image
-                            src={carImage}
-                            alt="Car Image"
-                            width={40}
-                            height={40}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  )}
                 </React.Fragment>
               ))}
             </div>

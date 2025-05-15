@@ -8,7 +8,7 @@ import HomePagePopupContent from "@/components/HomePagePopupContent";
 import React from "react";
 
 
-type Experience = { title: string; img: string; link: string };
+type Experience = { title: string; img: string; link: string; price: string };
 const experiences: Record<number, Experience[]> = {
   0: [
     // Explore Everything
@@ -16,61 +16,73 @@ const experiences: Record<number, Experience[]> = {
       title: "Morning Treks",
       img: "/images/jaipur/morningTrek.jpg",
       link: "/jaipur/nature/morningTrek",
+      price: "₹ 599",
     },
     {
       title: "Elephant Walks",
       img: "/images/jaipur/elephantWalks.jpg",
       link: "/jaipur/nature/elephantWalks",
+      price: "₹ 599",
     },
     {
       title: "Leopard Safari",
       img: "/images/jaipur/leopardSafari.jpg",
       link: "/jaipur/nature/leopardSafari",
+      price: "₹ 599",
     },
     {
       title: "Handicrafts",
       img: "/images/jaipur/handicrafts.jpg",
       link: "/jaipur/artist/handicrafts",
+      price: "₹ 599",
     },
     {
       title: "Jewellery",
       img: "/images/jaipur/jewellery.jpg",
       link: "/jaipur/artist/jewellery",
+      price: "₹ 599",
     },
     {
       title: "Carpets",
       img: "/images/jaipur/carpets.jpg",
       link: "/jaipur/artist/carpets",
+      price: "₹ 599",
     },
     {
       title: "Textile and Block Printing",
       img: "/images/jaipur/textileBlock.jpg",
       link: "/jaipur/artist/textile",
+      price: "₹ 599",
     },
     {
       title: "Cooking",
       img: "/images/jaipur/cooking.jpg",
       link: "/jaipur/culture/cooking",
+      price: "₹ 599",
     },
     {
       title: "Yoga",
       img: "/images/jaipur/yoga.png",
       link: "/jaipur/culture/yoga",
+      price: "₹ 599",
     },
     {
       title: "Temple Walk",
       img: "/images/jaipur/temple.jpg",
       link: "/jaipur/culture/templeWalk",
+      price: "₹ 599",
     },
     {
       title: "Pottery",
       img: "/images/jaipur/pottery.jpg",
       link: "/jaipur/culture/pottery",
+      price: "₹ 599",
     },
     {
       title: "Street Food Walk",
       img: "/images/jaipur/streetFoods.jpg",
       link: "/jaipur/culture/streetFood",
+      price: "₹ 599",
     },
   ],
   1: [
@@ -79,16 +91,19 @@ const experiences: Record<number, Experience[]> = {
       title: "Morning Treks",
       img: "/images/jaipur/morningTrek.jpg",
       link: "/jaipur/nature/morningTrek",
+      price: "₹ 599",
     },
     {
       title: "Elephant Walks",
       img: "/images/jaipur/elephantWalks.jpg",
       link: "/jaipur/nature/elephantWalks",
+      price: "₹ 599",
     },
     {
       title: "Leopard Safari",
       img: "/images/jaipur/leopardSafari.jpg",
       link: "/jaipur/nature/leopardSafari",
+      price: "₹ 599",
     },
   ],
   2: [
@@ -97,21 +112,25 @@ const experiences: Record<number, Experience[]> = {
       title: "Cooking",
       img: "/images/jaipur/cooking.jpg",
       link: "/jaipur/culture/cooking",
+      price: "₹ 599",
     },
     {
       title: "Yoga",
       img: "/images/jaipur/yoga.png",
       link: "/jaipur/culture/yoga",
+      price: "₹ 599",
     },
     {
       title: "Temple Walk",
       img: "/images/jaipur/temple.jpg",
       link: "/jaipur/culture/templeWalk",
+      price: "₹ 599",
     },
     {
       title: "Street Food Walk",
       img: "/images/jaipur/streetFoods.jpg",
       link: "/jaipur/culture/streetFood",
+      price: "₹ 599",
     },
   ],
   3: [
@@ -120,21 +139,25 @@ const experiences: Record<number, Experience[]> = {
       title: "Handicrafts",
       img: "/images/jaipur/handicrafts.jpg",
       link: "/jaipur/artist/handicrafts",
+      price: "₹ 599",
     },
     {
       title: "Jewellery",
       img: "/images/jaipur/jewellery.jpg",
       link: "/jaipur/artist/jewellery",
+      price: "₹ 599",
     },
     {
       title: "Carpets",
       img: "/images/jaipur/carpets.jpg",
       link: "/jaipur/artist/carpets",
+      price: "₹ 599",
     },
     {
       title: "Textile and Block Printing",
       img: "/images/jaipur/textileBlock.jpg",
       link: "/jaipur/artist/textile",
+      price: "₹ 599",
     },
   ],
 };
@@ -241,15 +264,14 @@ useEffect(() => {
         <div className={styles.hero2}>
           {activeTab === 1 && (
             <div className={styles.itineraryTab}>
-              {/* {innerTab === null && ( */}
                 <div className={styles.selectionBlocks}>
-                  {/* Sightseeing (enabled) */}
                   <div
                     className={styles.selectionBlock}
-                    onClick={() => router.push("/sightseeing")}
+                    onClick={() => window.open("/sightseeing", "_blank")}
+
                   >
                     <Image
-                      src="/images/sightseeings.jpg"
+                      src="/images/sightseeing.jpg"
                       alt="Sightseeing"
                       width={500}
                       height={500}
@@ -257,7 +279,8 @@ useEffect(() => {
                     <div className={styles.selectionBlockText}>
                       <h2>Sightseeing</h2>
                       <p>
-                        Explore the city&apos;s iconic landmarks and hidden gems with expert local guides.
+                        Explore the city&apos;s iconic landmarks and hidden gems with expert local guides. <br/>
+                        <span>From <span className={styles.price}>₹5,999</span> per person</span>
                       </p>
                     </div>
                   </div>
@@ -273,13 +296,14 @@ useEffect(() => {
                       height={100}
                     /></span>
                     <Image
-                      src="/images/jaipur/Homestay.jpg"
+                    className={styles.dullCard}
+                      src="/images/Homestays.jpg"
                       alt="Homestay"
                       width={500}
                       height={500}
                     />
-                    <div className={styles.selectionBlockText}>
-                      <h2>Homestays (Coming Soon)</h2>
+                    <div className={`${styles.selectionBlockText} ${styles.dullCard}`}>
+                      <h2>Homestays</h2>
                       <p>
                         Live like a local – stay in authentic homes and experience warm cultural hospitality.
                       </p>
@@ -324,7 +348,8 @@ useEffect(() => {
                         width={500}
                         height={300}
                       />
-                      <p>{item.title}</p>
+                      <p className={styles.title}>{item.title}</p>
+                      <p>Starting at <span className={styles.price}>{item.price}</span></p>
                     </div>
                   ))}
                 </div>
