@@ -2,6 +2,13 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import styles from "@/styles/Home.module.css";
 import React from "react";
+import { FaUser, FaCalendarAlt, FaGlobe } from "react-icons/fa";
+import { RiArrowDropDownLine } from "react-icons/ri";
+import { Calendar } from "react-date-range"; // for single date
+import { DateRange } from "react-date-range"; // for range picker
+import "react-date-range/dist/styles.css"; // ✅ main styles
+import "react-date-range/dist/theme/default.css";
+import { format } from "date-fns";
 
 const defaultPlan = [
   {
@@ -247,27 +254,34 @@ export default function Sightseeing() {
     name: string;
     price: number;
     category: string;
-    imageUrl: string; // Image path for main item
+    imageUrl: string;
     description: string;
     optional: boolean;
-    selected: boolean; // For optional items' selection state
+    selected: boolean;
     alternatives: {
       name: string;
       price: number;
-      imageUrl: string; // Image path for alternatives
+      imageUrl: string;
       description: string;
     }[];
   };
 
   const [itinerary, setItinerary] = useState<ItineraryItem[]>([]);
   const [selectedDay, setSelectedDay] = useState("1 Day");
-  const [travelFrom, setTravelFrom] = useState("");
-  const [travelTill, setTravelTill] = useState("");
-  const [travellers, setTravellers] = useState(1);
   const [planName, setPlanName] = useState("1 Day Sightseeing in");
   const [showReplaceDropdown, setShowReplaceDropdown] = useState(-1);
   const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 });
   const replaceButtonRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const selectionRef = useRef<HTMLDivElement | null>(null);
+  const [travellers, setTravellers] = useState(1);
+  const [participantsDropdown, setParticipantsDropdown] = useState(false);
+  const [calendarDropdown, setCalendarDropdown] = useState(false);
+  const [dateRange, setDateRange] = useState([
+    { startDate: new Date(), endDate: new Date(), key: "selection" },
+  ]);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const participantRef = useRef<HTMLDivElement>(null);
+  const calendarRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const plan = selectedDay === "1 Day" ? defaultPlan : defaultPlanDay2;
@@ -283,6 +297,29 @@ export default function Sightseeing() {
       selectedDay === "1 Day" ? "1 Day Sightseeing in" : "2 Days Sightseeing in"
     );
   }, [selectedDay]);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        participantRef.current &&
+        !participantRef.current.contains(e.target as Node)
+      ) {
+        setParticipantsDropdown(false);
+      }
+
+      if (
+        calendarRef.current &&
+        !calendarRef.current.contains(e.target as Node)
+      ) {
+        setCalendarDropdown(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const resetToDefault = () => {
     const plan =
@@ -334,29 +371,67 @@ export default function Sightseeing() {
 
   const totalPrice = basePrice * travellers;
 
+  const handleScrollToSelectionBar = () => {
+    const navbarHeight = 200;
+    if (selectionRef.current) {
+      const top =
+        selectionRef.current.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({
+        top: top - navbarHeight,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  const handleRangeSelect = (ranges: any) => {
+    setDateRange([ranges.selection]);
+    setCalendarDropdown(false);
+  };
+
+  const handleSingleDateSelect = (date: Date) => {
+    setSelectedDate(date);
+    setCalendarDropdown(false);
+  };
+
   return (
     <>
       <div className={styles.innerContent}>
         <div className={styles.topBar}>
-          {/* <h2>Headline:
-Partly Planned, Fully Yours – Jaipur in a Day
-Subheadline:
-Blend iconic landmarks with handpicked activities you can customize. Perfect balance of guidance and freedom.</h2> */}
-          {/* <button className={styles.button} onClick={() => router.back()}>
-            <IoMdArrowRoundBack size={20} />
-            Back
-          </button> */}
-          <button onClick={resetToDefault} className={styles.button}>
-            Reset Default
-          </button>
-          <select
-            value={selectedDay}
-            onChange={(e) => setSelectedDay(e.target.value)}
-            className={styles.dropdown}
-          >
-            <option>1 Day</option>
-            <option>2 Day</option>
-          </select>
+          <div className={styles.topbarLeft}>
+            <h2>
+              Partly Planned, Fully Yours – <span>Jaipur in a Day</span>
+            </h2>
+            <p>
+              Blend iconic landmarks with handpicked activities you can
+              customize. Perfect balance of guidance and freedom
+            </p>
+            <div className={styles.leftButton}>
+              <button onClick={resetToDefault} className={styles.button}>
+                Reset Default
+              </button>
+              <select
+                value={selectedDay}
+                onChange={(e) => setSelectedDay(e.target.value)}
+                className={styles.dropdown}
+              >
+                <option>1 Day</option>
+                <option>2 Day</option>
+              </select>
+            </div>
+          </div>
+          <div className={styles.topbarRight}>
+            <div className={styles.rightButton}>
+              <p>
+                From <span className={styles.price}>₹ 2700</span> per person
+              </p>
+              <button
+                className={styles.availButton}
+                onClick={handleScrollToSelectionBar}
+              >
+                Buy Now
+              </button>
+            </div>
+          </div>
         </div>
 
         <div className={styles.mainContainer}>
@@ -432,7 +507,9 @@ Blend iconic landmarks with handpicked activities you can customize. Perfect bal
                     {/* Meta Info */}
                     <div className={styles.metaInfo}>
                       <span className={styles.time}>{item.time}</span>
-                      <span className={styles.price}>₹{item.price}</span>
+                      {(item.optional || item.alternatives.length > 0) && (
+                        <span className={styles.price}>+ ₹{item.price}</span>
+                      )}
                     </div>
 
                     {/* Title */}
@@ -442,88 +519,121 @@ Blend iconic landmarks with handpicked activities you can customize. Perfect bal
                     <div className={styles.cardDescription}>
                       <p>{item.description}</p>
                     </div>
-
-                    {/* Replace Dropdown */}
                   </div>
                 </React.Fragment>
               ))}
             </div>
+          </div>
 
-            {/* Payment Box on Right */}
-            <div className={styles.paymentBox}>
-              <div className={styles.planInfo}>
-                <h3>🗺️ Itinerary Plan</h3>
-                <h2>{planName}</h2>
+          <div className={styles.selectionBar} ref={selectionRef}>
+            <h3 className={styles.selectionLabel}>
+              {planName} Jaipur
+            </h3>
+            <h3 className={styles.selectionLabel}>
+              Select participants and date
+            </h3>
 
-                <div className={styles.inputGroup}>
-                  <label>Travel Dates</label>
-                  <div className={styles.dateInputs}>
-                    <input
-                      type="date"
-                      value={travelFrom}
-                      onChange={(e) => setTravelFrom(e.target.value)}
-                      className={styles.dateInput}
-                    />
-                    <span>to</span>
-                    <input
-                      type="date"
-                      value={travelTill}
-                      onChange={(e) => setTravelTill(e.target.value)}
-                      className={styles.dateInput}
-                    />
+            <div className={styles.inputRow}>
+              {/* Participants */}
+              <div
+                ref={participantRef}
+                className={styles.inputBox}
+                onClick={() => setParticipantsDropdown(!participantsDropdown)}
+              >
+                <FaUser className={styles.inputIcon} />
+                <span>Adult x {travellers}</span>
+                <span className={styles.arrow}>
+                  <RiArrowDropDownLine size={40} />
+                </span>
+                {participantsDropdown && (
+                  <div className={styles.dropdownPanel}>
+                    <label className={styles.dropdownLabel}>
+                      Number of Travellers
+                    </label>
+                    <div className={styles.travellerInputWrapper}>
+                      <button
+                        type="button"
+                        className={styles.counterButton}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setTravellers((prev) => Math.max(1, prev - 1));
+                        }}
+                      >
+                        −
+                      </button>
+                      <input
+                        type="number"
+                        min="1"
+                        value={travellers}
+                        onChange={(e) => {
+                          const val = Number(e.target.value);
+                          if (val >= 1) setTravellers(val);
+                        }}
+                        className={styles.travellerInput}
+                        onClick={(e) => e.stopPropagation()}
+                      />
+                      <button
+                        type="button"
+                        className={styles.counterButton}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setTravellers((prev) => prev + 1);
+                        }}
+                      >
+                        +
+                      </button>
+                    </div>
                   </div>
-                </div>
-
-                <div className={styles.inputGroup}>
-                  <label>Number of Travellers</label>
-                  <div className={styles.travellerInputWrapper}>
-                    <button
-                      type="button"
-                      className={styles.counterButton}
-                      onClick={() =>
-                        setTravellers((prev) => Math.max(1, prev - 1))
-                      }
-                    >
-                      −
-                    </button>
-                    <input
-                      type="number"
-                      min="1"
-                      value={travellers}
-                      onChange={(e) => {
-                        const val = Number(e.target.value);
-                        if (val >= 1) setTravellers(val);
-                      }}
-                      className={styles.travellerInput}
-                    />
-                    <button
-                      type="button"
-                      className={styles.counterButton}
-                      onClick={() => setTravellers((prev) => prev + 1)}
-                    >
-                      +
-                    </button>
-                  </div>
-                </div>
-
-                <div className={styles.priceSummary}>
-                  <div className={styles.priceRow}>
-                    <span>Subtotal</span>
-                    <span>₹{totalPrice}</span>
-                  </div>
-                  <div className={styles.priceRow}>
-                    <span>Taxes & Fees</span>
-                    <span>₹{(totalPrice * 0.18 * 0).toFixed(2)}</span>
-                  </div>
-                  <div className={styles.totalPrice}>
-                    <span>Total</span>
-                    <span>₹{(totalPrice * 1).toFixed(2)}</span>
-                  </div>
-                </div>
-
-                <button className={styles.buyButton}>Buy Itinerary</button>
-                <button className={styles.cartButton}>Add to Cart</button>
+                )}
               </div>
+
+              {/* Date */}
+              <div
+                ref={calendarRef}
+                className={styles.inputBox}
+                onClick={() => setCalendarDropdown(!calendarDropdown)}
+              >
+                <FaCalendarAlt className={styles.inputIcon} />
+                <span>
+                  {selectedDay === "1 Day"
+                    ? format(selectedDate, "MMM d, yyyy")
+                    : `${format(dateRange[0].startDate, "MMM d")} → ${format(
+                        dateRange[0].endDate,
+                        "MMM d"
+                      )}`}
+                </span>
+                <span className={styles.arrow}>
+                  <RiArrowDropDownLine size={40} />
+                </span>
+
+                {calendarDropdown && (
+                  <div
+                    className={styles.calendarPopup}
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    {selectedDay === "1 Day" ? (
+                      <Calendar
+                        date={selectedDate}
+                        onChange={handleSingleDateSelect}
+                        minDate={new Date()}
+                        color="#007BFF"
+                      />
+                    ) : (
+                      <DateRange
+                        editableDateInputs={true}
+                        onChange={handleRangeSelect}
+                        moveRangeOnFirstSelection={false}
+                        ranges={dateRange}
+                        months={2}
+                        direction="horizontal"
+                        minDate={new Date()}
+                        rangeColors={["#007BFF"]}
+                      />
+                    )}
+                  </div>
+                )}
+              </div>
+              <button className={styles.buyButton}>Check Availability</button>
             </div>
           </div>
 
