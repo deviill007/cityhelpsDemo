@@ -7,6 +7,7 @@ import Popup from "@/components/Popup";
 import HomePagePopupContent from "@/components/HomePagePopupContent";
 import React from "react";
 import { DateRange } from "react-date-range";
+import { RangeKeyDict } from 'react-date-range';
 import { format } from "date-fns";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
@@ -190,10 +191,20 @@ export default function Home() {
       key: "selection",
     },
   ]);
-  const handleSelect = (ranges: any) => {
-    setDateRange([ranges.selection]);
-    setShowCalendar(false);
-  };
+const handleSelect = (ranges: RangeKeyDict) => {
+  const selection = ranges.selection;
+
+  // Manually extract and ensure the types are Date (not undefined)
+  if (selection?.startDate instanceof Date && selection?.endDate instanceof Date) {
+    setDateRange([
+      {
+        startDate: selection.startDate,
+        endDate: selection.endDate,
+        key: 'selection',
+      },
+    ]);
+  }
+};
   // Trigger popup after 5 seconds
   useEffect(() => {
     const hasSeenHomePopup = sessionStorage.getItem("hasSeenHomePopup");

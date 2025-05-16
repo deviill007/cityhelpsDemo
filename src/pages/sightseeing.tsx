@@ -2,13 +2,15 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import styles from "@/styles/Home.module.css";
 import React from "react";
-import { FaUser, FaCalendarAlt, FaGlobe } from "react-icons/fa";
+import { FaUser, FaCalendarAlt } from "react-icons/fa";
 import { RiArrowDropDownLine } from "react-icons/ri";
-import { Calendar } from "react-date-range"; // for single date
-import { DateRange } from "react-date-range"; // for range picker
-import "react-date-range/dist/styles.css"; // ✅ main styles
+import { Calendar } from "react-date-range";
+import { DateRange } from "react-date-range";
+import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { format } from "date-fns";
+import { RangeKeyDict } from 'react-date-range';
+
 
 const defaultPlan = [
   {
@@ -383,11 +385,22 @@ export default function Sightseeing() {
     }
   };
 
-  const handleRangeSelect = (ranges: any) => {
-    setDateRange([ranges.selection]);
-    setCalendarDropdown(false);
-  };
 
+const handleRangeSelect = (ranges: RangeKeyDict) => {
+  const selection = ranges.selection;
+
+  // Manually extract and ensure the types are Date (not undefined)
+  if (selection?.startDate instanceof Date && selection?.endDate instanceof Date) {
+    setDateRange([
+      {
+        startDate: selection.startDate,
+        endDate: selection.endDate,
+        key: 'selection',
+      },
+    ]);
+    setCalendarDropdown(false);
+  }
+};
   const handleSingleDateSelect = (date: Date) => {
     setSelectedDate(date);
     setCalendarDropdown(false);
@@ -527,7 +540,7 @@ export default function Sightseeing() {
 
           <div className={styles.selectionBar} ref={selectionRef}>
             <h3 className={styles.selectionLabel}>
-              {planName} Jaipur
+              {planName} Jaipur {totalPrice}
             </h3>
             <h3 className={styles.selectionLabel}>
               Select participants and date
