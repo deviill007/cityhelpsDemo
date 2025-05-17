@@ -20,73 +20,73 @@ const experiences: Record<number, Experience[]> = {
       title: "Morning Treks",
       img: "/images/jaipur/morningTrek.jpg",
       link: "/jaipur/nature/morningTrek",
-      price: "₹ 599",
+      price: "₹599",
     },
     {
       title: "Elephant Walks",
       img: "/images/jaipur/elephantWalks.jpg",
       link: "/jaipur/nature/elephantWalks",
-      price: "₹ 599",
+      price: "₹599",
     },
     {
       title: "Leopard Safari",
       img: "/images/jaipur/leopardSafari.jpg",
       link: "/jaipur/nature/leopardSafari",
-      price: "₹ 599",
+      price: "₹599",
     },
     {
       title: "Handicrafts",
       img: "/images/jaipur/handicrafts.jpg",
       link: "/jaipur/artist/handicrafts",
-      price: "₹ 599",
+      price: "₹599",
     },
     {
       title: "Jewellery",
       img: "/images/jaipur/jewellery.jpg",
       link: "/jaipur/artist/jewellery",
-      price: "₹ 599",
+      price: "₹599",
     },
     {
       title: "Carpets",
       img: "/images/jaipur/carpets.jpg",
       link: "/jaipur/artist/carpets",
-      price: "₹ 599",
+      price: "₹599",
     },
     {
       title: "Textile and Block Printing",
       img: "/images/jaipur/textileBlock.jpg",
       link: "/jaipur/artist/textile",
-      price: "₹ 599",
+      price: "₹599",
     },
     {
       title: "Cooking",
       img: "/images/jaipur/cooking.jpg",
       link: "/jaipur/culture/cooking",
-      price: "₹ 599",
+      price: "₹599",
     },
     {
       title: "Yoga",
       img: "/images/jaipur/yoga.png",
       link: "/jaipur/culture/yoga",
-      price: "₹ 599",
+      price: "₹599",
     },
     {
       title: "Temple Walk",
       img: "/images/jaipur/temple.jpg",
       link: "/jaipur/culture/templeWalk",
-      price: "₹ 599",
+      price: "₹599",
     },
     {
       title: "Pottery",
       img: "/images/jaipur/pottery.jpg",
       link: "/jaipur/culture/pottery",
-      price: "₹ 599",
+      price: "₹599",
     },
     {
       title: "Street Food Walk",
       img: "/images/jaipur/streetFoods.jpg",
       link: "/jaipur/culture/streetFood",
-      price: "₹ 599",
+      price: "₹599",
     },
   ],
   1: [
@@ -95,19 +95,19 @@ const experiences: Record<number, Experience[]> = {
       title: "Morning Treks",
       img: "/images/jaipur/morningTrek.jpg",
       link: "/jaipur/nature/morningTrek",
-      price: "₹ 599",
+      price: "₹599",
     },
     {
       title: "Elephant Walks",
       img: "/images/jaipur/elephantWalks.jpg",
       link: "/jaipur/nature/elephantWalks",
-      price: "₹ 599",
+      price: "₹599",
     },
     {
       title: "Leopard Safari",
       img: "/images/jaipur/leopardSafari.jpg",
       link: "/jaipur/nature/leopardSafari",
-      price: "₹ 599",
+      price: "₹599",
     },
   ],
   2: [
@@ -116,25 +116,25 @@ const experiences: Record<number, Experience[]> = {
       title: "Cooking",
       img: "/images/jaipur/cooking.jpg",
       link: "/jaipur/culture/cooking",
-      price: "₹ 599",
+      price: "₹599",
     },
     {
       title: "Yoga",
       img: "/images/jaipur/yoga.png",
       link: "/jaipur/culture/yoga",
-      price: "₹ 599",
+      price: "₹599",
     },
     {
       title: "Temple Walk",
       img: "/images/jaipur/temple.jpg",
       link: "/jaipur/culture/templeWalk",
-      price: "₹ 599",
+      price: "₹599",
     },
     {
       title: "Street Food Walk",
       img: "/images/jaipur/streetFoods.jpg",
       link: "/jaipur/culture/streetFood",
-      price: "₹ 599",
+      price: "₹599",
     },
   ],
   3: [
@@ -143,25 +143,25 @@ const experiences: Record<number, Experience[]> = {
       title: "Handicrafts",
       img: "/images/jaipur/handicrafts.jpg",
       link: "/jaipur/artist/handicrafts",
-      price: "₹ 599",
+      price: "₹599",
     },
     {
       title: "Jewellery",
       img: "/images/jaipur/jewellery.jpg",
       link: "/jaipur/artist/jewellery",
-      price: "₹ 599",
+      price: "₹599",
     },
     {
       title: "Carpets",
       img: "/images/jaipur/carpets.jpg",
       link: "/jaipur/artist/carpets",
-      price: "₹ 599",
+      price: "₹599",
     },
     {
       title: "Textile and Block Printing",
       img: "/images/jaipur/textileBlock.jpg",
       link: "/jaipur/artist/textile",
-      price: "₹ 599",
+      price: "₹599",
     },
   ],
 };
@@ -183,6 +183,7 @@ export default function Home() {
   const tabsRef = useRef<HTMLDivElement | null>(null);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [showCalendar, setShowCalendar] = useState(false);
+  const calendarRef = useRef<HTMLDivElement>(null);
 
   const [dateRange, setDateRange] = useState([
     {
@@ -219,6 +220,22 @@ const handleSelect = (ranges: RangeKeyDict) => {
     }
   }, []);
 
+    useEffect(() => {
+      const handleClickOutside = (e: MouseEvent) => {
+        if (
+          calendarRef.current &&
+          !calendarRef.current.contains(e.target as Node)
+        ) {
+          setShowCalendar(false);
+        }
+      };
+  
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }, []);
+
   const closePopup = () => {
     setIsPopupOpen(false); // Close the popup
   };
@@ -251,16 +268,15 @@ const handleSelect = (ranges: RangeKeyDict) => {
       <div className={styles.home}>
         {/* Hero Section */}
         <div className={styles.hero}>
-          <div className={styles.heroContent}>
-            <h2>Explore Jaipur like a local</h2>
-            <p>
-              Personalized and Authentic Local Experiences Tailored Just for You
-            </p>
-            <button className="button" onClick={handleScrollToTabs}>
-              Start Exploring
-            </button>
-          </div>
-        </div>
+  <div className={styles.heroContent}>
+    <h2>Explore Jaipur like a local</h2>
+    <p>Personalized and Authentic Local Experiences Tailored Just for You</p>
+    <button className="button" onClick={handleScrollToTabs}>
+      Start Exploring
+    </button>
+  </div>
+</div>
+
 
         {/* Tabs Section */}
         <div className={styles.tabsContainer} ref={tabsRef}>
@@ -394,8 +410,8 @@ const handleSelect = (ranges: RangeKeyDict) => {
                         height={300}
                       />
                       <p className={styles.title}>{item.title}</p>
-                      <p>
-                        Starting at{" "}
+                      <p className={styles.ecardPrice}>
+                        From{" "}
                         <span className={styles.price}>{item.price}</span>
                       </p>
                     </div>
@@ -427,9 +443,10 @@ const handleSelect = (ranges: RangeKeyDict) => {
 
                 <form className={styles.queryForm}>
                   <div className={styles.row}>
-                    <div className={styles.datepickerWrapper}>
+                    <div className={styles.datepickerWrapper} ref={calendarRef}>
                       <button
                         type="button"
+                         
                         onClick={() => setShowCalendar(!showCalendar)}
                         className={styles.datepickerButton}
                       >

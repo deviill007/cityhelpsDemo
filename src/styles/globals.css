@@ -478,7 +478,7 @@ a {
 
 .section h3 {
   margin-bottom: 15px;
-  font-size: 20px;
+  font-size: 1.5rem;
   color: rgba(4, 56, 115, 1);
   position: relative;
 }
@@ -512,7 +512,7 @@ a {
   color: var(--dark-text);
   font-weight: 500;
   text-decoration: none;
-  font-size: 14px;
+  font-size: 1rem;
   transition: color 0.3s ease;
 }
 
@@ -523,7 +523,7 @@ a {
 .section p {
   margin: 10px 0;
   line-height: 1.6;
-  font-size: 14px;
+  font-size: 0.9rem;
   color: #555;
 }
 
@@ -810,7 +810,7 @@ a {
 }
 
 .home-popup h2 {
-  font-size: 28px;
+  font-size: 2.25rem;
   font-weight: 700;
   color: var(--dark-text);
   margin: 10px 0;
@@ -822,7 +822,7 @@ a {
   color: var(--hover-color);
 }
 .home-popup p {
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 400;
   color: #555;
   text-align: center;
@@ -870,7 +870,7 @@ a {
 }
 
 .reset-form h2 {
-  font-size: 1.5rem;
+  font-size: 2.25rem;
   margin-bottom: 16px;
   color: var(--dark-text);
 }
@@ -911,6 +911,7 @@ a {
 .reset-form p {
   margin-top: 16px;
   color: #28a745;
+  font-size: 1rem;
 }
 
 /* Profile Page CSS */
@@ -1011,8 +1012,8 @@ a {
   }
 }
 
-h2,
-h3 {
+.content h2,
+.content h3 {
   margin-bottom: 24px;
   font-weight: 700;
   color: var(--dark-text);
@@ -1091,7 +1092,7 @@ h3 {
 }
 
 .delete-input p {
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 600;
   color: #444;
 }
@@ -1117,7 +1118,7 @@ h3 {
 }
 
 .notifications-section p {
-  font-size: 16px;
+  font-size: 1rem;
   color: #777;
 }
 
@@ -1161,12 +1162,12 @@ h3 {
 }
 
 .faq-item h3 {
-  font-size: 20px;
+  font-size: 1.5rem;
   color: var(--hover-color);
 }
 
 .faq-item p {
-  font-size: 16px;
+  font-size: 1rem;
   color: #7f8c8d;
 }
 
@@ -1206,12 +1207,12 @@ h3 {
 }
 
 .troubleshooting-item h3 {
-  font-size: 20px;
-  color: #e67e22;
+  font-size: 1.5rem;
+  color: var(--active-color);
 }
 
 .troubleshooting-item p {
-  font-size: 16px;
+  font-size: 1rem;
   color: #7f8c8d;
 }
 
@@ -1287,12 +1288,12 @@ h3 {
     margin-top: 70px;
   }
   .section h3 {
-    font-size: 18px;
+    font-size: 1.35rem;
   }
 
   .section p,
   .section ul li a {
-    font-size: 13px;
+    font-size: .9rem;
   }
 
   .footer-logo {
@@ -1385,10 +1386,10 @@ h3 {
     width: 300px;
   }
   .home-popup h2 {
-    font-size: 24px;
+    font-size: 1.7rem;
   }
   .home-popup p {
-    font-size: 14px;
+    font-size: 0.9rem;
   }
   .button {
     font-size: 16px;
@@ -1422,12 +1423,12 @@ h3 {
   }
 
   .section h3 {
-    font-size: 17px;
+    font-size: 1.35rem;
   }
 
   .section p,
   .section ul li a {
-    font-size: 12.5px;
+    font-size: .9rem;
   }
 
   .footer-logo {
@@ -1479,10 +1480,10 @@ h3 {
     width: 300px;
   }
   .home-popup h2 {
-    font-size: 24px;
+    font-size: 1.6rem;
   }
   .home-popup p {
-    font-size: 14px;
+    font-size: 0.85rem;
   }
   .button {
     font-size: 16px;
@@ -1513,7 +1514,7 @@ h3 {
   }
 
   .section h3 {
-    font-size: 16px;
+    font-size: 1.2rem;
   }
 
   .section p,

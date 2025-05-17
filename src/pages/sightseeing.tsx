@@ -9,8 +9,7 @@ import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { format } from "date-fns";
-import { RangeKeyDict } from 'react-date-range';
-
+import { RangeKeyDict } from "react-date-range";
 
 const defaultPlan = [
   {
@@ -284,6 +283,9 @@ export default function Sightseeing() {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const participantRef = useRef<HTMLDivElement>(null);
   const calendarRef = useRef<HTMLDivElement>(null);
+  const [showAvailabilityBox, setShowAvailabilityBox] = useState(false);
+  const [selectedTime, setSelectedTime] = useState<string | null>(null);
+  const timeOptions = ["07:00", "08:00", "9:00"];
 
   useEffect(() => {
     const plan = selectedDay === "1 Day" ? defaultPlan : defaultPlanDay2;
@@ -385,22 +387,24 @@ export default function Sightseeing() {
     }
   };
 
+  const handleRangeSelect = (ranges: RangeKeyDict) => {
+    const selection = ranges.selection;
 
-const handleRangeSelect = (ranges: RangeKeyDict) => {
-  const selection = ranges.selection;
-
-  // Manually extract and ensure the types are Date (not undefined)
-  if (selection?.startDate instanceof Date && selection?.endDate instanceof Date) {
-    setDateRange([
-      {
-        startDate: selection.startDate,
-        endDate: selection.endDate,
-        key: 'selection',
-      },
-    ]);
-    setCalendarDropdown(false);
-  }
-};
+    // Manually extract and ensure the types are Date (not undefined)
+    if (
+      selection?.startDate instanceof Date &&
+      selection?.endDate instanceof Date
+    ) {
+      setDateRange([
+        {
+          startDate: selection.startDate,
+          endDate: selection.endDate,
+          key: "selection",
+        },
+      ]);
+      setCalendarDropdown(false);
+    }
+  };
   const handleSingleDateSelect = (date: Date) => {
     setSelectedDate(date);
     setCalendarDropdown(false);
@@ -434,16 +438,16 @@ const handleRangeSelect = (ranges: RangeKeyDict) => {
           </div>
           <div className={styles.topbarRight}>
             <div className={styles.rightButton}>
-              <p>
-                From <span className={styles.price}>₹ 2700</span> per person
-              </p>
-              <button
-                className={styles.availButton}
-                onClick={handleScrollToSelectionBar}
-              >
-                Buy Now
-              </button>
-            </div>
+  <div className={styles.priceInfo}>
+    <p>
+      From <span className={styles.price}>₹ 2700</span> <span className={styles.unit}>per person</span>
+    </p>
+  </div>
+  <button className={styles.buyButton} onClick={handleScrollToSelectionBar}>
+    Buy Now
+  </button>
+</div>
+
           </div>
         </div>
 
@@ -539,9 +543,6 @@ const handleRangeSelect = (ranges: RangeKeyDict) => {
           </div>
 
           <div className={styles.selectionBar} ref={selectionRef}>
-            <h3 className={styles.selectionLabel}>
-              {planName} Jaipur {totalPrice}
-            </h3>
             <h3 className={styles.selectionLabel}>
               Select participants and date
             </h3>
@@ -646,9 +647,66 @@ const handleRangeSelect = (ranges: RangeKeyDict) => {
                   </div>
                 )}
               </div>
-              <button className={styles.buyButton}>Check Availability</button>
+              <button
+                className={styles.availButton}
+                onClick={() => setShowAvailabilityBox(true)}
+              >
+                Check Availability
+              </button>
             </div>
           </div>
+
+          {showAvailabilityBox && (
+            <div className={styles.availabilityBox}>
+              <h2 className={styles.planTitle}>{planName} Jaipur</h2>
+
+              <div className={styles.availabilityDetails}>
+                <p>
+                  Selected Date:{" "}
+                  <span>
+                    {selectedDay === "1 Day"
+                      ? format(selectedDate, "MMMM d, yyyy")
+                      : `${format(dateRange[0].startDate, "MMMM d")} → ${format(
+                          dateRange[0].endDate,
+                          "MMMM d"
+                        )}`}
+                  </span>
+                </p>
+
+                <label className={styles.timeLabel}>
+                  Select a starting time:
+                </label>
+                <div className={styles.timeOptions}>
+                  {timeOptions.map((time) => (
+                    <button
+                      key={time}
+                      className={`${styles.timeButton} ${
+                        selectedTime === time ? styles.selectedTime : ""
+                      }`}
+                      onClick={() => setSelectedTime(time)}
+                    >
+                      {time}
+                    </button>
+                  ))}
+                </div>
+
+                <div className={styles.priceRow}>
+                  <p className={styles.finalPrice}>
+                    ₹{totalPrice.toLocaleString()}{" "}
+                  </p>
+                  <p className={styles.oldPrice}>
+                    ₹{Math.round(totalPrice * 1.12)}
+                  </p>{" "}
+                  <p className={styles.discount}>-12%</p>
+                </div>
+
+                <div className={styles.actionButtons}>
+                  <button className={styles.buyButton}>Book now</button>
+                  <button className={styles.addToCart}>Add to cart</button>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Description at Bottom */}
           <div className={styles.descriptionSection}>
